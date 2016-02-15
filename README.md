@@ -29,7 +29,7 @@ This project makes the use of a number of third party Open Source libraries. You
 
 # Licence
 
-Copyright (C) 2015 Anthony Mills
+Copyright (C) 2015 [Anthony Mills](http://www.anthony-mills.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
