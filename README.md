@@ -1,4 +1,4 @@
-=== Raspberry Pi Car Computer ===
+# Raspberry Pi Car Computer 
 
 UI component of a Raspberry Pi car computer setup.
 
