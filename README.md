@@ -1,6 +1,6 @@
 # Raspberry Pi Car Computer 
 
-UI component of a Raspberry Pi car computer setup.
+UI component of a Raspberry Pi car computer setup. [Visit this blog post for more information on the project and building your own Raspberry Pi based "carputer".](https://www.development-cycle.com/2016/02/building-a-raspberry-pi-car-computer/)
 
 # Prerequisites
 The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So obviously to have the frontend work properly these two daemons must be installed and configured.
