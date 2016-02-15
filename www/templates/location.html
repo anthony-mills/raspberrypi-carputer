@@ -1,0 +1,74 @@
+<div class="card">
+    <div class="item item-divider bar bar-header bar-dark headingText" >
+        GPS: {{gpsData.status}}
+    </div>
+
+    <div class="item item-text-wrap">
+        <strong>Current Speed:</strong>
+        <div class="speed-data">
+            <span ng-if="gpsData.speed_warn == 1" class="current-speed warn-speed">
+                {{gpsData.speed}}
+            </span>
+
+            <span ng-else class="current-speed">
+                {{gpsData.speed}}
+            </span>
+
+            <span ng-if="gpsData.speed_warn == 1" class="speed-unit warn-speed">
+                km/h
+            </span>
+
+            <span ng-else class="speed-unit">
+                km/h
+            </span>
+        </div>
+
+        <div class="gps-data">
+            <strong>Estimated Speed Limit:</strong>
+
+            <br /><br />
+            <div class="warn-speed" align="center">
+                <strong>{{gpsData.speed_limit}}</strong>
+            </div>
+            
+            <div ng-if="gpsData.speed_limit_age > 0" align="center">
+                {{gpsData.speed_limit_age}}  
+            </div>
+         
+        </div>
+
+        <div class="gps-data">
+            <strong>Heading:</strong>
+
+            <br />
+
+            {{gpsData.heading}}
+        </div>
+
+        <div class="gps-data">        
+            <strong>Altitude:</strong>
+
+            <br />
+
+            {{gpsData.altitude}}
+        </div>
+
+        <div class="gps-data">
+            <strong>Latitude:</strong>
+
+            <br />
+
+            {{gpsData.latitude}}
+        </div>
+
+        <div class="gps-data">
+            <strong>Longitude:</strong>
+
+            <br />
+
+            {{gpsData.longitude}}
+
+        </div>        
+    </div>
+
+</div>

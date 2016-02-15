@@ -1,0 +1,53 @@
+<ion-view title="Playlists" align-title="center">
+  <div growl></div>
+  <ion-nav-buttons side="left" class="bar bar-header bar-assertive">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header bodyElement paneBackground">
+
+    <!-- Start the parent content container -->
+    <div class="row">
+
+      <!-- Start the speed and location column -->   
+      <div class="col-33 pad-column">
+        <ng-include src="'/templates/location.html'"></ng-include>
+      </div>
+      <!-- End the speed and location column -->
+
+      <!-- Start the music control column -->
+      <div class="col-66">
+        <div class="card">
+          <div class="item item-divider bar bar-header bar-dark barHeading" >
+            <span class="barHeadingText">Stored Playlists</span>
+          </div>
+
+          <div bindonce="menuItems" ng-if="storedPlaylists">
+            <ion-list>
+
+              <ion-item ng-repeat="playlistItem in storedPlaylists track by $index" id="$index">
+                <h2>{{playlistItem}}</h2>
+
+                <br />
+                <div class="button-bar">
+                      <button ng-click="loadPlaylist(playlistItem)" class="button button-positive icon-right ion-music-note">
+                        Load playlist into queue
+                      </button>
+                    
+                </div>
+              </ion-item>
+
+            </ion-list>
+          </div>
+
+          <div class="item item-text-wrap" ng-else>
+            <p>No playlists are currently available</p>
+          </div>
+
+        </div>
+      </div>
+      <!-- End the music control column -->
+
+    </div>
+    <!-- End the parent content container -->
+  </ion-content>
+</ion-view>

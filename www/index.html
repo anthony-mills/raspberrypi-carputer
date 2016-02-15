@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width target-densityDpi=device-dpi"">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/notifications/angular-growl.css" rel="stylesheet">    
+    <link href="css/notifications/bootstrap.min.css" rel="stylesheet">  
+
+    <script src="lib/mpd.js"></script>
+    <script src="lib/websockify/websock.js"></script>
+    <script src="lib/websockify/util.js"></script>    
+    <script src="lib/websockify/base64.js"></script> 
+
+    <!-- ionic/angularjs js -->   
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- Application javascript files -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/sound.js"></script> 
+    <script src="js/gps.js"></script>       
+    <script src="js/weather.js"></script>    
+
+    <!-- Start the external dependencies-->
+    <script src="lib/elif.js"></script>
+    <script src="lib/imgcache.js"></script> 
+    <script src="lib/angular-imgcache.js"></script>
+    <script src="lib/angular-growl.min.js"></script>                                  
+  </head>
+
+  <body ng-app="landcruiser">
+    <ion-nav-view></ion-nav-view>
+
+    <script src="js/index.js"></script>
+
+    <script type="text/javascript">
+        app.initialize();
+
+        function openExternal(elem) {
+            window.open(elem.href, "_system");
+            return false; // Prevent execution of the default onClick handler 
+        }      
+    </script>        
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<ion-view title="Weather" align-title="center">
+  <ion-nav-buttons side="left" class="bar bar-header bar-assertive">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header bodyElement paneBackground">
+
+    <!-- Start the parent content container -->
+    <div class="row">
+      <!-- Start the speed and location column -->   
+      <div class="col-33 pad-column">
+        <ng-include src="'/templates/location.html'"></ng-include>
+      </div>
+      <!-- End the speed and location column -->
+
+      <!-- Start the music control column -->
+      <div class="col-66 pad-column">    
+        <!-- Start weather related tags -->
+        <div ng-if="weatherData.forecast">
+          <div ng-repeat="weatherItem in weatherData.forecast track by $index" class="card">
+            <div class="item item-divider bar bar-header bar-dark headingText" >
+                {{weatherItem.weekday}}
+            </div>
+
+            <div class="item item-text-wrap">
+              <div class="row">
+                <div class="col-80 pad-column">
+                  <p>{{weatherItem.description}}</p>
+                </div>
+
+                <div class="col-20 pad-column">
+                  <img src="{{weatherItem.iconLink}}">
+                </div>
+              </div>
+
+              <ul>
+                <li>
+                  <p> 
+                    <strong>Min Temp:</strong> 
+                    {{weatherItem.lowTemperature | number:0 | number }} Celcius
+                  </p>
+                </li>
+
+                <li>
+                  <p>
+                    <strong>Max Temp:</strong>
+                    {{weatherItem.highTemperature | number:0 | number }} Celcius
+                  </p>
+                </li>
+
+                <li>
+                  <p>
+                    <strong>Chance Of Rain:</strong>
+                    {{weatherItem.precipitationProbability}}%
+                  </p>
+                </li>
+
+                <li>
+                  <p>
+                    <strong>Humidity:</strong>
+                    {{weatherItem.humidity}}%
+                  </p>
+                </li>   
+
+                <li>
+                  <p>
+                    <strong>Wind:</strong>
+                    {{weatherItem.windSpeed | number:0 | number }}km/h {{weatherItem.windDescShort}}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- End weather related tags -->
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

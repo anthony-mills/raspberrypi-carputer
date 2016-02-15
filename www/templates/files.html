@@ -1,0 +1,101 @@
+<ion-view title="Music Files" cache-view="false">
+  <div growl></div>
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header bodyElement paneBackground">
+
+    <!-- Start the parent content container -->
+    <div class="row">
+
+      <!-- Start the speed and location column -->   
+      <div class="col-33 pad-column">
+        <ng-include src="'/templates/location.html'"></ng-include>
+      </div>
+      <!-- End the speed and location column -->
+
+      <!-- Start the file management column -->
+      <div class="col-66">
+        <div class="card">  
+          <div ng-if="mpdConn === 1">
+            <div class="item item-divider bar bar-header bar-dark headingText">
+                Music Files
+            </div>
+
+            <div ng-if="homeButton" class="button-bar">
+              <button class="button button-positive icon-left ion-arrow-left-b" ng-click="goBack()">Go Back</button>            
+              <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
+            </div>
+
+            <ion-item ng-show="isEmpty(directoryContents)">
+              <div align="center">
+                <strong>Loading Files</strong>
+                <br />
+                <br />
+                <img src="/img/loading.gif"/>
+              </div>
+            </ion-item>
+
+            <ion-item class="item-text-wrap" ng-repeat="directoryItem in directoryContents">
+                <div ng-if="directoryItem.type === 'file'">
+                  <div class="row">
+                    <div class="col-33">
+                      
+                      <img img-cache ic-src="{{::directoryItem.artwork}}"/>
+                    </div>
+
+                    <div class="col-66"> 
+                      <h2 ng-if="directoryItem.title && directoryItem.artist">{{::directoryItem.title}}</h2>
+                      <h2 ng-else ><div ng-bind-html="::formatPath(directoryItem.path)"></div></h2>
+
+                      <p>Duration: {{::directoryItem.duration}}</p>
+                    </div>
+                  </div>
+
+                  <div class="button-bar">
+                    <button class="button button-positive icon-left ion-plus-circled" ng-click="addSong(directoryItem.path)">Add To Queue</button>           
+                  </div>
+                </div>
+
+                <div ng-if="directoryItem.type === 'directory'">
+
+                  <div class="row">
+                    <div class="col-33">
+                      <img src="{{::directoryItem.artwork}}"/>
+                    </div>
+
+                    <div class="col-66">                    
+                      <h2><div ng-bind-html="::formatPath(directoryItem.path)"></div></h2>
+                    </div>
+                  </div>                   
+
+                  <div class="button-bar">
+                    <button class="button button-positive icon-left ion-plus-circled" ng-click="addDirectory(directoryItem.path)">Add To Queue</button> 
+                    <a class="button button-positive icon-left ion-log-in" href="#/app/music-files/{{::directoryItem.link}}">See Contents</a>                                     
+                  </div>
+                </div>                
+            </ion-item>
+
+            <div ng-if="homeButton" class="button-bar">
+              <button class="button button-positive icon-left ion-arrow-left-b" ng-click="goBack()">Go Back</button>            
+              <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
+            </div>            
+          </div>
+
+          <div class="card" ng-if="mpdConn === 0">
+            <div class="item item-divider bar bar-header bar-assertive headingText">
+                ERROR: No MPD Connection
+            </div>
+        
+            <div class="item item-text-wrap">
+              Cannot access the filesystem when the MPD instance is not connected.
+            </div>
+          </div>
+      </div>
+      <!-- End the file managment column -->
+
+    </div>
+    <!-- End the parent content container -->        
+  </ion-content>
+
+</ion-view>

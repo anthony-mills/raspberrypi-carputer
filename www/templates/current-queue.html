@@ -1,0 +1,92 @@
+<ion-view title="Current Queue" align-title="center">
+  <div growl></div>
+  <ion-nav-buttons side="left" class="bar bar-header bar-assertive">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header bodyElement paneBackground">
+
+    <!-- Start the parent content container -->
+    <div class="row">
+      <!-- Start the speed and location column -->   
+      <div class="col-33 pad-column">
+        <ng-include src="'/templates/location.html'"></ng-include>
+      </div>
+      <!-- End the speed and location column -->
+
+      <!-- Start the music control column -->
+      <div class="col-66">
+        <div class="card">
+          <div class="item item-divider bar bar-header bar-dark barHeading" >
+            <span class="barHeadingText">Current Play Queue: {{playlistCount}} Songs</span>
+          </div>
+
+          <div class="button-bar">
+            <button class="button button-positive icon-left ion-trash-a" ng-click="wipePlaylist()">Clear Queue</button>
+            <button class="button button-positive icon-left ion-shuffle" ng-click="shuffleQueue()">Shuffle</button>
+          </div>
+
+          <div ng-if="playlistLoading">
+              <div align="center">
+                <br />
+                <strong>Loading Queue</strong>
+                <br />
+                <br />
+                <img src="/img/loading.gif"/>
+                <br />
+                <br />                
+              </div>
+          </div>
+
+          <div ng-else>
+            <div bindonce="menuItems" ng-if="playlistCount > 0">
+              <ion-list>
+
+                <ion-item ng-repeat="playlistItem in playlistSongs track by $index" id="{{playlistItem.id}}">
+                      <div class="row">
+                        <div class="col-33">
+                          <img img-cache ic-src="{{::playlistItem.image}}">
+                        </div>
+
+                        <div class="col-66"> 
+
+                          <div ng-if="playlistItem.artist">
+                            <h2>{{::playlistItem.name}}</h2>
+                            <h3>{{::playlistItem.artist}}</h3>
+                        
+                          </div>
+
+                          <div ng-else>{{::playlistItem.name}}</div>
+
+                          <br />
+
+                          <p>
+                            Duration: {{::playlistItem.duration}}
+                          </p>
+
+                        </div>
+                      </div>              
+
+                      <div class="button-bar" ng-if="playlistItem.playing === 0">
+                        <button ng-click="removePlaylistItem(playlistItem.position, $index)" class="button button-positive icon-right ion-eject">Remove</button>
+                        <button ng-click="playSong(playlistItem.position, $index)" class="button button-positive icon-right ion-play">Play Item</button>
+                      </div>
+
+                      <div class="button-bar" ng-if="playlistItem.playing === 1">
+                        <button ng-click="stopSong(playlistItem.position, $index)" class="button button-assertive icon-right ion-stop">Stop Item</button>
+                      </div>
+                </ion-item>
+
+              </ion-list>
+            </div>
+
+            <div class="item item-text-wrap" ng-if="playlistCount === 0">
+              <p>No music is currently in the sound queue :-(</p>
+            </div>
+          </div>
+      </div>
+      <!-- End the music control column -->
+
+    </div>
+    <!-- End the parent content container -->
+  </ion-content>
+</ion-view>

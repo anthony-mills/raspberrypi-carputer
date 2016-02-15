@@ -1,0 +1,77 @@
+<ion-view hide-nav-bar="true">
+  <ion-content class=" bodyElement nightMode">
+
+    <!-- Start the parent content container -->
+    <div class="card">
+
+      <div class="item item-text-wrap">
+        <div class="gps-status">
+          GPS Status: {{gpsData.status}}
+        </div>
+
+        <div class="row speed-info">
+          <div class="col pad-column">
+            <div class="speed-data">
+                <div class="night-speed-limit" ng-if="gpsData.speed_limit !='Unknown'">
+                  Estimated Speed Limit: {{gpsData.speed_limit}}
+                  
+                  <br />
+                  <div ng-if="gpsData.speed_limit_age > 0" align="center">
+                      {{gpsData.speed_limit_age}}  
+                  </div>           
+                </div>
+
+                <span ng-if="gpsData.speed_warn == 1" class="current-speed warn-speed">
+                    {{gpsData.speed}}
+                </span>
+
+                <span ng-else class="current-speed">
+                    {{gpsData.speed}}
+                </span>
+
+                <span ng-if="gpsData.speed_warn == 1" class="speed-unit warn-speed">
+                    km/h
+                </span>
+
+                <span ng-else class="speed-unit">
+                    km/h
+                </span>
+
+                <br />
+                <br />
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-10 pad-column"></div>
+
+          <div class="col-40 pad-column">
+            <div class="gps-data">
+                <strong>Heading:</strong>
+
+                {{gpsData.heading}}
+            </div>
+          </div>
+
+          <div class="col-40 pad-column">          
+            <div class="gps-data">        
+                <strong>Altitude:</strong>
+
+                {{gpsData.altitude}}
+            </div>
+          </div>
+
+          <div class="col-10 pad-column"></div>          
+      </div>  
+
+      <div align="center" class="exit-night">
+        <button ng-click="goHome()" class="button button-dark icon-left ion-ios-home">Back</button>
+      </div>
+
+    </div>
+    <!-- End the parent content container -->
+  </ion-content>
+</ion-view>

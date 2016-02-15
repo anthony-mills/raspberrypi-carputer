@@ -1,0 +1,34 @@
+<ion-view title="Music Files" cache-view="false">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header bodyElement paneBackground" padding="true">
+    <div class="card" ng-if="mpdConn === 1">
+      <div class="item item-divider bar bar-header bar-dark headingText">
+          Music Files
+      </div>
+
+
+      <ion-item collection-repeat="directoryItem in directoryContents">
+          <div ng-if="directoryItem.type === 'file'">
+            <img src="{{directoryItem.image}}">
+
+            <h2>{{directoryItem.path}}</h2>
+            <p>Duration: {{directoryItem.duration}}</p>
+          </div>
+      </ion-item>
+    </div>
+
+    <div class="card" ng-if="mpdConn === 0">
+      <div class="item item-divider bar bar-header bar-assertive headingText">
+          ERROR: No MPD Connection
+      </div>
+  
+      <div class="item item-text-wrap">
+        Cannot access the filesystem when the MPD instance is not connected.
+      </div>
+    </div>
+  </ion-content>
+
+
+</ion-view>
