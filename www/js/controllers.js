@@ -456,7 +456,13 @@ angular.module('landcruiser.controllers', [])
 
     if (playlistData) {
       console.log(playlistData);
-      $scope.storedPlaylists = playlistData;
+      var storedPlaylists = playlistData;
+
+      if (storedPlaylists.length > 0) {
+        $scope.storedPlaylists = storedPlaylists;
+      } else {
+        $scope.storedPlaylists = false;
+      }
     }
 
 
@@ -468,14 +474,7 @@ angular.module('landcruiser.controllers', [])
     mpdClient.loadPlaylistIntoQueue(playlistPath);
 
     growl.success("Playlist loaded to queue"); 
-  }
-
-  $timeout(function(){
-    if (!$scope.storedPlaylists) {
-      console.log('Timeout: reloading!');
-      $state.go($state.current, {}, {reload: true});
-    }
-  }, 2000); 
+  } 
 })
 
 /*

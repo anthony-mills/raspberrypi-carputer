@@ -1,23 +1,5 @@
 /* Empty. Add your own CSS if you like */
 @font-face {
-  font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 400;
-  src: url('fonts/playfair_normal.woff') format('woff');
-}
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 700;
-  src: url('fonts/playfair_bold.woff') format('woff');
-}
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: italic;
-  font-weight: 400;
-  src: url('fonts/playfair_italic.woff') format('woff');
-}
-@font-face {
   font-family: 'Audiowide';
   font-style: normal;
   font-weight: 400;
@@ -78,7 +60,7 @@ a.navItem {
   padding-top: 10px;
   font-size: 20px;
   font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  color: #fff;  
+  color: #ccc;  
   font-weight: bold;  
   line-height: 35px;
   text-rendering: optimizeLegibility;     
@@ -287,6 +269,20 @@ select::-ms-expand {
   text-align: left;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.page-heading {
+  background-color: #000 !important;
+  color: #ccc;
+  width: 100%;
+}
+
+.page-heading .title {
+  font-size: 18px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: bold;  
+  text-rendering: optimizeLegibility;   
+  color: #ccc !important;
 }
 
 .speed-data {

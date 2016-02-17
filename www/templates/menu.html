@@ -1,4 +1,4 @@
-<ion-side-menus>
+<ion-side-menus enable-menu-with-back-views="true">
   <ion-pane ion-side-menu-content drag-content="false">
     <ion-nav-bar class="bar-stable nav-title-slide-ios7">
       <ion-nav-back-button class="button-clear"><i class="icon ion-arrow-left-c"></i> Back</ion-nav-back-button>
@@ -6,20 +6,17 @@
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-pane>
 
-  <ion-side-menu side="left" class="sideMenu">
-    <header class="bar bar-header bar-stable">
+  <ion-side-menu side="left" class="sideMenu" title="test">
+    <ion-header-bar class="page-heading">
       <h1 class="title">Menu</h1>
-    </header>
+    </ion-header-bar>
+
     <ion-content class="has-header" style="overflow: hidden;">
       <div id="side-menu">
         <br />
         <ion-list>
           <ion-item nav-clear menu-close href="#/app/home" class="menuEntries">
             <i class="icon ion-home button-energized"></i> Home
-          </ion-item>
-
-          <ion-item nav-clear menu-close href="#/app/about">
-            <i class="icon ion-music-note"></i> Music
           </ion-item>
 
           <ion-item nav-clear menu-close href="#/app/reference">

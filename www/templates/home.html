@@ -1,6 +1,6 @@
-<ion-view title="{{currentDate}}" cache-view="false" align-title="center">
-  <ion-nav-bar class="bar-dark">
-    <ion-nav-buttons side="left" class="bar bar-header bar-assertive">
+<ion-view title="{{currentDate}}" align-title="center">
+  <ion-nav-bar class="page-heading">
+    <ion-nav-buttons side="left" class="bar bar-header">
       <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
     </ion-nav-buttons>
   </ion-nav-bar> 
@@ -18,7 +18,7 @@
     <!-- Start the music control column -->
     <div class="col-66 pad-column">  
       <div class="card" ng-if="currentlyPlaying">
-        <div class="item item-divider bar bar-header bar-dark headingText" >
+        <div class="item item-divider page-heading bar-header page-heading headingText" >
              Now Playing: 
              {{currentlyPlaying.name}} - {{currentlyPlaying.playTime.formatted}} / {{currentlyPlaying.duration.formatted}}
         </div>
@@ -72,7 +72,7 @@
       </div>
 
       <div class="card">
-        <div class="item item-divider bar bar-header bar-dark headingText" >
+        <div class="item item-divider page-heading bar-header page-heading headingText" >
             MPD Status: {{mpdStatus}} {{protocolVersion}}
         </div>
 
