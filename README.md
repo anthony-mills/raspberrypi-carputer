@@ -14,6 +14,10 @@ The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli
 * From the command line run the start.sh script to start a and instance of the internal PHP webserver on port 8000.
 * Open Chrome or Chromium and visit the location localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Offical touchscreen in mind i.e 800x600.
 
+# No GPS
+
+GPS functionality can be tested without a GPS fix or even a GPS device. To enable testing mode edit line 24 of php/gps.php and change the value of the $testmode to a zero ( it would be more intuitive the other way around this script comes directly from the GPSD project in its current iteration though ). Editing the test JSON object starting at line 52 can also be useful when trying to test functionality for a specific location.
+
 # Credits
 
 This project makes the use of a number of third party Open Source libraries. You are all fantastic thank you for all your hardwork its much appreciated!

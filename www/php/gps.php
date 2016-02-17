@@ -21,7 +21,7 @@
 
 global $head, $blurb, $title, $showmap, $autorefresh, $footer, $gmap_key;
 global $server, $advertise, $port, $open, $swap_ew, $testmode;
-$testmode = 0; # leave this set to 1
+$testmode = 1; # leave this set to 1
 
 # Public script parameters:
 #   host: host name or address where GPSd runs. Default: from config file

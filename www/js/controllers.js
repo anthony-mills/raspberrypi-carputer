@@ -484,12 +484,16 @@ angular.module('landcruiser.controllers', [])
 .controller('WeatherCtrl', function($scope, weatherAssist) {
   $weatherConditions = null;
 
-  var gpsData = JSON.parse(window.localStorage['gps_data']);
+  var gpsData = window.localStorage['gps_data'];
 
-  if (gpsData.latitude && gpsData.longitude) {
-    $scope.weatherData = weatherAssist.getForecast( gpsData.latitude, gpsData.longitude );
+  if (gpsData) {
+    var gpsData = JSON.parse( gpsData );
+    
+    if (gpsData.latitude && gpsData.longitude) {
+      $scope.weatherData = weatherAssist.getForecast( gpsData.latitude, gpsData.longitude );
 
-    console.log($scope.weatherData);
+      console.log($scope.weatherData);
+    }
   }
 })
 
