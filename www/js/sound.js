@@ -95,7 +95,7 @@ angular.module('landcruiser.sound', [])
 	/**
 	* Find the album art for an artist
 	*
-	* param string artistName
+	* @param string artistName
 	*/
 	function findAlbumArt( artistName, imageSize ) 
 	{	     	
@@ -347,6 +347,7 @@ angular.module('landcruiser.sound', [])
 
 	return {
 		checkConnection: function() {
+			
 			return checkConnection();
 		},
 	    formatSeconds: function( songDuration ) {
@@ -370,6 +371,7 @@ angular.module('landcruiser.sound', [])
 	    },
 
 	    getPlaying: function() {
+
 	    	return getPlaying();
 	    },
 

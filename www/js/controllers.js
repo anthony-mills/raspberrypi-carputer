@@ -25,6 +25,7 @@ angular.module('landcruiser.controllers', [])
   $scope.mpdStatus = "Not connected";
   $scope.currentlyPlaying = false;
   $scope.playState = mpdClient.getPlaystate();
+
   var playbackSettings = window.localStorage['playback_settings'];
 
   if (!playbackSettings) {
@@ -335,8 +336,7 @@ angular.module('landcruiser.controllers', [])
       for (var i in obj) if (obj.hasOwnProperty(i)) return false;
       return true;
   };
-
-  
+ 
 })
 
 /**
@@ -465,7 +465,6 @@ angular.module('landcruiser.controllers', [])
       }
     }
 
-
   });
 
   $scope.loadPlaylist = function(playlistPath) {
@@ -478,7 +477,7 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
-* Manage the weather 
+* Manage the weather forecast
 */
 .controller('WeatherCtrl', function($scope, weatherAssist) {
   $weatherConditions = null;
@@ -490,8 +489,6 @@ angular.module('landcruiser.controllers', [])
     
     if (gpsData.latitude && gpsData.longitude) {
       $scope.weatherData = weatherAssist.getForecast( gpsData.latitude, gpsData.longitude );
-
-      console.log($scope.weatherData);
     }
   }
 })

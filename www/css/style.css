@@ -16,21 +16,6 @@
 }
 
 /* End Navigation related styles */ 
-.navItem {
-	min-height: 78px;	
-    background-color: white;
-    border-bottom: 1px solid #ddd;    
-    padding: 2px 15px 2px 15px;
-    position: relative;
-    z-index: 2;
-}
-
-a.navItem {
-    color: inherit;
-    display: block;
-    text-decoration: none;
-}
-
 .headingImage {
 	float: right;
 	width: 150px;
@@ -112,16 +97,6 @@ a.navItemSmall {
 .sideMenu {
 	background-color: #000;
 	border-right: 2px #000 solid;
-}
-
-.tableContainer {
-  margin: 10px 5px 10px 5px;
-  text-align: center;
-}
-
-.tableCell {
-  padding: 15px 5px 15px 5px;
-  border-bottom: solid 1px #ccc;
 }
 
 .contentDivider {
