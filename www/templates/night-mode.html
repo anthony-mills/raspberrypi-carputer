@@ -6,7 +6,8 @@
 
       <div class="item item-text-wrap">
         <div class="gps-status">
-          GPS Status: {{gpsData.status}}
+          <strong>Heading:</strong> {{gpsData.heading}} <br/>
+          <strong>Altitude:</strong> {{gpsData.altitude}}
         </div>
 
         <div class="row speed-info">
@@ -36,36 +37,14 @@
                 <span ng-else class="speed-unit">
                     km/h
                 </span>
-
-                <br />
-                <br />
             </div>
 
           </div>
-        </div>
+        </div> 
 
-        <div class="row">
-
-          <div class="col-10 pad-column"></div>
-
-          <div class="col-40 pad-column">
-            <div class="gps-data">
-                <strong>Heading:</strong>
-
-                {{gpsData.heading}}
-            </div>
-          </div>
-
-          <div class="col-40 pad-column">          
-            <div class="gps-data">        
-                <strong>Altitude:</strong>
-
-                {{gpsData.altitude}}
-            </div>
-          </div>
-
-          <div class="col-10 pad-column"></div>          
-      </div>  
+        <div class="gps-status">
+          GPS Status: {{gpsData.status}} <br/>
+        </div>        
 
       <div align="center" class="exit-night">
         <button ng-click="goHome()" class="button button-dark icon-left ion-ios-home">Back</button>
