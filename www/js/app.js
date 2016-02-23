@@ -13,7 +13,9 @@ angular.module(
                   'weatherAssist',
                   'elif',
                   'ImgCache',
-                  'angular-growl'
+                  'angular-growl',
+                  'nemLogging',
+                  'uiGmapgoogle-maps'
                 ]
               )
 
@@ -26,6 +28,7 @@ angular.module(
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, ImgCacheProvider, growlProvider) {
   $stateProvider
 
+    // Handler for the side menu
     .state('app', {
       url: '/app',
       abstract: true,
@@ -33,6 +36,7 @@ angular.module(
       controller: 'AppCtrl'
     })
 
+    // Default application home page
     .state('app.home', {
       url: '/home',
       views: {
@@ -44,6 +48,7 @@ angular.module(
       cache: false
     })
 
+    // Navigation the MPD filesystem
     .state('app.files', {
       url: '/music-files/:param1',
       views: {
@@ -55,6 +60,7 @@ angular.module(
       cache: false      
     })
 
+    // Switch to darkened "night mode" view
     .state('app.night', {
       url: '/night-mode',
       views: {
@@ -66,6 +72,7 @@ angular.module(
       cache: false      
     })
 
+    // List the predefined MPD playlists
     .state('app.playlists', {
       url: '/playlists',
       views: {
@@ -77,6 +84,7 @@ angular.module(
       cache: false      
     })
 
+    // Show the current play queue
     .state('app.current-queue', {
       url: '/current-queue',
       views: {
@@ -88,6 +96,7 @@ angular.module(
       cache: false
     })
 
+    // Get a weather forecast for the current location
     .state('app.weather', {
       url: '/weather',
       views: {
@@ -98,6 +107,18 @@ angular.module(
       }
     })
 
+    // Show the current location of the car
+    .state('app.location', {
+      url: '/car-location',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/car-location.html',
+          controller: 'LocationCtrl'
+        }
+      }
+    })
+
+    // Reference materials page
     .state('app.reference', {
       url: '/reference',
       views: {
@@ -111,19 +132,12 @@ angular.module(
   // Default route (used as a fallback should the request not match any of the defined routes)
   $urlRouterProvider.otherwise('/app/home');
 
-  // set single options
-  ImgCacheProvider.setOption('debug', true);
-  ImgCacheProvider.setOption('usePersistentCache', true);
-
-  // or more options at once
+  // Set options for the ImgCache module
   ImgCacheProvider.setOptions({
       debug: true,
       usePersistentCache: true
   });
 
-  // ImgCache library is initialized automatically,
-  // but set this option if you are using platform like Ionic -
-  // in this case we need init imgcache.js manually after device is ready
   ImgCacheProvider.manualInit = true;  
 
   /**

@@ -494,6 +494,34 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
+* Display the car location
+*/
+.controller('LocationCtrl', function($scope, weatherAssist) {
+  $scope.areaMap = null;
+
+  var gpsData = window.localStorage['gps_data'];
+
+  if (gpsData) {
+    var gpsData = JSON.parse( gpsData );
+    
+    if (gpsData.latitude && gpsData.longitude) {
+      $scope.markerLocation = {
+        latitude: gpsData.latitude,
+        longitude: gpsData.longitude            
+      };
+
+      $scope.areaMap = {
+          center: {
+              latitude: gpsData.latitude,
+              longitude: gpsData.longitude
+          },
+          zoom: 16
+      };        
+    }
+  }
+})
+
+/*
 * Static page with external links out of the application 
 * to static resource files.
 */

@@ -1,0 +1,45 @@
+<ion-view title="{{currentDate}}" cache-view="false" align-title="center">
+  <ion-nav-bar class="page-heading">
+    <ion-nav-buttons side="left" class="bar bar-header">
+      <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
+    </ion-nav-buttons>
+  </ion-nav-bar> 
+
+  <ion-content class="has-header bodyElement paneBackground">
+
+    <!-- Start the parent content container -->
+    <div class="row">
+      <!-- Start the speed and location column -->   
+      <div class="col-33 pad-column">
+        <ng-include src="'/templates/location.html'"></ng-include>
+      </div>
+      <!-- End the speed and location column -->
+
+      <div class="col-66 pad-column">    
+
+        <div ng-if="areaMap" class="card">
+          <div class="item item-divider bar bar-header page-heading headingText" >
+                Current Location
+          </div>
+
+          <div class="item item-text-wrap">
+            <google-map center="areaMap.center" zoom="areaMap.zoom">
+              <marker idKey="presentLocation" coords="markerLocation"></marker>
+            </google-map>            
+          </div>
+        </div>
+
+        <div class="card" ng-else>
+            <div class="item item-divider bar bar-header page-heading headingText" >
+                Error!
+            </div>
+
+            <div class="item item-text-wrap">
+              No GPS data, cannot locate the car.
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
