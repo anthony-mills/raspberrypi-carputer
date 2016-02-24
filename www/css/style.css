@@ -106,8 +106,6 @@ a.navItemSmall {
   border-bottom: solid 1px #ccc;
 }
 
-
-
 textarea {
   -webkit-appearance:none;
   background-repeat: no-repeat;
@@ -223,6 +221,10 @@ select::-ms-expand {
 
 .convertedValue {
   padding: 10px 0px 10px 0px;
+}
+
+.angular-google-map-container { 
+  height: 300px; 
 }
 
 .resultHeading {

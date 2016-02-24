@@ -505,18 +505,16 @@ angular.module('landcruiser.controllers', [])
     var gpsData = JSON.parse( gpsData );
     
     if (gpsData.latitude && gpsData.longitude) {
-      $scope.markerLocation = {
-        latitude: gpsData.latitude,
-        longitude: gpsData.longitude            
-      };
 
       $scope.areaMap = {
           center: {
               latitude: gpsData.latitude,
               longitude: gpsData.longitude
           },
-          zoom: 16
-      };        
+          zoom: 16,
+          id: 0
+      }; 
+       
     }
   }
 })
