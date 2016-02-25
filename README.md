@@ -33,7 +33,7 @@ This project makes the use of a number of third party Open Source libraries. You
 
 # Screenshots
 
-![Home screen while travelling at 54kph and playing music](/screenshots/home_playing_screen.png?raw=true "Home Screen")
+![Home screen while travelling at 54kph and playing music](/screenshots/home_screen_playing.png?raw=true "Home Screen")
 
 ![Browsing the music collection stored on the filesystem](/screenshots/music_files.png?raw=true "Music Files")
 
