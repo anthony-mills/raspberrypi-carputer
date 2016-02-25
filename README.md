@@ -20,7 +20,7 @@ GPS functionality can be tested without a GPS fix or even a GPS device. To enabl
 
 # Credits
 
-This project makes the use of a number of third party Open Source libraries. You are all fantastic thank you for all your hardwork its much appreciated!
+This project makes the use of a number of third party Open Source libraries. You are all fantastic! Thank you for all your hardwork its much appreciated!
 
 * [Ionic Framework](https://github.com/driftyco/ionic)
 * [ng-elif](https://github.com/zachsnow/ng-elif)
@@ -30,6 +30,16 @@ This project makes the use of a number of third party Open Source libraries. You
 * [websockify](https://github.com/kanaka/websockify)
 * [mpd](http://www.catb.org/gpsd/)
 * [gpsd](http://www.musicpd.org/)
+
+# Screenshots
+
+![Home screen while travelling at 54kph and playing music](/screenshots/home_playing_screen.png?raw=true "Home Screen")
+
+![Browsing the music collection stored on the filesystem](/screenshots/music_files.png?raw=true "Music Files")
+
+![Displaying the current location of a car using Google Maps](/screenshots/car_location.png?raw=true "Car location")
+
+![Interacting with the current music play queue](/screenshots/play_queue.png?raw=true "Play Queue")
 
 # Licence
 
