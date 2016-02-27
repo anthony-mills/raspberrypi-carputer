@@ -3,7 +3,7 @@ angular.module('weatherAssist', [])
 /**
  * Service providing playback and mpd queue functionality 
  */
-.factory('weatherAssist', function($http, $log, $rootScope, $interval) {
+.factory('weatherAssist', function($http, $log, $rootScope) {
 	
 	/**
 	* Get the weather forecast for an area
@@ -23,7 +23,14 @@ angular.module('weatherAssist', [])
 			var weatherRequest = getWeatherCall('http://localhost:8000/php/services.php?action=weather-forecast&location=' + latitude + ',' + longitude);
 
 			weatherRequest.then(function(resultSet) {
-				if (typeof resultSet.data.forecasts != undefined) {
+
+				// Check first for an error message
+				if ( resultSet.data.Message != undefined ) {
+					console.error('Weather API Error: ' + resultSet.data.Message);
+					return;
+				}
+
+				if ( typeof resultSet.data.dailyForecasts.forecastLocation != undefined ) {
 
 					var weatherForecast = {
 										'location'	: {
@@ -36,27 +43,15 @@ angular.module('weatherAssist', [])
 										'created'	: Date.now()
 									}
 
-					window.localStorage['weather_forecast'] = JSON.stringify( weatherForecast );								
+					window.localStorage['weather_forecast'] = JSON.stringify( weatherForecast );		
+
+					return weatherForecast;						
 				}
 
-				return weatherForecast;
 			});
 		} else {
 			return weatherData;
 		}
-	}
-
-	/*
-	* Parse 
-	*
-	* @param string dataEndpoint
-	*/
-	function getWeatherCall(dataEndpoint) {
-
-	   	return $http({
-	   	  	method: 'GET',
-	   	  	url: dataEndpoint
-	   	})	
 	}
 
 	/**
@@ -64,7 +59,7 @@ angular.module('weatherAssist', [])
 	*
 	* @param string dataEndpoint
 	*/
-	function getWeatherData(dataEndpoint) {
+	function getWeatherCall(dataEndpoint) {
 
 	   	return $http({
 	   	  	method: 'GET',
