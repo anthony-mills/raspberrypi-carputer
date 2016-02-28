@@ -24,6 +24,7 @@ angular.module('landcruiser.controllers', [])
 
   $scope.mpdStatus = "Not connected";
   $scope.currentlyPlaying = false;
+  $scope.currentDate = '';
   $scope.playState = mpdClient.getPlaystate();
 
   var playbackSettings = window.localStorage['playback_settings'];
@@ -49,7 +50,10 @@ angular.module('landcruiser.controllers', [])
   }
 
   $scope.checkConnection = $interval(function() {
+    $scope.getTime();
+
     var mpdState = mpdClient.getState();    
+
     $scope.playState = mpdClient.getPlaystate();
 
     if (mpdState.connected) {
@@ -92,8 +96,6 @@ angular.module('landcruiser.controllers', [])
     } else {
       $scope.mpdStatus = "Not connected";
     }
-
-    $scope.getTime();
   }, 1000);
 
   $scope.getTime = function formatAMPM() {

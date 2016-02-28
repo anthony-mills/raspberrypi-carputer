@@ -1,0 +1,19 @@
+/**
+*
+* Styles related to sound and music playback functionality
+*
+*/
+
+.song-album {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.now-playing-image {
+  padding: 20px;
+}
+
+.track-play-time {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}

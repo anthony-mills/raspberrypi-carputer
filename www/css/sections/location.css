@@ -1,0 +1,67 @@
+/**
+* Styles relating to the location / speed and "night mode" functionality
+*/
+
+.angular-google-map-container { 
+  height: 300px; 
+}
+
+.gps-data {
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.speed-data {
+  padding-top: 10px;
+  font-size: 40px;
+  font-family: "Audiowide", Helvetica, Arial, "Lucida Grande", sans-serif;
+  text-align: center;
+}
+
+.speed-data .current-speed {
+  font-size: 70px;
+}
+
+.speed-data .speed-unit {
+  font-size: 20px;
+}
+
+.night-speed-limit {
+  font-size: 15px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+.warn-speed {
+  color: #FC1745;
+}
+
+/* Start style definitions related to night mode */
+
+.night-mode-theme {
+  background-color: #000;
+  padding-left:10px;
+  color: #ccc;
+}
+
+.night-mode-theme .item{
+  background-color: #000;
+  padding-left:10px;
+  color: #ccc;
+}
+
+.night-mode-theme .speed-data .current-speed {
+  font-size: 150px;
+  padding-bottom: 60px;
+}
+
+.night-mode-theme .gps-status{
+  background-color: #000;
+  text-align: center;
+}
+
+.night-mode-theme .exit-night {
+  padding-top: 30px;
+}
+
+/* End night mode related styles */

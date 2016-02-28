@@ -1,4 +1,9 @@
-/* Empty. Add your own CSS if you like */
+/* Styles related to sound and music playback functionality */
+@import 'sections/sound.css';
+
+/* Styles related to location, speed and the "night mode" UI */
+@import 'sections/location.css';
+
 @font-face {
   font-family: 'Audiowide';
   font-style: normal;
@@ -7,21 +12,12 @@
        url('/css/fonts/audiowide.ttf') format('truetype');;
 }
 
-.bodyElement {
+.body-element {
 	background-color: #FFF;
 }
 
 .textContent {
 	padding: 10px;
-}
-
-/* End Navigation related styles */ 
-.headingImage {
-	float: right;
-	width: 150px;
-	height: 150px;
-	margin: 2px;
-	border: 1px #000 solid;
 }
 
 .heading-text {
@@ -43,22 +39,9 @@
 
 /*--- End heading bar related styles ---*/
 
-.song-album {
-  font-style: italic;
-  font-weight: bold;
-}
-
-.now-playing-image {
-  padding: 20px;
-}
-
-.track-play-time {
-  padding-top: 10px;
-  padding-bottom: 20px;
-}
 
 /* End Navigation related styles */ 
-.paneBackground {
+.pane-background {
 	background: url('../img/background.jpg') no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -78,20 +61,11 @@
 	border-right: 2px #000 solid;
 }
 
-.angular-google-map-container { 
-  height: 300px; 
-}
-
 .pad-column {
   padding-left: 10px;
   padding-right: 10px;
 }
 
-.gps-data {
-  text-align: left;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
 
 .page-heading {
   background-color: #000 !important;
@@ -105,54 +79,4 @@
   font-weight: bold;  
   text-rendering: optimizeLegibility;   
   color: #ccc !important;
-}
-
-.speed-data {
-  padding-top: 10px;
-  font-size: 40px;
-  font-family: "Audiowide", Helvetica, Arial, "Lucida Grande", sans-serif;
-  text-align: center;
-}
-
-.speed-data .current-speed {
-  font-size: 70px;
-}
-
-.speed-data .speed-unit {
-  font-size: 20px;
-}
-
-.night-speed-limit {
-  font-size: 15px;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
-
-.warn-speed {
-  color: #FC1745;
-}
-
-.night-mode-theme {
-  background-color: #000;
-  padding-left:10px;
-  color: #ccc;
-}
-
-.night-mode-theme .item{
-  background-color: #000;
-  padding-left:10px;
-  color: #ccc;
-}
-
-.night-mode-theme .speed-data .current-speed {
-  font-size: 150px;
-  padding-bottom: 60px;
-}
-
-.night-mode-theme .gps-status{
-  background-color: #000;
-  text-align: center;
-}
-
-.night-mode-theme .exit-night {
-  padding-top: 30px;
 }
