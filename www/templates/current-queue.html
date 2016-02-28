@@ -18,8 +18,8 @@
       <!-- Start the music control column -->
       <div class="col-66">
         <div class="card">
-          <div class="item item-divider page-heading bar-header page-heading barHeading" >
-            <span class="barHeadingText">Current Play Queue: {{playlistCount}} Songs</span>
+          <div class="item item-divider page-heading bar-header page-heading heading-text" >
+            Current Play Queue: {{playlistCount}} Songs
           </div>
 
           <div class="button-bar">
@@ -55,6 +55,9 @@
                             <h2>{{::playlistItem.name}}</h2>
                             <h3>{{::playlistItem.artist}}</h3>
                         
+                            <h3 ng-if="playlistItem.album">
+                              {{::playlistItem.album}}
+                            </h3>
                           </div>
 
                           <div ng-else>{{::playlistItem.name}}</div>

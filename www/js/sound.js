@@ -32,7 +32,7 @@ angular.module('landcruiser.sound', [])
 		if (currentSong) {
 			var songArtist = currentSong.getArtist();
 			var albumArt = findAlbumArt(songArtist, 'feature');
-
+			var trackMetadata = currentSong.getMetadata()
 			var songObj = {
 	            'id' :  currentSong.getId(),
 	            'name' :  currentSong.getDisplayName(),
@@ -46,6 +46,7 @@ angular.module('landcruiser.sound', [])
 	            			},    				
 	            'artist' : songArtist,
 	            'album' : currentSong.getAlbum(),
+	            'year' : trackMetadata.date,
 	            'image' : albumArt,
 				'next' : false,
 				'paused' : 0

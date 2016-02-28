@@ -24,7 +24,7 @@
 	border: 1px #000 solid;
 }
 
-.headingText {
+.heading-text {
   padding-top: 10px;
   padding-bottom: 10px;  
 	font-size: 20px;
@@ -35,50 +35,29 @@
 }
 
 /*--- Start heading bar related styles ---*/
-.barHeading {
+.bar-heading {
   padding-top: 10px;
   padding-bottom: 10px;
   height: 55px;     
 }
 
-.barHeadingText {
-  padding-top: 10px;
-  font-size: 20px;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  color: #ccc;  
-  font-weight: bold;  
-  line-height: 35px;
-  text-rendering: optimizeLegibility;     
-}
-
 /*--- End heading bar related styles ---*/
 
-.playlistTitle {
-  line-height: 35px;
+.song-album {
+  font-style: italic;
+  font-weight: bold;
 }
 
-.navItemSmall {
-	min-height: 78px;	
-    background-color: white;
-    border-bottom: 1px solid #ddd;    
-    padding: 2px 15px 2px 15px;
-    position: relative;
-    z-index: 2;
+.now-playing-image {
+  padding: 20px;
 }
 
-a.navItemSmall {
-    color: inherit;
-    display: block;
-    text-decoration: none;
+.track-play-time {
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 
 /* End Navigation related styles */ 
-
-.formErrorMsg {
-	color: red;
-	text-align: center;
-}
-
 .paneBackground {
 	background: url('../img/background.jpg') no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -94,147 +73,13 @@ a.navItemSmall {
   color: red !important;
 }
 
-.sideMenu {
+.side-menu {
 	background-color: #000;
 	border-right: 2px #000 solid;
 }
 
-.contentDivider {
-  text-align: center;
-  margin: 10px 5px 10px 5px;
-  padding-bottom: 10px;
-  border-bottom: solid 1px #ccc;
-}
-
-textarea {
-  -webkit-appearance:none;
-  background-repeat: no-repeat;
-  background-color: rgba(0,0,0,0);  
-  border:thin solid #dddddd;
-  font-weight:300;
-  display:inline;
-  vertical-align:middle;
-  color:#333;
-  box-sizing:border-box; 
-  width:89%;
-  height: 75px;
-  font-size:1.4rem;
-  padding:1.2rem 0;
-  text-align: center;
-}
-
-input[type=text] {
-  -webkit-appearance:none;
-  background-repeat: no-repeat;
-  background-color: rgba(0,0,0,0);  
-  border:thin solid #dddddd;
-  font-weight:300;
-  display:inline;
-  vertical-align:middle;
-  color:#333;
-  box-sizing:border-box; 
-  width:89%;
-  height: 75px;
-  font-size:1.4rem;
-  padding:1.2rem 0;
-  text-align: center;
-}
-
-input[type=number] {
-  -webkit-appearance:none;
-  background-repeat: no-repeat;
-  background-color: rgba(0,0,0,0);  
-  border:thin solid #dddddd;
-  font-weight:300;
-  display:inline;
-  vertical-align:middle;
-  color:#333;
-  box-sizing:border-box; 
-  width:89%;
-  height: 75px;
-  font-size:1.4rem;
-  padding:1.2rem 0;
-  text-align: center;
-}
-
-select {
-  -webkit-appearance:none;
-  background-repeat: no-repeat;
-  background-color: rgba(0,0,0,0);  
-  border:thin solid #dddddd;
-  font-weight:300;
-  display:inline;
-  vertical-align:middle;
-  color:#333;
-  padding: auto 0;
-  overflow:hidden;
-  box-sizing:border-box;
-  text-align: center !important;
-}
-
-.formContainer {
-  text-align: center;
-}
-
-.formInput {  
-  width:90%;
-  font-size:1.4rem;
-  padding:1.2rem 0;
-  text-align: center !important;
-  padding-left: 5px;
-  padding-right: 55px;
-
-}
-
-input[type=radio] { 
-  width:90%;
-  font-size:1.4rem;
-  padding:1.2rem 0;
-  text-align: center;
-}
-
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 10px; 
-}
-
-.formLabel {
-  text-align: left;
-  padding-left: 6%;
-  padding-bottom: 5px;
-}
-
-ion-input-select
-
-option {
-  color: #008c4a;
-  background:#ffd600;
-}
-
-select::-ms-expand {
-    display: none;
-}
-
-:focus {
-  outline
-}
-
-.convertedValue {
-  padding: 10px 0px 10px 0px;
-}
-
 .angular-google-map-container { 
   height: 300px; 
-}
-
-.resultHeading {
-  text-align: right !important;
-  padding-right: 5px;
-}
-
-.now-playing-image {
-  text-align: center; 
-  padding-top: 20px;
 }
 
 .pad-column {
@@ -286,28 +131,28 @@ select::-ms-expand {
   color: #FC1745;
 }
 
-.nightMode {
+.night-mode-theme {
   background-color: #000;
   padding-left:10px;
   color: #ccc;
 }
 
-.nightMode .item{
+.night-mode-theme .item{
   background-color: #000;
   padding-left:10px;
   color: #ccc;
 }
 
-.nightMode .speed-data .current-speed {
+.night-mode-theme .speed-data .current-speed {
   font-size: 150px;
   padding-bottom: 60px;
 }
 
-.nightMode .gps-status{
+.night-mode-theme .gps-status{
   background-color: #000;
   text-align: center;
 }
 
-.nightMode .exit-night {
+.night-mode-theme .exit-night {
   padding-top: 30px;
 }

@@ -18,35 +18,39 @@
     <!-- Start the music control column -->
     <div class="col-66 pad-column">  
       <div class="card" ng-if="currentlyPlaying">
-        <div class="item item-divider page-heading bar-header page-heading headingText" >
+        <div class="item item-divider page-heading bar-header page-heading heading-text" >
              Now Playing: 
              {{currentlyPlaying.name}} - {{currentlyPlaying.playTime.formatted}} / {{currentlyPlaying.duration.formatted}}
         </div>
 
         <div class="row">
-          <div class="col-33">
-            <div class="now-playing-image">
-              <img img-cache ic-src="{{currentlyPlaying.image}}">
-            </div>
+          <div class="col-40">
+            <img class="now-playing-image" img-cache ic-src="{{currentlyPlaying.image}}">
           </div>
 
-          <div class="col-66"> 
+          <div class="col-60"> 
 
             <div ng-if="currentlyPlaying.artist">
               <h2>{{currentlyPlaying.name}}</h2>
-              <h3>{{currentlyPlaying.artist}}</h3>
-          
+              <strong>{{currentlyPlaying.artist}}</strong>
+
+              <br />
+
+              <span class="song-album" ng-if="currentlyPlaying.album">
+                {{currentlyPlaying.album}}
+                <span ng-if="currentlyPlaying.year">
+                  ( {{currentlyPlaying.year}} )
+                </span>
+              </span>          
             </div>
 
             <div ng-else>{{currentlyPlaying.name}}</div>
 
-            <br />
+            <div class="track-play-time">
+              Now Playing: 
+              {{currentlyPlaying.playTime.formatted}} / {{currentlyPlaying.duration.formatted}}
+            </div>
 
-            Now Playing: 
-            {{currentlyPlaying.playTime.formatted}} / {{currentlyPlaying.duration.formatted}}
-
-            <br />
-            <br />
             <div ng-if="currentlyPlaying.next">
               <strong>Next Up:</strong> 
               <br />
@@ -72,7 +76,7 @@
       </div>
 
       <div class="card">
-        <div class="item item-divider page-heading bar-header page-heading headingText" >
+        <div class="item item-divider page-heading bar-header page-heading heading-text" >
             MPD Status: {{mpdStatus}} {{protocolVersion}}
         </div>
 

@@ -44,8 +44,6 @@ angular.module('landcruiser.controllers', [])
     $scope.consumePlayback = playbackSettings.consume;
   }
 
-  console.log('Current playstate: ' + $scope.playState);
-
   $scope.playQueue = function() {
     mpdClient.play();
   }
@@ -76,7 +74,7 @@ angular.module('landcruiser.controllers', [])
           if ( ( $scope.playState === 'play' ) && ( nowPlaying.playTime.raw > 0) && (nowPlaying.playTime.raw < nowPlaying.duration.raw)) {
             nowPlaying.playTime.raw++;
             nowPlaying.playTime.formatted = mpdAssist.formatSeconds( nowPlaying.playTime.raw );
-
+            console.log(nowPlaying);
             $scope.currentlyPlaying = nowPlaying;
           } else if ( ( $scope.playState === 'play' ) && ($scope.currentlyPlaying.playTime.formatted === $scope.currentlyPlaying.duration.formatted)) {
 
@@ -108,7 +106,11 @@ angular.module('landcruiser.controllers', [])
 
     var monthDate = $scope.formatDate( d.getDate() );
 
-    $scope.currentDate = hours+':'+minutes+ampm + ' - ' + days[d.getDay()] + ' '+ monthDate + ' '+months[d.getMonth()]+' '+d.getFullYear();
+    $scope.currentDate = days[d.getDay()] + ' ' + 
+                          monthDate + ' ' + 
+                          months[d.getMonth()] + ' ' + 
+                          d.getFullYear() + ' - ' + 
+                          hours + ':' + minutes + ampm;
   }
 
   $scope.formatDate = function(number) {
