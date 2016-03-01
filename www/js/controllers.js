@@ -12,7 +12,7 @@ angular.module('landcruiser.controllers', [])
       }
       $scope.gpsData = gpsData;
     });
-  }, 2000);
+  }, 1000);
 })
 
 /**
@@ -500,27 +500,35 @@ angular.module('landcruiser.controllers', [])
 /*
 * Display the car location
 */
-.controller('LocationCtrl', function($scope, weatherAssist) {
+.controller('LocationCtrl', function($scope, $interval, weatherAssist) {
   $scope.areaMap = null;
 
-  var gpsData = window.localStorage['gps_data'];
+  $scope.updateLocation = function() {
+    var gpsData = window.localStorage['gps_data'];
 
-  if (gpsData) {
-    var gpsData = JSON.parse( gpsData );
-    
-    if (gpsData.latitude && gpsData.longitude) {
+    if (gpsData) {
+      var gpsData = JSON.parse( gpsData );
 
-      $scope.areaMap = {
-          center: {
-              latitude: gpsData.latitude,
-              longitude: gpsData.longitude
-          },
-          zoom: 16,
-          id: 0
-      }; 
-       
+      if (gpsData.latitude && gpsData.longitude) {
+
+        $scope.areaMap = {
+            center: {
+                latitude: gpsData.latitude,
+                longitude: gpsData.longitude
+            },
+            zoom: 16,
+            id: 0
+        }; 
+         
+      }
     }
   }
+
+  $interval(function() {
+    $scope.updateLocation();
+  }, 5000);
+
+  $scope.updateLocation();  
 })
 
 /*
