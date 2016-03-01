@@ -16,10 +16,6 @@
 	background-color: #FFF;
 }
 
-.textContent {
-	padding: 10px;
-}
-
 .heading-text {
   padding-top: 10px;
   padding-bottom: 10px;  
@@ -36,11 +32,8 @@
   padding-bottom: 10px;
   height: 55px;     
 }
-
 /*--- End heading bar related styles ---*/
 
-
-/* End Navigation related styles */ 
 .pane-background {
 	background: url('../img/background.jpg') no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -65,7 +58,6 @@
   padding-left: 10px;
   padding-right: 10px;
 }
-
 
 .page-heading {
   background-color: #000 !important;
