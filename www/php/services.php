@@ -70,7 +70,7 @@ class apiServices {
 	* @param string $curLatitude
 	*/
 	public function getWeather($curLongitude, $curLatitude) {
-		$apiUrl = '';
+		$apiUrl = 'https://weather.cit.api.here.com/weather/1.0/report.json?app_id=' . $this->_hereAppId . '&product=observation&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {

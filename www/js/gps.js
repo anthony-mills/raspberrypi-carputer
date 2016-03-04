@@ -90,8 +90,6 @@ angular.module('gpsAssist', [])
 					}
 				}
 
-				//console.log(gpsStatus);
-
 				return gpsStatus
 			});
 
