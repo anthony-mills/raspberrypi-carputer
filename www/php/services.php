@@ -35,6 +35,9 @@ switch ($requestedAction) {
 class apiServices {
 	protected $_hereAppId = 'MYAPPID';
 	protected $_hereAppCode = 'MYAPPCODE';	
+	protected $_baseWeatherAPI = 'https://weather.cit.api.here.com/weather/1.0/report.json';
+	protected $_baseSpeedAPI = 'http://route.st.nlp.nokia.com/routing/6.2/getlinkinfo.xml';
+
 	/**
 	* Get the speed limit for a particular location
 	*
@@ -47,7 +50,7 @@ class apiServices {
 			die('No location provided');
 		}
 
-		$apiUrl = 'http://route.st.nlp.nokia.com/routing/6.2/getlinkinfo.xml?app_id=' . $this->_hereAppId . '&app_code=' . $this->_hereAppCode . '&waypoint='.$currentLocation.'&linkattributes=all';
+		$apiUrl = $this->_baseSpeedAPI . '?app_id=' . $this->_hereAppId . '&app_code=' . $this->_hereAppCode . '&waypoint='.$currentLocation.'&linkattributes=all';
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {
@@ -70,7 +73,7 @@ class apiServices {
 	* @param string $curLatitude
 	*/
 	public function getWeather($curLongitude, $curLatitude) {
-		$apiUrl = 'https://weather.cit.api.here.com/weather/1.0/report.json?app_id=' . $this->_hereAppId . '&product=observation&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
+		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . '&product=observation&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {
@@ -85,7 +88,7 @@ class apiServices {
 	* @param string $curLatitude
 	*/
 	public function getForecast($curLongitude, $curLatitude) {
-		$apiUrl = 'https://weather.cit.api.here.com/weather/1.0/report.json?app_id=' . $this->_hereAppId . '&product=forecast_7days_simple&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
+		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . '&product=forecast_7days_simple&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {
