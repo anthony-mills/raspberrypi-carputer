@@ -25,6 +25,14 @@ angular.module(
   });
 })
 
+.run(function($rootScope, $location) {
+
+  // Global function for returning a user to the application home page  
+  $rootScope.goHome = function() {
+    $location.path('/');
+  };
+})
+
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, ImgCacheProvider, growlProvider) {
   $stateProvider
 

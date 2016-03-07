@@ -79,7 +79,13 @@
             </div>
 
             <div class="item item-text-wrap" ng-if="playlistCount === 0">
-              <p>No music is currently in the sound queue :-(</p>
+              <div class="no-playlists">
+                <p>No music is currently in the sound queue :-(</p>
+              </div>
+
+              <div class="button-bar">         
+                <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
+              </div>  
             </div>
           </div>
       </div>

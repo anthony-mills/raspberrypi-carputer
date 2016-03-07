@@ -214,7 +214,7 @@ angular.module('landcruiser.controllers', [])
     var playbackSettings = {
         'random' : $scope.randomPlayback,
         'consume' : $scope.consumePlayback
-      }
+    }
 
     window.localStorage['playback_settings'] = JSON.stringify(playbackSettings);     
   }
@@ -264,7 +264,7 @@ angular.module('landcruiser.controllers', [])
 /**
 * Browse and manage music files in the MPD servers filesystem
 */
-.controller('FilesCtrl', function( $scope, $state, $stateParams, $ionicHistory, $location, $timeout, growl, mpdAssist) {
+.controller('FilesCtrl', function( $scope, $state, $stateParams, $ionicHistory, $timeout, growl, mpdAssist) {
   $scope.mpdConn = mpdAssist.checkConnection();
   $scope.directoryContents = {};
   $scope.homeButton = 0;
@@ -272,11 +272,6 @@ angular.module('landcruiser.controllers', [])
   $scope.goBack = function() {
     $ionicHistory.goBack();
   };  
-
-  $scope.goHome = function () {
-    $location.path('/');
-  };
-
 
   $scope.formatPath = function (directoryPath) {
     return directoryPath.replace(/\//g, '<br />');
@@ -443,16 +438,14 @@ angular.module('landcruiser.controllers', [])
 * Night mode is a cutback interface with a a black back ground to minimise glare from the screen
 * when travelling at night.
 */
-.controller('NightModeCtrl', function( $scope, $location ) {
-  $scope.goHome = function () {
-    $location.path('/');
-  };
+.controller('NightModeCtrl', function( $scope ) {
+
 })
 
 /**
 * Show the playlists stored under MPD
 */
-.controller('PlaylistsCtrl', function( $scope, $location, growl, mpdAssist ) {
+.controller('PlaylistsCtrl', function( $scope, growl, mpdAssist ) {
   $scope.storedPlaylists = '';
   mpdClient.lsPlaylists();
   $scope.PlaylistData = mpdClient.getPlaylists();
@@ -469,10 +462,6 @@ angular.module('landcruiser.controllers', [])
       }
     }
   });
-
-  $scope.goHome = function () {
-    $location.path('/');
-  };
 
   $scope.loadPlaylist = function(playlistPath) {
     console.log("Adding playlist " + playlistPath + " to the play queue.");
