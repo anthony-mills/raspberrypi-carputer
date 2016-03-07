@@ -452,7 +452,7 @@ angular.module('landcruiser.controllers', [])
 /**
 * Show the playlists stored under MPD
 */
-.controller('PlaylistsCtrl', function( $scope, $interval, $timeout, $state, growl, mpdAssist ) {
+.controller('PlaylistsCtrl', function( $scope, $location, growl, mpdAssist ) {
   $scope.storedPlaylists = '';
   mpdClient.lsPlaylists();
   $scope.PlaylistData = mpdClient.getPlaylists();
@@ -468,8 +468,11 @@ angular.module('landcruiser.controllers', [])
         $scope.storedPlaylists = false;
       }
     }
-
   });
+
+  $scope.goHome = function () {
+    $location.path('/');
+  };
 
   $scope.loadPlaylist = function(playlistPath) {
     console.log("Adding playlist " + playlistPath + " to the play queue.");
