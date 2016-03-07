@@ -23,9 +23,15 @@
           </div>
 
           <div class="item item-text-wrap">
-            <ui-gmap-google-map center='areaMap.center' zoom='areaMap.zoom'>
-              <ui-gmap-marker coords="areaMap.center" idkey="areaMap.id">
-            </ui-gmap-google-map>          
+            <div class="col">
+              <ui-gmap-google-map center='areaMap.center' zoom='areaMap.zoom'>
+                <ui-gmap-marker coords="areaMap.center" idkey="areaMap.id">
+              </ui-gmap-google-map>    
+            </div>
+              
+            <div class="button-bar">         
+              <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
+            </div>             
           </div>
         </div>
 
@@ -35,8 +41,16 @@
             </div>
 
             <div class="item item-text-wrap">
-              No GPS data, cannot locate the car.
+              <div class="no-playlists">
+                <p>No GPS data, cannot locate the car.</p>
+              </div>
+
+
+              <div class="button-bar ">         
+                <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
+              </div>  
             </div>
+ 
         </div>
 
       </div>
