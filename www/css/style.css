@@ -45,10 +45,6 @@
   display: none;
 }
 
-.errorText {
-  color: red !important;
-}
-
 .side-menu {
 	background-color: #000;
 	border-right: 2px #000 solid;

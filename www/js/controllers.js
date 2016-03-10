@@ -76,9 +76,11 @@ angular.module('landcruiser.controllers', [])
           }
 
           if ( ( $scope.playState === 'play' ) && ( nowPlaying.playTime.raw > 0) && (nowPlaying.playTime.raw < nowPlaying.duration.raw)) {
+            
             nowPlaying.playTime.raw++;
+
             nowPlaying.playTime.formatted = mpdAssist.formatSeconds( nowPlaying.playTime.raw );
-            console.log(nowPlaying);
+
             $scope.currentlyPlaying = nowPlaying;
           } else if ( ( $scope.playState === 'play' ) && ($scope.currentlyPlaying.playTime.formatted === $scope.currentlyPlaying.duration.formatted)) {
 
@@ -103,8 +105,29 @@ angular.module('landcruiser.controllers', [])
         minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
         hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
         ampm = d.getHours() >= 12 ? 'pm' : 'am',
-        months = ['January','February','March','April','May','June','July','August','September','October','November','December'],
-        days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        months = [
+                    'January',
+                    'February',
+                    'March',
+                    'April',
+                    'May',
+                    'June',
+                    'July',
+                    'August',
+                    'September',
+                    'October',
+                    'November',
+                    'December'
+                  ],
+        days = [
+                  'Sunday',
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                  'Saturday'
+                ];
 
     var monthDate = $scope.formatDate( d.getDate() );
 
@@ -197,8 +220,8 @@ angular.module('landcruiser.controllers', [])
   * Change the random playback status
   *
   */
-  $scope.toggleRandom = function(status) {
-    if (status) {
+  $scope.toggleRandom = function(currentStatus) {
+    if (currentStatus) {
       mpdClient.enableRandomPlay();
 
       $scope.randomPlayback = true;
@@ -223,8 +246,8 @@ angular.module('landcruiser.controllers', [])
   * Change the consumption playback status
   *
   */
-  $scope.toggleConsumption = function(status) {
-    if (status) {
+  $scope.toggleConsumption = function(currentStatus) {
+    if (currentStatus) {
       mpdClient.enablePlayConsume();
 
       $scope.consumePlayback = true;
