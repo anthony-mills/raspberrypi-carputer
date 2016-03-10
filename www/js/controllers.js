@@ -314,7 +314,7 @@ angular.module('landcruiser.controllers', [])
   console.log('Getting path:' + basePath);
   $scope.dirData = mpdAssist.getDirectory(basePath);
 
-  $scope.$watch('dirData', function (dirData) {
+  $scope.$watch('dirData', function ( dirData ) {
     $scope.directoryContents = dirData;
   });
 
@@ -328,8 +328,9 @@ angular.module('landcruiser.controllers', [])
   /**
   * Add all of the files living under a playlist to the queue
   *
+  * @param dirPath
   */
-  $scope.addDirectory = function(dirPath) {
+  $scope.addDirectory = function( dirPath ) {
     var dirPath = decodeURIComponent(dirPath);
     var dirPath = dirPath.replace("@!@", "/");    
 
@@ -344,7 +345,7 @@ angular.module('landcruiser.controllers', [])
   *
   * @param integer songPath
   */
-  $scope.addSong = function(songPath) {
+  $scope.addSong = function( songPath ) {
     console.log('Added song to playlist: ' + songPath);
 
     growl.success("Song added to play queue");
@@ -353,9 +354,11 @@ angular.module('landcruiser.controllers', [])
 
   /**
   * Check if an object is empty
+  *
+  * @param object checkObj
   */
-  $scope.isEmpty = function (obj) {
-      for (var i in obj) if (obj.hasOwnProperty(i)) return false;
+  $scope.isEmpty = function ( checkObj ) {
+      for (var i in checkObj) if (checkObj.hasOwnProperty(i)) return false;
       return true;
   };
  
@@ -379,7 +382,7 @@ angular.module('landcruiser.controllers', [])
     }
   }
 
-  $scope.removePlaylistItem = function(itemId, playlistIndex) {
+  $scope.removePlaylistItem = function( itemId, playlistIndex ) {
     $scope.playlistSongs.splice(playlistIndex, 1);
     $scope.playlistCount--;
 
@@ -486,7 +489,7 @@ angular.module('landcruiser.controllers', [])
     }
   });
 
-  $scope.loadPlaylist = function(playlistPath) {
+  $scope.loadPlaylist = function( playlistPath ) {
     console.log("Adding playlist " + playlistPath + " to the play queue.");
 
     mpdClient.loadPlaylistIntoQueue(playlistPath);
@@ -513,7 +516,7 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
-* Display the car location
+* Display the current location of the car 
 */
 .controller('LocationCtrl', function($scope, $interval, weatherAssist) {
   $scope.areaMap = null;
@@ -551,9 +554,16 @@ angular.module('landcruiser.controllers', [])
 * to static resource files.
 */
 .controller('ReferenceCtrl', function($scope) {
-  $scope.openExtFile = function openExternal(externalLink) {
+
+  /**
+  * Open a file with the external system handler
+  *
+  * @param string externalLink
+  */
+  $scope.openExtFile = function openExternal( externalLink ) {
     window.open(externalLink, "_system");
 
     return false; 
   }
+
 })
