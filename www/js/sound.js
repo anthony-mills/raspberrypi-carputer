@@ -215,6 +215,8 @@ angular.module('landcruiser.sound', [])
 	* MPD filesystem
 	*
 	* @param string dirPath
+	* 
+	* @return object directoryPlaylists	
 	*/	
 	function getDirectoryPlaylists( dirPath )
 	{
@@ -239,7 +241,9 @@ angular.module('landcruiser.sound', [])
 				} 
 			});
     	});
+
 		console.log(directoryPlaylists);
+
 		return directoryPlaylists;
 	}
 
@@ -248,6 +252,8 @@ angular.module('landcruiser.sound', [])
 	* MPD filesystem
 	*
 	* @param string dirPath
+	* 
+	* @return object directoryContents
 	*/	
 	function getDirectory( dirPath )
 	{
