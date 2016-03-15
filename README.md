@@ -1,6 +1,6 @@
 # Raspberry Pi Car Computer 
 
-This repository is the UI component of a Raspberry Pi car computer setup. [Visit this blog post for more information on the project and building your own Raspberry Pi based "carputer".](https://www.development-cycle.com/2016/02/building-a-raspberry-pi-car-computer/)
+This repository is the UI component of a Raspberry Pi car computer set up. [Visit this blog post for more information on the project and building your own Raspberry Pi based "carputer".](https://www.development-cycle.com/2016/02/building-a-raspberry-pi-car-computer/)
 
 # Prerequisites
 The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So obviously to have the frontend work properly these two daemons must be installed and configured. Although for development and testing, a fake GPS data set can be activated to make things easier ( see below under "No GPS" for more details). 
@@ -12,11 +12,11 @@ The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli
 * Install all of the required dependencies.
 * Edit line 36 & 37 of www/php/services.php replacing the values with your application keys for the [Here.com API](https://developer.here.com/plans/api/consumer-mapping) - Required for speed limit and weather information.
 * From the command line run the start.sh script to start a and instance of the internal PHP webserver on port 8000.
-* Open Chrome or Chromium and visit the location localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Offical touchscreen in mind i.e 800x600.
+* Open Chrome or Chromium and visit localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Official touch screen in mind i.e 800x468.
 
-# Running with out GPS
+# Running with out a GPS device
 
-GPS functionality can be tested without a GPS fix or even a GPS device. To enable testing mode edit line 24 of php/gps.php and change the value of the $testmode to a zero ( it would be more intuitive the other way around this script comes directly from the GPSD project in its current iteration though ). Editing the test JSON object starting at line 52 can also be useful when trying to test functionality for a specific location.
+GPS functionality can be tested without a GPS fix or even a GPS device. To enable the GPS testing mode edit line 24 of php/gps.php and change the value of the $testmode to a zero ( it would be more intuitive the other way around this script comes directly from the GPSD project in its current iteration though ). Editing the test JSON object starting at line 52 can also be useful when trying to test functionality for a specific location.
 
 # Credits
 
@@ -30,6 +30,13 @@ This project makes the use of a number of third party Open Source libraries. You
 * [websockify](https://github.com/kanaka/websockify)
 * [mpd](http://www.catb.org/gpsd/)
 * [gpsd](http://www.musicpd.org/)
+
+# Immediate Roadmap
+
+In the near future the following features are planned:
+
+* Integrate the PHP code that talks to GPSD into the PHP service file. In its present form its very messy.
+* GPS trip meter adding the ability to log a cars journey
 
 # Screenshots
 
