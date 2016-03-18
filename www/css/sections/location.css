@@ -27,16 +27,16 @@
   font-size: 20px;
 }
 
-.night-speed-limit {
-  font-size: 15px;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
-
 .warn-speed {
   color: #FC1745;
 }
 
 /* Start style definitions related to night mode */
+
+.night-speed-limit {
+  font-size: 15px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
 
 .night-mode-theme {
   background-color: #000;
@@ -62,6 +62,13 @@
 
 .night-mode-theme .exit-night {
   padding-top: 30px;
+}
+
+.night-wrap {
+  padding: 0px;
+  background-color: #000 !important;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0)!important;
+  border-radius: 0px !important;
 }
 
 /* End night mode related styles */

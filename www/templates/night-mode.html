@@ -2,14 +2,9 @@
   <ion-content class="night-mode-theme">
 
     <!-- Start the parent content container -->
-    <div class="card">
+    <div class="card night-wrap">
 
       <div class="item item-text-wrap">
-        <div class="gps-status">
-          <strong>Heading:</strong> {{gpsData.heading}} <br/>
-          <strong>Altitude:</strong> {{gpsData.altitude}}
-        </div>
-
         <div class="row speed-info">
           <div class="col pad-column">
             <div class="speed-data">
@@ -43,7 +38,9 @@
         </div> 
 
         <div class="gps-status">
-          GPS Status: {{gpsData.status}} <br/>
+          <strong>GPS Status:</strong> {{gpsData.status}} <br/>
+          <strong>Heading:</strong> {{gpsData.heading}} <br/>
+          <strong>Altitude:</strong> {{gpsData.altitude}}
         </div>        
 
         <div align="center" class="button-bar exit-night">
