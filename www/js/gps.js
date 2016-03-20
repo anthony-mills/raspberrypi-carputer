@@ -6,6 +6,8 @@ angular.module('gpsAssist', [])
 .factory('gpsAssist', function($http, $log, $rootScope, $interval) {
 	/**
 	* Get data fromt the Gpsd service
+	*
+	* @return object 
 	*/
 	function startGPS() {
 		var getGps = getGpsData('http://localhost:8000/php/gps.php?op=json');
@@ -140,6 +142,8 @@ angular.module('gpsAssist', [])
 	* Convert a heading in degrees into a compass direction
 	*
 	* @param integer headingDegrees
+	*
+	* @return string $headingDegrees
 	*/
 	function convertBearing(headingDegrees)
 	{
@@ -218,6 +222,8 @@ angular.module('gpsAssist', [])
 	* Convert GPSD speeds from m/s to km/h
 	*
 	* @param gpsSpeed
+	*
+	* @return integer carSpeed
 	*/
 	function speedConversion( gpsSpeed )
 	{

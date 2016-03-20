@@ -10,6 +10,8 @@ angular.module('weatherAssist', [])
 	*
 	* @param integer latitude
 	* @param integer longitude
+	* 
+	* @return object
 	*/
 	function getForecast(latitude, longitude) {
 		var weatherData = window.localStorage['weather_forecast'];

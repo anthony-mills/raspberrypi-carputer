@@ -23,7 +23,8 @@ angular.module('landcruiser.sound', [])
 
 	/**
 	* Get details about the currently playing song
-	* 
+	*
+	* @return object songObj 
 	*/
 	function getPlaying()
 	{
@@ -78,6 +79,7 @@ angular.module('landcruiser.sound', [])
 	* Format a song duration from seconds
 	*
 	* @param integer timeSeconds
+	*
 	* @return string playTime
 	*/
 	function formatSeconds( timeSeconds )
@@ -97,6 +99,8 @@ angular.module('landcruiser.sound', [])
 	* Find the album art for an artist
 	*
 	* @param string artistName
+	*
+	* @return string albumArt
 	*/
 	function findAlbumArt( artistName, imageSize ) 
 	{	     	
