@@ -516,7 +516,7 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
-* Display the current location of the car 
+* Display the current location of the car on a map
 */
 .controller('LocationCtrl', function($scope, $interval, weatherAssist) {
   $scope.areaMap = null;

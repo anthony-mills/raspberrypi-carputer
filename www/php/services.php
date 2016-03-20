@@ -12,24 +12,24 @@ $serviceObj = new apiServices();
 
 switch ($requestedAction) {
 	case 'speed-limit':
-		$currentLocation = $_GET['location'];
+		$currentLocation = filter_input(INPUT_GET, 'location', FILTER_SANITIZE_SPECIAL_CHARS);
 
 		$serviceObj->getSpeed($currentLocation);
 	break;
 
 	case 'weather-outlook':
-		$curLatitide = $_GET['latitude'];
-		$curLongitude = $_GET['longitude'];
+		$curLatitude = filter_input(INPUT_GET, 'latitude'], FILTER_SANITIZE_SPECIAL_CHARS);
+		$curLongitude = filter_input(INPUT_GET, 'longitude'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-		$serviceObj->getWeather($curLongitude, $curLatitide);
+		$serviceObj->getWeather($curLongitude, $curLatitude);
 	break;
 
 	case 'weather-forecast':
-		$curLatitide = $_GET['latitude'];
-		$curLongitude = $_GET['longitude'];
+		$curLatitide = filter_input(INPUT_GET, 'latitude'], FILTER_SANITIZE_SPECIAL_CHARS);
+		$curLongitude = filter_input(INPUT_GET, 'longitude'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-		$serviceObj->getForecast($curLongitude, $curLatitide);
-	break;	
+		$serviceObj->getForecast($curLongitude, $curLatitude);
+	break;
 }
 
 class apiServices {
