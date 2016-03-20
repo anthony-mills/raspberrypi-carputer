@@ -18,15 +18,15 @@ switch ($requestedAction) {
 	break;
 
 	case 'weather-outlook':
-		$curLatitude = filter_input(INPUT_GET, 'latitude'], FILTER_SANITIZE_SPECIAL_CHARS);
-		$curLongitude = filter_input(INPUT_GET, 'longitude'], FILTER_SANITIZE_SPECIAL_CHARS);
+		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
+		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
 
 		$serviceObj->getWeather($curLongitude, $curLatitude);
 	break;
 
 	case 'weather-forecast':
-		$curLatitide = filter_input(INPUT_GET, 'latitude'], FILTER_SANITIZE_SPECIAL_CHARS);
-		$curLongitude = filter_input(INPUT_GET, 'longitude'], FILTER_SANITIZE_SPECIAL_CHARS);
+		$curLatitide = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
+		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
 
 		$serviceObj->getForecast($curLongitude, $curLatitude);
 	break;
