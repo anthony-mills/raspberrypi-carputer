@@ -39,8 +39,18 @@
 
         <div class="gps-status">
           <strong>GPS Status:</strong> {{gpsData.status}} <br/>
-          <strong>Heading:</strong> {{gpsData.heading}} <br/>
-          <strong>Altitude:</strong> {{gpsData.altitude}}
+
+          <span ng-if="gpsData.heading != 'N / A'">
+            <strong>Heading:</strong> {{gpsData.heading}} <br/>
+          </span>             
+
+          <span ng-if="gpsData.longitude != 'Unknown'">
+            <strong>Location:</strong> {{gpsData.longitude}}, {{gpsData.latitude}} <br/>
+          </span>
+
+          <span ng-if="gpsData.altitude != 'N / A'">
+            <strong>Altitude:</strong> {{gpsData.altitude}} <br/>
+          </span>          
         </div>        
 
         <div align="center" class="button-bar exit-night">
