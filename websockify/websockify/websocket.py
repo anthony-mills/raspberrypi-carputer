@@ -113,6 +113,9 @@ class WebSocketRequestHandler(SimpleHTTPRequestHandler):
 
         SimpleHTTPRequestHandler.__init__(self, req, addr, server)
 
+    def log_message(self, format, *args):
+        self.logger.info("%s - - [%s] %s" % (self.address_string(), self.log_date_time_string(), format % args))
+
     @staticmethod
     def unmask(buf, hlen, plen):
         pstart = hlen + 4
@@ -745,6 +748,10 @@ class WebSocketServer(object):
 
     @staticmethod
     def daemonize(keepfd=None, chdir='/'):
+        
+        if keepfd is None:
+            keepfd = []
+
         os.umask(0)
         if chdir:
             os.chdir(chdir)
@@ -767,7 +774,7 @@ class WebSocketServer(object):
         if maxfd == resource.RLIM_INFINITY: maxfd = 256
         for fd in reversed(range(maxfd)):
             try:
-                if fd != keepfd:
+                if fd not in keepfd:
                     os.close(fd)
             except OSError:
                 _, exc, _ = sys.exc_info()
@@ -888,11 +895,14 @@ class WebSocketServer(object):
         raise self.Terminate()
 
     def multiprocessing_SIGCHLD(self, sig, stack):
-        self.vmsg('Reaping zombies, active child count is %s', len(multiprocessing.active_children()))
+        # TODO: figure out a way to actually log this information without
+        #       calling `log` in the signal handlers
+        multiprocessing.active_children()
 
     def fallback_SIGCHLD(self, sig, stack):
         # Reap zombies when using os.fork() (python 2.4)
-        self.vmsg("Got SIGCHLD, reaping zombies")
+        # TODO: figure out a way to actually log this information without
+        #       calling `log` in the signal handlers
         try:
             result = os.waitpid(-1, os.WNOHANG)
             while result[0]:
@@ -902,11 +912,13 @@ class WebSocketServer(object):
             pass
 
     def do_SIGINT(self, sig, stack):
-        self.msg("Got SIGINT, exiting")
+        # TODO: figure out a way to actually log this information without
+        #       calling `log` in the signal handlers
         self.terminate()
 
     def do_SIGTERM(self, sig, stack):
-        self.msg("Got SIGTERM, exiting")
+        # TODO: figure out a way to actually log this information without
+        #       calling `log` in the signal handlers
         self.terminate()
 
     def top_new_client(self, startsock, address):
@@ -934,6 +946,18 @@ class WebSocketServer(object):
                 # Original socket closed by caller
                 client.close()
 
+    def get_log_fd(self):
+        """
+        Get file descriptors for the loggers.
+        They should not be closed when the process is forked.
+        """
+        descriptors = []
+        for handler in self.logger.parent.handlers:
+            if isinstance(handler, logging.FileHandler):
+                descriptors.append(handler.stream.fileno())
+
+        return descriptors
+
     def start_server(self):
         """
         Daemonize if requested. Listen for for connections. Run
@@ -949,7 +973,9 @@ class WebSocketServer(object):
                             tcp_keepintvl=self.tcp_keepintvl)
 
         if self.daemon:
-            self.daemonize(keepfd=lsock.fileno(), chdir=self.web)
+            keepfd = self.get_log_fd()
+            keepfd.append(lsock.fileno())
+            self.daemonize(keepfd=keepfd, chdir=self.web)
 
         self.started()  # Some things need to happen after daemonizing
 
@@ -1053,6 +1079,14 @@ class WebSocketServer(object):
 
                     except (self.Terminate, SystemExit, KeyboardInterrupt):
                         self.msg("In exit")
+                        # terminate all child processes
+                        if multiprocessing and not self.run_once:
+                            children = multiprocessing.active_children()
+
+                            for child in children:
+                                self.msg("Terminating child %s" % child.pid)
+                                child.terminate()
+
                         break
                     except Exception:
                         exc = sys.exc_info()[1]
