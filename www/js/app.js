@@ -11,6 +11,7 @@ angular.module(
                   'landcruiser.sound',
                   'gpsAssist',
                   'weatherAssist',
+                  'contentFormatting',
                   'elif',
                   'ImgCache',
                   'angular-growl',

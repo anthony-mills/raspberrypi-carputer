@@ -1,7 +1,14 @@
 angular.module('landcruiser.controllers', [])
 
 .controller('AppCtrl', function( $scope, $interval, gpsAssist ) {
-  // Get the GPS data from GPSD for the location panel
+
+  /**
+  * Get the GPS data from GPSD for the location panel
+  *
+  * Default frequency is every second. The interval can prbably be increased for a more responsive speed readout on systems using a Raspberry Pi Model 3
+  */
+  var updateFrequency = 1000;
+
   $scope.gpsData = {}
 
   $scope.getGPS = $interval(function() {
@@ -12,14 +19,14 @@ angular.module('landcruiser.controllers', [])
       }
       $scope.gpsData = gpsData;
     });
-  }, 1000);
+  }, updateFrequency);
 })
 
 /**
 * Manage the connection to the MPD instance 
 * and display main application navigation.
 */
-.controller('HomeCtrl', function( $scope, $interval, $timeout, growl, mpdAssist) {
+.controller('HomeCtrl', function( $scope, $interval, $timeout, growl, mpdAssist, contentFormatting) {
   $scope.playlistCount = 0;
 
   $scope.mpdStatus = "Not connected";
@@ -50,7 +57,7 @@ angular.module('landcruiser.controllers', [])
   }
 
   $scope.checkConnection = $interval(function() {
-    $scope.getTime();
+    $scope.currentDate = contentFormatting.getTime();
 
     var mpdState = mpdClient.getState();    
 
@@ -100,63 +107,7 @@ angular.module('landcruiser.controllers', [])
     }
   }, 1000);
 
-  $scope.getTime = function formatAMPM() {
-    var d = new Date(),
-        minutes = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes(),
-        hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours(),
-        ampm = d.getHours() >= 12 ? 'pm' : 'am',
-        months = [
-                    'January',
-                    'February',
-                    'March',
-                    'April',
-                    'May',
-                    'June',
-                    'July',
-                    'August',
-                    'September',
-                    'October',
-                    'November',
-                    'December'
-                  ],
-        days = [
-                  'Sunday',
-                  'Monday',
-                  'Tuesday',
-                  'Wednesday',
-                  'Thursday',
-                  'Friday',
-                  'Saturday'
-                ];
-
-    var monthDate = $scope.formatDate( d.getDate() );
-
-    $scope.currentDate = days[d.getDay()] + ' ' + 
-                          monthDate + ' ' + 
-                          months[d.getMonth()] + ' ' + 
-                          d.getFullYear() + ' - ' + 
-                          hours + ':' + minutes + ampm;
-  }
-
-  $scope.formatDate = function(number) {
-    number = Number(number);
-
-    if(!number || (Math.round(number) !== number)) {
-      return number;
-    }
-    var signal = (number < 20) ? number : Number(('' + number).slice(-1));
-
-    switch(signal) {
-      case 1:
-        return number + 'st'
-      case 2:
-        return number + 'nd'
-      case 3:
-        return number + 'rd'
-      default:
-        return number + 'th'
-    }
-  }
+  $scope.currentDate = contentFormatting.getTime();
 
   /**
   * Paused the music
