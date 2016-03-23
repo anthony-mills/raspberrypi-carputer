@@ -1858,7 +1858,7 @@ function MPD(_port, _host, _password){
           protocol = "wss://";
           url = url.substr(8);
       }
-      if(url.substring(0, 3) == "wss"){
+      else if(url.substring(0, 3) == "wss"){
           protocol = "wss://";
           url = url.substr(6);
       }
