@@ -127,6 +127,17 @@ angular.module(
       }
     })
 
+    // Map the current car trip 
+    .state('app.trip-meter', {
+      url: '/trip-meter',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/trip-meter.html',
+          controller: 'TripMeterCtrl'
+        }
+      }
+    })
+
     // Reference materials page
     .state('app.reference', {
       url: '/reference',

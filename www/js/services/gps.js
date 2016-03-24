@@ -99,6 +99,80 @@ angular.module('gpsAssist', [])
 	}
 
 	/**
+	* Maintain a local storage object containing information about a trip
+	*
+	* @param integer currentLong
+	* @param integer currentLat
+	* @param integer checkFrequency
+	**/
+	function updateTrip(currentLong, currentLat, checkFrequency)
+	{
+		var tripData = window.localStorage['trip_data'];
+
+		if (tripData) {
+
+			var tripData = JSON.parse( tripData );
+
+			var distanceTravelled = (haversineDistance({ 'long': tripData.long, 'lat': tripData.lat }, {'long': currentLong, 'lat': currentLat })) + tripData.distance;
+			var tripTime = tripData.time + checkFrequency;
+
+			var startLocation = {
+				'lat' : tripData.start_location.lat,
+				'long' : tripData.start_location.long
+			};
+		} else {
+			var distanceTravelled = 0;
+			var tripTime = 0;
+
+			var startLocation = {
+				'lat' : currentLat,
+				'long' : currentLong
+			};
+		}
+
+		var tripDetails = {
+			'distance' : distanceTravelled,
+			'lat' : currentLat,
+			'long' : currentLong,
+			'time' : tripTime,
+			'start_location' : startLocation
+		}		
+
+		window.localStorage['trip_data'] = JSON.stringify( tripDetails );
+	}
+
+	/**
+	* Haversine formulae for calculating between two points
+	*
+	* @param object coords1
+	* @param object coords2
+	*/ 
+	function haversineDistance(coords1, coords2) {
+	  function toRad(x) {
+	    return x * Math.PI / 180;
+	  }
+
+	  var lon1 = coords1.long;
+	  var lat1 = coords1.lat;
+
+	  var lon2 = coords2.long;
+	  var lat2 = coords2.lat;
+
+	  var R = 6371; // km
+
+	  var x1 = lat2 - lat1;
+	  var dLat = toRad(x1);
+
+	  var x2 = lon2 - lon1;
+	  var dLon = toRad(x2)
+	  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	  var d = R * c;
+
+	  return d;
+	}	
+
+	/**
 	* Get the speed limit for an area
 	*
 	* @param integer latitude
@@ -235,6 +309,10 @@ angular.module('gpsAssist', [])
 	return {
 		speedConversion: function() {
 			return speedConversion();
+		},
+
+		updateTrip: function( currentLong, currentLat, checkFrequency ) {
+			return updateTrip( currentLong, currentLat, checkFrequency );
 		},
 
 		startGPS: function() {

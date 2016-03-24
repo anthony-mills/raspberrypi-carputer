@@ -13,8 +13,10 @@ angular.module('landcruiser.controllers', [])
 
   $scope.getGPS = $interval(function() {
     gpsAssist.startGPS().then(function(gpsData) {
-
+      
       if ((gpsData.latitude != 'Unknown') && (gpsData.longitude !='Unknown')) {
+          gpsAssist.updateTrip( gpsData.longitude, gpsData.latitude, updateFrequency );
+
           window.localStorage['gps_data'] = JSON.stringify( gpsData );  
       }
       $scope.gpsData = gpsData;
@@ -469,7 +471,7 @@ angular.module('landcruiser.controllers', [])
 /*
 * Display the current location of the car on a map
 */
-.controller('LocationCtrl', function($scope, $interval, weatherAssist) {
+.controller('LocationCtrl', function($scope, $interval) {
   $scope.areaMap = null;
 
   $scope.updateLocation = function() {
@@ -498,6 +500,14 @@ angular.module('landcruiser.controllers', [])
   }, 5000);
 
   $scope.updateLocation();  
+})
+
+/*
+* Display the car trip meter
+*/
+.controller('TripMeterCtrl', function( $scope ) {
+  $scope.tripData = '';
+
 })
 
 /*
