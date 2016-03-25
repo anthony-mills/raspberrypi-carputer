@@ -215,7 +215,7 @@ angular.module('landcruiser.controllers', [])
     var playbackSettings = {
         'random' : $scope.randomPlayback,
         'consume' : $scope.consumePlayback
-      }
+    }
 
     window.localStorage['playback_settings'] = JSON.stringify(playbackSettings);     
   }
@@ -471,8 +471,9 @@ angular.module('landcruiser.controllers', [])
 /*
 * Display the current location of the car on a map
 */
-.controller('LocationCtrl', function($scope, $interval) {
+.controller('LocationCtrl', function($scope, $interval, contentFormatting) {
   $scope.areaMap = null;
+  $scope.currentDate = contentFormatting.getTime();
 
   $scope.updateLocation = function() {
     var gpsData = window.localStorage['gps_data'];
@@ -495,6 +496,11 @@ angular.module('landcruiser.controllers', [])
     }
   }
 
+  // Update the current time
+  $interval(function() {
+    $scope.currentDate = contentFormatting.getTime();
+  }, 1000);
+
   $interval(function() {
     $scope.updateLocation();
   }, 5000);
@@ -505,9 +511,79 @@ angular.module('landcruiser.controllers', [])
 /*
 * Display the car trip meter
 */
-.controller('TripMeterCtrl', function( $scope ) {
+.controller('TripMeterCtrl', function( $scope, $interval, contentFormatting, mpdAssist, uiGmapGoogleMapApi ) {
   $scope.tripData = '';
 
+  $scope.currentDate = contentFormatting.getTime();
+  // Update the current time
+  $interval(function() {
+    $scope.currentDate = contentFormatting.getTime();
+  }, 1000);
+
+  // Reset the stored trip data
+  $scope.resetTrip = function() {
+    $scope.tripData = '';
+    window.localStorage['trip_data'] = '';
+  }
+
+  var tripData = window.localStorage['trip_data'];
+
+  if (tripData) {
+
+    // Only show a map if we have gone at least 1km
+    if (tripData.distance < 1) {
+      return;
+    }
+    var tripData = JSON.parse(tripData);
+    tripData.time = mpdAssist.formatSeconds( tripData.time / 1000 )
+    var carLog =  [
+                    {
+                        latitude: tripData.start_location.lat,
+                        longitude: tripData.start_location.long
+                    },
+                    {
+                        latitude: tripData.current_location.lat,
+                        longitude: tripData.current_location.long
+                    }
+                  ];
+
+    var mapZoom = function() {
+      var latAdjustment = Math.cos( Math.PI * tripData.current_location.lat / 180.0 );
+
+      var latArg = 6378140 * 464 * latAdjustment / ( (tripData.distance * 1000) * 256.0 );
+
+      return Math.floor( Math.log( latArg ) / Math.log( 2.0 ) );
+    }
+
+    $scope.tripMap = {center: {latitude: tripData.current_location.lat, longitude: tripData.current_location.long }, zoom: mapZoom(), bounds: {}};
+
+    $scope.polylines = [];
+    uiGmapGoogleMapApi.then(function(){
+    $scope.polylines = [
+        {
+            id: 'carTrip',
+            path: carLog,
+            stroke: {
+                color: '#000',
+                weight: 2
+            },
+            editable: false,
+            draggable: false,
+            geodesic: true,
+            visible: true,
+            icons: [{
+                icon: {
+                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+                },
+                offset: '25px',
+                repeat: '50px'
+            }]
+        }
+      ];
+    });
+
+    $scope.tripData = tripData;
+  }
 })
 
 /*

@@ -36,7 +36,7 @@ This project makes the use of a number of third party Open Source libraries. You
 In the near future the following features are planned:
 
 * Integrate the PHP code that talks to GPSD into the PHP service file. In its present form its very messy.
-* GPS trip meter adding the ability to log a cars journey
+* GPS trip meter adding the ability to log a cars journey - Basic functionality has been done, needs some enhancements to storing the datapoints throughout a trip.
 
 # Screenshots
 

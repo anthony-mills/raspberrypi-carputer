@@ -17,17 +17,29 @@
 
       <div class="col-66 pad-column">    
 
-        <div ng-if="areaMap" class="card">
+        <div ng-if="tripData" class="card">
           <div class="item item-divider bar bar-header page-heading heading-text" >
-                Current Location
+                Trip Log - Distance: {{ tripData.distance }}km
           </div>
 
           <div class="item item-text-wrap">
-            <div class="col">
-           
+            <div class="col" ng-if="tripData.distance > 0">
+				<div id="map_canvas" ng-controller="TripMeterCtrl">
+				    <ui-gmap-google-map center="tripMap.center" zoom="tripMap.zoom" draggable="true" options="options" bounds="map.bounds">
+				        <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible'
+				                  geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable" icons='p.icons'>
+				        </ui-gmap-polyline>
+				    </ui-gmap-google-map>
+				</div>
+
+	            <div class="no-playlists">
+					<p>Travelled {{ tripData.distance }}km in {{ tripData.time }}.</p>   
+	            </div>
             </div>
               
-            <div class="button-bar">         
+            <div class="button-bar"> 
+              <button class="button button-assertive icon-left ion-ios-stopwatch-outline" ng-click="resetTrip()">Reset</button>
+
               <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
             </div>             
           </div>
