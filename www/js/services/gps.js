@@ -101,19 +101,33 @@ angular.module('gpsAssist', [])
 	/**
 	* Maintain a local storage object containing information about a trip
 	*
-	* @param integer currentLong
-	* @param integer currentLat
 	* @param integer checkFrequency
 	**/
-	function updateTrip(currentLong, currentLat, checkFrequency)
+	function updateTrip(checkFrequency)
 	{
+		// Frequency to store a trip data point
+		var dataResolution = 60;
+
+		var gpsData = JSON.parse(window.localStorage['gps_data']);
 		var tripData = window.localStorage['trip_data'];
+		var dataPoints = [];
 
 		if (tripData) {
-
 			var tripData = JSON.parse( tripData );
 
-			var distanceTravelled = (haversineDistance({ 'long': tripData.start_location.long, 'lat': tripData.start_location.lat }, {'long': currentLong, 'lat': currentLat }));
+			var distanceTravelled = (
+										haversineDistance(
+															{ 
+																'long': tripData.start_location.long, 
+																'lat': tripData.start_location.lat 
+															}, 
+															{
+																'long': gpsData.longitude, 
+																'lat': gpsData.latitude 
+															}
+														)
+									);
+
 			var tripTime = tripData.time + checkFrequency;
 
 			var startLocation = {
@@ -122,29 +136,47 @@ angular.module('gpsAssist', [])
 			};
 
 			var currentLocation = {
-				'lat' : currentLat,
-				'long' : currentLong				
-			}			
+				'lat' : gpsData.latitude,
+				'long' : gpsData.longitude			
+			}
+
+			dataPoints = tripData.data_points;	
 		} else {
 			var distanceTravelled = 0;
 			var tripTime = 0;
 
 			var startLocation = {
-				'lat' : currentLat,
-				'long' : currentLong
+				'lat' : gpsData.latitude,
+				'long' : gpsData.longitude
 			};
 
 			var currentLocation = {
-				'lat' : currentLat,
-				'long' : currentLong				
+				'lat' : gpsData.latitude,
+				'long' : gpsData.longitude				
 			}
+		}
+
+		/*
+		* If we have passed the time resolution value has been passed, store another data point about the trip
+		*/
+		if ((dataPoints[0] === undefined) || ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
+			var gpsAltitude = gpsData.altitude.replace("m", "");
+
+			dataPoints.push({
+								'lat' : gpsData.latitude,
+								'long' : gpsData.longitude,
+								'timestamp' : Date.now(),
+								'speed' : gpsData.speed,
+								'altitude' : gpsAltitude 
+							});
 		}
 
 		var tripDetails = {
 			'distance' : Math.round( distanceTravelled, 2 ),
 			'time' : tripTime,
 			'current_location' : currentLocation,
-			'start_location' : startLocation
+			'start_location' : startLocation,
+			'data_points' : dataPoints
 		}		
 
 		window.localStorage['trip_data'] = JSON.stringify( tripDetails );
