@@ -114,12 +114,13 @@ angular.module('gpsAssist', [])
 
 		if (tripData) {
 			var tripData = JSON.parse( tripData );
+			dataPoints = tripData.data_points;
 
 			var distanceTravelled = (
 										haversineDistance(
 															{ 
-																'long': tripData.start_location.long, 
-																'lat': tripData.start_location.lat 
+																'long': dataPoints[0].long, 
+																'lat': dataPoints[0].lat 
 															}, 
 															{
 																'long': gpsData.longitude, 
@@ -128,32 +129,10 @@ angular.module('gpsAssist', [])
 														)
 									);
 
-			var tripTime = tripData.time + checkFrequency;
-
-			var startLocation = {
-				'lat' : tripData.start_location.lat,
-				'long' : tripData.start_location.long
-			};
-
-			var currentLocation = {
-				'lat' : gpsData.latitude,
-				'long' : gpsData.longitude			
-			}
-
-			dataPoints = tripData.data_points;	
+			var tripTime = tripData.time + checkFrequency;	
 		} else {
 			var distanceTravelled = 0;
 			var tripTime = 0;
-
-			var startLocation = {
-				'lat' : gpsData.latitude,
-				'long' : gpsData.longitude
-			};
-
-			var currentLocation = {
-				'lat' : gpsData.latitude,
-				'long' : gpsData.longitude				
-			}
 		}
 
 		/*
@@ -174,8 +153,6 @@ angular.module('gpsAssist', [])
 		var tripDetails = {
 			'distance' : Math.round( distanceTravelled, 2 ),
 			'time' : tripTime,
-			'current_location' : currentLocation,
-			'start_location' : startLocation,
 			'data_points' : dataPoints
 		}		
 
