@@ -51,9 +51,9 @@ require_once("gpsd_config.inc");
 $resp = <<<EOF
 {"class":"POLL","time":"2010-04-05T21:27:54.84Z","active":1,
  "tpv":[{"class":"TPV","tag":"MID41","device":"/dev/ttyUSB0",
-           "time":1270517264.240,"ept":0.005,"lat":-33.873427,
-           "lon":151.206939,"alt":31.1,"track":99.4319,
-           "speed":25.123,"mode":3}],
+           "time":1270517264.240,"ept":0.005,"lat":-32.590521,
+           "lon":49.5887611,"alt":200.1,"track":99.4319,
+           "speed":27.123,"mode":3}],
  "sky":[{"class":"SKY","tag":"MID41","device":"/dev/ttyUSB0",
               "time":"2010-04-05T21:27:44.84Z","hdop":9.20,"vdop":12.1,
               "satellites":[{"PRN":16,"el":55,"az":42,"ss":36,"used":true},

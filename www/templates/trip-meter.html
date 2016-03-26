@@ -19,11 +19,11 @@
 
         <div ng-if="tripData" class="card">
           <div class="item item-divider bar bar-header page-heading heading-text" >
-                Trip Log - Distance: {{ tripData.distance }}km
+                Trip Log - Distance: {{ tripDistance }}km
           </div>
 
           <div class="item item-text-wrap">
-            <div class="col" ng-if="tripData.distance > 0">
+            <div class="col" ng-if="tripDistance > 0">
 				<div id="map_canvas" ng-controller="TripMeterCtrl">
 				    <ui-gmap-google-map center="tripMap.center" zoom="tripMap.zoom" draggable="true" options="options" bounds="map.bounds">
 				        <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible'
@@ -33,8 +33,16 @@
 				</div>
 
 	            <div class="no-playlists">
-					<p>Travelled {{ tripData.distance }}km in {{ tripData.time }}.</p>   
+					<p>Travelled {{ tripDistance }}km in {{ tripData.time }}.</p>   
 	            </div>
+
+	            <div ng-if="avgSpeed">
+	            	<strong>Average Speed:</strong> {{avgSpeed}} km/h
+	            </div>
+
+	            <div ng-if="avgAltitude">
+	            	<strong>Average Altitude:</strong> {{avgAltitude}} m
+	            </div>	            
             </div>
               
             <div class="button-bar"> 

@@ -116,18 +116,22 @@ angular.module('gpsAssist', [])
 			var tripData = JSON.parse( tripData );
 			dataPoints = tripData.data_points;
 
-			var distanceTravelled = (
-										haversineDistance(
-															{ 
-																'long': dataPoints[0].long, 
-																'lat': dataPoints[0].lat 
-															}, 
-															{
-																'long': gpsData.longitude, 
-																'lat': gpsData.latitude 
-															}
-														)
-									);
+			if ((gpsData.longitude != dataPoints[dataPoints.length - 1].long) && (gpsData.lat != dataPoints[dataPoints.length - 1].lat)) {
+				var distanceTravelled = (
+											haversineDistance(
+																{ 
+																	'long': dataPoints[dataPoints.length - 1].long, 
+																	'lat': dataPoints[dataPoints.length - 1].lat 
+																}, 
+																{
+																	'long': gpsData.longitude, 
+																	'lat': gpsData.latitude 
+																}
+															)
+										);
+			} else {
+				var distanceTravelled = 0;
+			}
 
 			var tripTime = tripData.time + checkFrequency;	
 		} else {
@@ -146,7 +150,8 @@ angular.module('gpsAssist', [])
 								'long' : gpsData.longitude,
 								'timestamp' : Date.now(),
 								'speed' : gpsData.speed,
-								'altitude' : gpsAltitude 
+								'altitude' : gpsAltitude,
+								'distance' : distanceTravelled
 							});
 		}
 
@@ -335,6 +340,10 @@ angular.module('gpsAssist', [])
 
 		startGPS: function() {
 			return startGPS();
+		},
+
+		calculateDistance: function(startCoords, endCoords) {
+			return haversineDistance(startCoords, endCoords);
 		}
 
 	}

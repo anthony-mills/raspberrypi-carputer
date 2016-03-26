@@ -511,10 +511,11 @@ angular.module('landcruiser.controllers', [])
 /*
 * Display the car trip meter
 */
-.controller('TripMeterCtrl', function( $scope, $interval, contentFormatting, mpdAssist, uiGmapGoogleMapApi ) {
+.controller('TripMeterCtrl', function( $scope, $interval, contentFormatting, mpdAssist, gpsAssist, uiGmapGoogleMapApi ) {
   $scope.tripData = '';
 
   $scope.currentDate = contentFormatting.getTime();
+
   // Update the current time
   $interval(function() {
     $scope.currentDate = contentFormatting.getTime();
@@ -530,32 +531,54 @@ angular.module('landcruiser.controllers', [])
 
   if (tripData) {
 
-    // Only show a map if we have gone at least 1km
-    if (tripData.distance < 1) {
-      return;
-    }
     var tripData = JSON.parse(tripData);
     tripData.time = mpdAssist.formatSeconds( tripData.time / 1000 )
-    var carLog =  [
-                    {
-                        latitude: tripData.start_location.lat,
-                        longitude: tripData.start_location.long
-                    },
-                    {
-                        latitude: tripData.current_location.lat,
-                        longitude: tripData.current_location.long
-                    }
-                  ];
+
+    var avgSpeed = 0;
+    var avgAltitude = 0;
+    var tripDistance = 0 
+    var carLog = [];
+
+    for (var i = 0; i < tripData.data_points.length; i++) { 
+
+      if (tripData.data_points[i].distance > 0) {
+        tripDistance += parseInt(tripData.data_points[i].distance);  
+
+        carLog.push(
+                      {
+                          latitude: tripData.data_points[i].lat,
+                          longitude: tripData.data_points[i].long
+                      }
+                    );
+        avgAltitude += parseInt(tripData.data_points[i].altitude);
+        avgSpeed += parseInt(tripData.data_points[i].speed);         
+      }    
+    }
+
+    $scope.avgAltitude = Math.round(avgAltitude / carLog.length);
+    $scope.avgSpeed = Math.round(avgSpeed / carLog.length);   
+    $scope.tripDistance = Math.round(tripDistance);
+
+    // Only show a map if we have gone at least 1km
+    if (tripDistance < 1) {
+      return;
+    }
+
+    var lastPos = {
+                    lat : tripData.data_points[carLog.length-1].lat,
+                    long : tripData.data_points[carLog.length-1].long
+                  }
+    console.log(lastPos);
 
     var mapZoom = function() {
-      var latAdjustment = Math.cos( Math.PI * tripData.current_location.lat / 180.0 );
+      var latAdjustment = Math.cos( Math.PI * lastPos.lat / 180.0 );
 
-      var latArg = 6378140 * 464 * latAdjustment / ( (tripData.distance * 1000) * 256.0 );
+      var latArg = 6378140 * 464 * latAdjustment / ( (tripDistance * 1000) * 256.0 );
 
       return Math.floor( Math.log( latArg ) / Math.log( 2.0 ) );
     }
 
-    $scope.tripMap = {center: {latitude: tripData.current_location.lat, longitude: tripData.current_location.long }, zoom: mapZoom(), bounds: {}};
+    $scope.tripMap = {center: {latitude: lastPos.lat, longitude: lastPos.long }, zoom: mapZoom(), bounds: {}};
 
     $scope.polylines = [];
     uiGmapGoogleMapApi.then(function(){
