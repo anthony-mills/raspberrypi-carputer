@@ -17,6 +17,10 @@ switch ($requestedAction) {
 		$serviceObj->getSpeed($currentLocation);
 	break;
 
+	case 'get-location':
+		$serviceObj->getLocation();
+	break;
+
 	case 'weather-outlook':
 		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
 		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -38,6 +42,14 @@ class apiServices {
 	protected $_baseWeatherAPI = 'https://weather.cit.api.here.com/weather/1.0/report.json';
 	protected $_baseSpeedAPI = 'http://route.st.nlp.nokia.com/routing/6.2/getlinkinfo.xml';
 
+	// Live or debug GPS data
+	protected $_debugGps = false;
+	protected $_gpsDebugFile = 'gps_data.json';
+
+	// GPSD server settings
+	protected $_gpsdHost = 'localhost';
+	protected $_gpsdPort = 2947;	
+
 	/**
 	* Get the speed limit for a particular location
 	*
@@ -45,7 +57,6 @@ class apiServices {
 	*/
 	public function getSpeed($currentLocation) {
 		
-
 		if (!$currentLocation) {
 			die('No location provided');
 		}
@@ -82,6 +93,25 @@ class apiServices {
 	}
 
 	/**
+	* Talk to the GPSD daemon and hopefully get some location data
+	*
+	*/
+	public function getLocation() {
+
+		// If GPS debugging is enabled simply load in the gps_data.json file and return
+		if ($this->_debugGps) {
+			if (file_exists($this->_gpsDebugFile)) {
+				$gpsResponse = file_get_contents($this->_gpsDebugFile);
+			} else {
+				$gpsResponse = '{"class":"ERROR","message":"Cannot load GPS debug file"}';
+			}
+		} else {
+			$gpsResponse = $this->_gpsdCall();
+		}
+
+		echo $gpsResponse;
+	}
+	/**
 	* Get the current weather forecast
 	*
 	* @param string $curLongitude	
@@ -115,5 +145,36 @@ class apiServices {
 		curl_close($curl);
 
 		return $apiResponse;
+	}
+
+	/**
+	* Attempt to poll the the GPSD Daemon for location data
+	*
+	* @return $gpsResponse
+	*/
+	protected function _gpsdCall() {
+		$gpsdSock = @fsockopen(	$this->_gpsdHost, $this->_gpsdHost, $errNo, $errStr, 2 );
+
+		@fwrite($gpsdSock, "?WATCH={\"enable\":true}\n");
+		usleep(1000);
+
+		@fwrite($gpsdSock, "?POLL;\n");
+		usleep(1000);
+
+		for($tries = 0; $tries < 10; $tries++){
+			$gpsResponse = @fread($gpsdSock, 2000);
+			if (preg_match('/{"class":"POLL".+}/i', $gpsResponse, $respMatch)){
+				$gpsResponse = $respMatch[0];
+				break;
+			}
+		}	
+
+		@fclose($gpsdSock);
+
+		if (!$gpsResponse) {
+			$gpsResponse = '{"class":"ERROR","message":"no response from GPS daemon"}';					
+		}
+
+		return $gpsResponse;		
 	}
 }

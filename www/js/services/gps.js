@@ -10,7 +10,7 @@ angular.module('gpsAssist', [])
 	* @return object 
 	*/
 	function startGPS() {
-		var getGps = getGpsData('http://localhost:8000/php/gps.php?op=json');
+		var getGps = getGpsData('http://localhost:8000/php/services.php?action=get-location');
 		var gpsData = getGps.then(function(resultSet) {
 				if (typeof resultSet.data.tpv ==='undefined' || typeof resultSet.data.tpv[0].lat ==='undefined' || typeof resultSet.data.tpv[0].lon ==='undefined') {
 					var gpsStatus = {
