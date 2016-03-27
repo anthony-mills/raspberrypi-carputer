@@ -568,8 +568,8 @@ angular.module('landcruiser.controllers', [])
                     lat : tripData.data_points[carLog.length-1].lat,
                     long : tripData.data_points[carLog.length-1].long
                   }
-    console.log(lastPos);
 
+    // Calculate the optimum zoom level given the distance traversed
     var mapZoom = function() {
       var latAdjustment = Math.cos( Math.PI * lastPos.lat / 180.0 );
 
@@ -594,6 +594,7 @@ angular.module('landcruiser.controllers', [])
             draggable: false,
             geodesic: true,
             visible: true,
+            static: true,
             icons: [{
                 icon: {
                     path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
