@@ -10,13 +10,13 @@ The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli
 # Installation
 
 * Install all of the required dependencies.
-* Edit line 36 & 37 of www/php/services.php replacing the values with your application keys for the [Here.com API](https://developer.here.com/plans/api/consumer-mapping) - Required for speed limit and weather information.
+* Edit line 36 & 37 of www/php/services.php replacing the values with your application keys for the [Here.com API](https://developer.here.com/plans/api/consumer-mapping) - Required for speed limit and weather information. 
 * From the command line run the start.sh script to start a and instance of the internal PHP webserver on port 8000.
 * Open Chrome or Chromium and visit localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Official touch screen in mind i.e 800x468.
 
 # Running with out a GPS device
 
-GPS functionality can be tested without a GPS fix or even a GPS device. To enable the GPS testing mode edit line 24 of php/gps.php and change the value of the $testmode to a zero ( it would be more intuitive the other way around this script comes directly from the GPSD project in its current iteration though ). Editing the test JSON object starting at line 52 can also be useful when trying to test functionality for a specific location.
+GPS functionality can be tested without a GPS fix or even a GPS device. To enable the GPS testing mode change the protected variable ( $_debugGps ) to true on line 46 of www/php/services.php. This will read a GPS json object from the www/php/gps_data.json file, by changing the location values in this file you can spoof a specific location or speed to test functionality.
 
 # Credits
 
@@ -35,7 +35,7 @@ This project makes the use of a number of third party Open Source libraries. You
 
 In the near future the following features are planned:
 
-* Integrate the PHP code that talks to GPSD into the PHP service file. In its present form its very messy.
+* Ability to skip to a band or folder by the first letter of its name to save time when trying to find an artist in a huge collection of music
 
 # Screenshots
 
