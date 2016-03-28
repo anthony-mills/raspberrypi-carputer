@@ -22,7 +22,7 @@ angular.module('weatherAssist', [])
 
 		// Cache weather data for an hour
 		if (!weatherData || ( (Date.now() - weatherData.age) > 3600) ) {
-			var weatherRequest = getWeatherCall('http://localhost:8000/php/services.php?action=weather-forecast&location=' + latitude + ',' + longitude);
+			var weatherRequest = getWeatherCall('/php/services.php?action=weather-forecast&location=' + latitude + ',' + longitude);
 
 			weatherRequest.then(function(resultSet) {
 

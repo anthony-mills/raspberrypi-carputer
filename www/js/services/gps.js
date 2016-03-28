@@ -10,7 +10,7 @@ angular.module('gpsAssist', [])
 	* @return object 
 	*/
 	function startGPS() {
-		var getGps = getGpsData('http://localhost:8000/php/services.php?action=get-location');
+		var getGps = getGpsData('/php/gps.php?op=json');
 		var gpsData = getGps.then(function(resultSet) {
 				if (typeof resultSet.data.tpv ==='undefined' || typeof resultSet.data.tpv[0].lat ==='undefined' || typeof resultSet.data.tpv[0].lon ==='undefined') {
 					var gpsStatus = {
@@ -101,64 +101,50 @@ angular.module('gpsAssist', [])
 	/**
 	* Maintain a local storage object containing information about a trip
 	*
+	* @param integer currentLong
+	* @param integer currentLat
 	* @param integer checkFrequency
 	**/
-	function updateTrip(checkFrequency)
+	function updateTrip(currentLong, currentLat, checkFrequency)
 	{
-		// Frequency to store a trip data point
-		var dataResolution = 60;
-
-		var gpsData = JSON.parse(window.localStorage['gps_data']);
 		var tripData = window.localStorage['trip_data'];
-		var dataPoints = [];
 
 		if (tripData) {
+
 			var tripData = JSON.parse( tripData );
-			dataPoints = tripData.data_points;
 
-			if ((gpsData.longitude != dataPoints[dataPoints.length - 1].long) && (gpsData.lat != dataPoints[dataPoints.length - 1].lat)) {
-				var distanceTravelled = (
-											haversineDistance(
-																{ 
-																	'long': dataPoints[dataPoints.length - 1].long, 
-																	'lat': dataPoints[dataPoints.length - 1].lat 
-																}, 
-																{
-																	'long': gpsData.longitude, 
-																	'lat': gpsData.latitude 
-																}
-															)
-										);
-			} else {
-				var distanceTravelled = 0;
-			}
+			var distanceTravelled = (haversineDistance({ 'long': tripData.start_location.long, 'lat': tripData.start_location.lat }, {'long': currentLong, 'lat': currentLat }));
+			var tripTime = tripData.time + checkFrequency;
 
-			var tripTime = tripData.time + checkFrequency;	
+			var startLocation = {
+				'lat' : tripData.start_location.lat,
+				'long' : tripData.start_location.long
+			};
+
+			var currentLocation = {
+				'lat' : currentLat,
+				'long' : currentLong				
+			}			
 		} else {
 			var distanceTravelled = 0;
 			var tripTime = 0;
-		}
 
-		/*
-		* If we have passed the time resolution value has been passed, store another data point about the trip
-		*/
-		if ((dataPoints[0] === undefined) || ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
-			var gpsAltitude = gpsData.altitude.replace("m", "");
+			var startLocation = {
+				'lat' : currentLat,
+				'long' : currentLong
+			};
 
-			dataPoints.push({
-								'lat' : gpsData.latitude,
-								'long' : gpsData.longitude,
-								'timestamp' : Date.now(),
-								'speed' : gpsData.speed,
-								'altitude' : gpsAltitude,
-								'distance' : distanceTravelled
-							});
+			var currentLocation = {
+				'lat' : currentLat,
+				'long' : currentLong				
+			}
 		}
 
 		var tripDetails = {
 			'distance' : Math.round( distanceTravelled, 2 ),
 			'time' : tripTime,
-			'data_points' : dataPoints
+			'current_location' : currentLocation,
+			'start_location' : startLocation
 		}		
 
 		window.localStorage['trip_data'] = JSON.stringify( tripDetails );
@@ -203,7 +189,7 @@ angular.module('gpsAssist', [])
 	*/
 	function speedLimit(latitude, longitude) {
 
-		var getGps = getGpsData('http://localhost:8000/php/services.php?action=speed-limit&location=' + latitude + ',' + longitude);
+		var getGps = getGpsData('/php/services.php?action=speed-limit&location=' + latitude + ',' + longitude);
 
 		getGps.then(function(resultSet) {
 			if (resultSet.data) {
@@ -340,10 +326,6 @@ angular.module('gpsAssist', [])
 
 		startGPS: function() {
 			return startGPS();
-		},
-
-		calculateDistance: function(startCoords, endCoords) {
-			return haversineDistance(startCoords, endCoords);
 		}
 
 	}
