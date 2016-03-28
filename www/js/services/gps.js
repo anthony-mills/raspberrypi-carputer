@@ -10,7 +10,7 @@ angular.module('gpsAssist', [])
 	* @return object 
 	*/
 	function startGPS() {
-		var getGps = getGpsData('http://localhost:8000/php/gps.php?op=json');
+		var getGps = getGpsData('/php/gps.php?op=json');
 		var gpsData = getGps.then(function(resultSet) {
 				if (typeof resultSet.data.tpv ==='undefined' || typeof resultSet.data.tpv[0].lat ==='undefined' || typeof resultSet.data.tpv[0].lon ==='undefined') {
 					var gpsStatus = {
@@ -189,7 +189,7 @@ angular.module('gpsAssist', [])
 	*/
 	function speedLimit(latitude, longitude) {
 
-		var getGps = getGpsData('http://localhost:8000/php/services.php?action=speed-limit&location=' + latitude + ',' + longitude);
+		var getGps = getGpsData('/php/services.php?action=speed-limit&location=' + latitude + ',' + longitude);
 
 		getGps.then(function(resultSet) {
 			if (resultSet.data) {
