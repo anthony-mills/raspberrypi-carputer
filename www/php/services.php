@@ -152,29 +152,32 @@ class apiServices {
 	*
 	* @return $gpsResponse
 	*/
-	protected function _gpsdCall() {
-		$gpsdSock = @fsockopen(	$this->_gpsdHost, $this->_gpsdHost, $errNo, $errStr, 2 );
+    protected function _gpsdCall() {
+            $gpsdSock = @fsockopen( $this->_gpsdHost, $this->_gpsdPort, $errNo, $errStr, 2 );
 
-		@fwrite($gpsdSock, "?WATCH={\"enable\":true}\n");
-		usleep(1000);
+            @fwrite($gpsdSock, "?WATCH={\"enable\":true}\n");
+            usleep(500);
 
-		@fwrite($gpsdSock, "?POLL;\n");
-		usleep(1000);
+            @fwrite($gpsdSock, "?POLL;\n");
+            usleep(500);
 
-		for($tries = 0; $tries < 10; $tries++){
-			$gpsResponse = @fread($gpsdSock, 2000);
-			if (preg_match('/{"class":"POLL".+}/i', $gpsResponse, $respMatch)){
-				$gpsResponse = $respMatch[0];
-				break;
-			}
-		}	
+            for($connectAttempts = 0; $connectAttempts < 10; $connectAttempts++){
+                    $gpsResponse = @fread($gpsdSock, 1000);
+                    $jsonOb = json_decode($gpsResponse);
 
-		@fclose($gpsdSock);
+                    //print_r($jsonOb);
+                    if (preg_match('/{"class":"POLL".+}/i', $gpsResponse, $respMatch)){
 
-		if (!$gpsResponse) {
-			$gpsResponse = '{"class":"ERROR","message":"no response from GPS daemon"}';					
-		}
+                            $gpsResponse = $respMatch[0];
+                            break;
+                    }
+            }       
 
-		return $gpsResponse;		
-	}
+            @fclose($gpsdSock);
+
+            if (!$gpsResponse) {
+                    $gpsResponse = '{"class":"ERROR","message":"no response from GPS daemon"}';
+            }
+            return $gpsResponse;            
+    }
 }
