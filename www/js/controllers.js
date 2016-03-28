@@ -171,7 +171,8 @@ angular.module('landcruiser.controllers', [])
 
   /**
   * Change the random playback status
-  *
+  * 
+  * @param boolean currentStatus
   */
   $scope.toggleRandom = function(currentStatus) {
     if (currentStatus) {
@@ -198,6 +199,7 @@ angular.module('landcruiser.controllers', [])
   /**
   * Change the consumption playback status
   *
+  * @param boolean currentStatus  
   */
   $scope.toggleConsumption = function(currentStatus) {
     if (currentStatus) {

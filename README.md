@@ -3,9 +3,9 @@
 This repository is the UI component of a Raspberry Pi car computer set up. [Visit this blog post for more information on the project and building your own Raspberry Pi based "carputer".](https://www.development-cycle.com/2016/02/building-a-raspberry-pi-car-computer/)
 
 # Prerequisites
-The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So obviously to have the frontend work properly these two daemons must be installed and configured. Although for development and testing, a fake GPS data set can be activated to make things easier ( see below under "No GPS" for more details). 
+The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So to have the frontend work properly these two daemons must be installed and configured. Although for development and testing, a fake GPS data set can be used in place of a live GPS stream to make things easier ( see below under "No GPS" for more details). 
 
-The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli and PHP5-curl packages must be installed. The application also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This API is poorly supported so either Chromium or Chrome needs to be used for displaying the application.
+The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli and PHP5-curl packages must be installed on the system. The application also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This API is poorly supported so either Chromium or Chrome needs to be used for displaying the application.
 
 # Installation
 
@@ -16,7 +16,9 @@ The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli
 
 # Running with out a GPS device
 
-GPS functionality can be tested without a GPS fix or even a GPS device. To enable the GPS testing mode change the protected variable ( $_debugGps ) to true on line 46 of www/php/services.php. This will read a GPS json object from the www/php/gps_data.json file, by changing the location values in this file you can spoof a specific location or speed to test functionality.
+GPS functionality can be tested without an active GPS fix or even a GPS device. To enable the GPS testing mode change the value of the variable $_debugGps to true on line 46 of www/php/services.php. 
+
+This will force the service to read a static GPS json object from the www/php/gps_data.json file. By changing the location values in this file you can spoof a specific location, altitude or speed to test functionality.
 
 # Credits
 
