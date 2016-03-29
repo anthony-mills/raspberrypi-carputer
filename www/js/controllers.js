@@ -88,7 +88,7 @@ angular.module('landcruiser.controllers', [])
             
             nowPlaying.playTime.raw++;
 
-            nowPlaying.playTime.formatted = mpdAssist.formatSeconds( nowPlaying.playTime.raw );
+            nowPlaying.playTime.formatted = contentFormatting.formatSeconds( nowPlaying.playTime.raw );
 
             $scope.currentlyPlaying = nowPlaying;
           } else if ( ( $scope.playState === 'play' ) && ($scope.currentlyPlaying.playTime.formatted === $scope.currentlyPlaying.duration.formatted)) {
@@ -534,7 +534,7 @@ angular.module('landcruiser.controllers', [])
   if (tripData) {
 
     var tripData = JSON.parse(tripData);
-    tripData.time = mpdAssist.formatSeconds( tripData.time / 1000 )
+    tripData.time = contentFormatting.formatSeconds( tripData.time / 1000 )
 
     var avgSpeed = 0;
     var avgAltitude = 0;
@@ -583,30 +583,32 @@ angular.module('landcruiser.controllers', [])
     $scope.tripMap = {center: {latitude: lastPos.lat, longitude: lastPos.long }, zoom: mapZoom(), bounds: {}};
 
     $scope.polylines = [];
+
     uiGmapGoogleMapApi.then(function(){
-    $scope.polylines = [
-        {
-            id: 'carTrip',
-            path: carLog,
-            stroke: {
-                color: '#000',
-                weight: 2
-            },
-            editable: false,
-            draggable: false,
-            geodesic: true,
-            visible: true,
-            static: true,
-            icons: [{
-                icon: {
-                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-                },
-                offset: '25px',
-                repeat: '50px'
-            }]
-        }
-      ];
-    });
+
+      $scope.polylines = [
+          {
+              id: 'carTrip',
+              path: carLog,
+              stroke: {
+                  color: '#000',
+                  weight: 2
+              },
+              editable: false,
+              draggable: false,
+              geodesic: true,
+              visible: true,
+              static: true,
+              icons: [{
+                  icon: {
+                      path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+                  },
+                  offset: '25px',
+                  repeat: '50px'
+              }]
+          }
+        ];
+      });
 
     $scope.tripData = tripData;
   }

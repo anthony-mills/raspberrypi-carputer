@@ -3,7 +3,7 @@ angular.module('landcruiser.sound', [])
 /**
  * Service providing playback and mpd queue functionality 
  */
-.factory('mpdAssist', function($http, $log, $rootScope, $q) {
+.factory('mpdAssist', function($http, $log, $rootScope, $q, contentFormatting) {
 
 	/**
 	* Check if the system is connected to the MPD instance
@@ -38,11 +38,11 @@ angular.module('landcruiser.sound', [])
 	            'id' :  currentSong.getId(),
 	            'name' :  currentSong.getDisplayName(),
 	            'playTime' : {
-	            				'formatted': formatSeconds(mpdClient.getCurrentSongTime()),
+	            				'formatted': contentFormatting.formatSeconds(mpdClient.getCurrentSongTime()),
 	            				'raw': mpdClient.getCurrentSongTime()
 	            			},   	            
 	            'duration' : {
-	            				'formatted': formatSeconds(currentSong.getDuration()),
+	            				'formatted': contentFormatting.formatSeconds(currentSong.getDuration()),
 	            				'raw': currentSong.getDuration() 
 	            			},    				
 	            'artist' : songArtist,
@@ -61,7 +61,7 @@ angular.module('landcruiser.sound', [])
 				var nextSongObj = {
 		            'id' :  nextSong.getId(),
 		            'name' :  nextSong.getDisplayName(),
-		            'duration' : formatSeconds(nextSong.getDuration()),
+		            'duration' : contentFormatting.formatSeconds(nextSong.getDuration()),
 		            'artist' : nextSong.getArtist(),
 		            'album' : nextSong.getAlbum(),
 		            'queueid' : nextSong.getQueuePosition(),
@@ -73,26 +73,6 @@ angular.module('landcruiser.sound', [])
 	        return songObj;
 		}
 		
-	}
-
-	/**
-	* Format a song duration from seconds
-	*
-	* @param integer timeSeconds
-	*
-	* @return string playTime
-	*/
-	function formatSeconds( timeSeconds )
-	{
-	    var date = new Date(1970,0,1);
-	    date.setSeconds(timeSeconds);
-	    var playTime = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-
-	    if (playTime.substring(0, 3) == '00:') {
-			var playTime = playTime.substring(3);
-	    }
-
-	    return playTime;
 	}
 
 	/**
@@ -281,7 +261,7 @@ angular.module('landcruiser.sound', [])
 							'artist' : directoryItem.getArtist(),
 							'album' : directoryItem.getAlbum(),
 							'track' : directoryItem.getTrack(),
-							'duration' : formatSeconds(metaData.time),
+							'duration' : contentFormatting.formatSeconds(metaData.time),
 							'artwork' : albumArt
 						}
 						//console.log(itemData);
@@ -334,7 +314,7 @@ angular.module('landcruiser.sound', [])
 		            'id' :  playlistSong.getId(),
 					'position' : playlistPostition,
 		            'name' :  playlistSong.getDisplayName(),
-		            'duration' : formatSeconds(playlistSong.getDuration()),
+		            'duration' : contentFormatting.formatSeconds(playlistSong.getDuration()),
 		            'artist' : songArtist,
 		            'album' : playlistSong.getAlbum(),
 		            'image' : albumArt,
@@ -343,7 +323,7 @@ angular.module('landcruiser.sound', [])
 		        }
 
 		        if (songStatus === 1) {
-		        	songObj.playTime = formatSeconds(mpdClient.getCurrentSongTime());
+		        	songObj.playTime = contentFormatting.formatSeconds(mpdClient.getCurrentSongTime());
 		        }
 
 		        playlistSongs.push(songObj);
@@ -361,10 +341,6 @@ angular.module('landcruiser.sound', [])
 			
 			return checkConnection();
 		},
-	    formatSeconds: function( songDuration ) {
-
-			return formatSeconds(songDuration);
-	    },
 
 		getDirectory: function( dirPath ) {
 

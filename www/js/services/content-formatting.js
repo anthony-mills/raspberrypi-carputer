@@ -55,6 +55,8 @@ angular.module('contentFormatting', [])
 	* Format the day of the month into something a little more presentatable
 	*	
 	* @param dateObj
+	*
+	* @return string
 	*/
 	function dateFormat( dayNumber )
 	{
@@ -77,9 +79,33 @@ angular.module('contentFormatting', [])
 	    }		
 	}
 
+	/**
+	* Format an amount of time in seconds to an hours:minutes:seconds format 
+	*
+	* @param integer timeSeconds
+	*
+	* @return string playTime
+	*/
+	function formatSeconds( timeSeconds )
+	{
+	    var date = new Date(1970,0,1);
+	    date.setSeconds(timeSeconds);
+	    var playTime = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+
+	    if (playTime.substring(0, 3) == '00:') {
+			var playTime = playTime.substring(3);
+	    }
+
+	    return playTime;
+	}
+
 	return {
 		getTime: function() {
 			return getTime();
+		},
+
+		formatSeconds: function( timeSeconds ) {
+			return formatSeconds( timeSeconds );
 		}
 
 	}
