@@ -10,15 +10,16 @@ The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli
 # Installation
 
 * Install all of the required dependencies.
-* Edit line 36 & 37 of www/php/services.php replacing the values with your application keys for the [Here.com API](https://developer.here.com/plans/api/consumer-mapping) - Required for speed limit and weather information. 
+* Edit the application config file at config/config.ini and enter your [Here.com API](https://developer.here.com/plans/api/consumer-mapping) details - Required for speed limit and weather information. 
+* Also check the GPSD daemon setting in application config file - Should work with the defaults on most setups
 * From the command line run the start.sh script to start a and instance of the internal PHP webserver on port 8000.
-* Open Chrome or Chromium and visit localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Official touch screen in mind i.e 800x468.
+* Open Chrome or Chromium and visit localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Official touch screen in mind i.e 800x468 so if your on a desktop / laptop you may want to use developer tools to switch to a 800x468 viewport. To get get a more realistic idea of what the UI will look like on the end device.
 
 # Running with out a GPS device
 
-GPS functionality can be tested without an active GPS fix or even a GPS device. To enable the GPS testing mode change the value of the variable $_debugGps to true on line 46 of www/php/services.php. 
+GPS functionality can be tested without an active GPS fix or even a GPS device. To enable the GPS testing mode change the value of the gpsd-debug option in the application config file to true. 
 
-This will force the service to read a static GPS json object from the www/php/gps_data.json file. By changing the location values in this file you can spoof a specific location, altitude or speed to test functionality.
+This will force the service to read a static GPS json object from the www/php/data/gps_data.json file. By changing the location values in this file a specific location, altitude or speed can be spoofed to test functionality.
 
 # Credits
 
@@ -37,7 +38,7 @@ This project makes the use of a number of third party Open Source libraries. You
 
 In the near future the following features are planned:
 
-* Ability to skip to a band or folder by the first letter of its name to save time when trying to find an artist in a huge collection of music
+* Ability to directly skip to a band or folder in the file browser view by the first letter of its name. This will help save time when trying to find an artist when using larger collections of music.
 
 # Screenshots
 
