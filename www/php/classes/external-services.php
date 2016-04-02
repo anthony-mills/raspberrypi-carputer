@@ -150,7 +150,7 @@ class apiServices {
             usleep(500);
 
             for($connectAttempts = 0; $connectAttempts < 10; $connectAttempts++){
-                    $gpsResponse = @fread($gpsdSock, 1000);
+                    $gpsResponse = @fread($gpsdSock, 2000);
                     $jsonOb = json_decode($gpsResponse);
 
                     //print_r($jsonOb);
