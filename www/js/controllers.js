@@ -17,7 +17,7 @@ angular.module('landcruiser.controllers', [])
       if ((gpsData.latitude != 'Unknown') && (gpsData.longitude !='Unknown')) {
           window.localStorage['gps_data'] = JSON.stringify( gpsData ); 
 
-          gpsAssist.updateTrip( updateFrequency );
+          gpsAssist.updateTrip( gpsData, updateFrequency );
       }
       $scope.gpsData = gpsData;
     });

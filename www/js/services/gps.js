@@ -101,14 +101,14 @@ angular.module('gpsAssist', [])
 	/**
 	* Maintain a local storage object containing information about a trip
 	*
+	* @param object currentLocation
 	* @param integer checkFrequency
 	**/
-	function updateTrip(checkFrequency)
+	function updateTrip( currentLocation, checkFrequency )
 	{
 		// Frequency to store a trip data point
 		var dataResolution = 60;
 
-		var gpsData = JSON.parse(window.localStorage['gps_data']);
 		var tripData = window.localStorage['trip_data'];
 		var dataPoints = [];
 
@@ -116,7 +116,7 @@ angular.module('gpsAssist', [])
 			var tripData = JSON.parse( tripData );
 			dataPoints = tripData.data_points;
 
-			if ((gpsData.longitude != dataPoints[dataPoints.length - 1].long) && (gpsData.lat != dataPoints[dataPoints.length - 1].lat)) {
+			if ((currentLocation.longitude != dataPoints[dataPoints.length - 1].long) && (currentLocation.latitude != dataPoints[dataPoints.length - 1].lat)) {
 				var distanceTravelled = (
 											haversineDistance(
 																{ 
@@ -124,8 +124,8 @@ angular.module('gpsAssist', [])
 																	'lat': dataPoints[dataPoints.length - 1].lat 
 																}, 
 																{
-																	'long': gpsData.longitude, 
-																	'lat': gpsData.latitude 
+																	'long': currentLocation.longitude, 
+																	'lat': currentLocation.latitude 
 																}
 															)
 										);
@@ -143,13 +143,13 @@ angular.module('gpsAssist', [])
 		* If we have passed the time resolution value has been passed, store another data point about the trip
 		*/
 		if ((dataPoints[0] === undefined) || ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
-			var gpsAltitude = gpsData.altitude.replace("m", "");
+			var gpsAltitude = currentLocation.altitude.replace("m", "");
 
 			dataPoints.push({
-								'lat' : gpsData.latitude,
-								'long' : gpsData.longitude,
+								'lat' : currentLocation.lat,
+								'long' : currentLocation.long,
 								'timestamp' : Date.now(),
-								'speed' : gpsData.speed,
+								'speed' : currentLocation.latitude.speed,
 								'altitude' : gpsAltitude,
 								'distance' : distanceTravelled
 							});
