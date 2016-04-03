@@ -26,6 +26,10 @@
   text-rendering: optimizeLegibility;  		
 }
 
+.menu-icon {
+  color: #fff;
+}
+
 /*--- Start heading bar related styles ---*/
 .bar-heading {
   padding-top: 10px;
