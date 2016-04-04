@@ -50,6 +50,8 @@ In the near future the following features are planned:
 
 ![Interacting with the current music play queue](/screenshots/play_queue.png?raw=true "Play Queue")
 
+![Journey Trip Log](/screenshots/trip_log.png?raw=true "Trip Log")
+
 # Licence
 
 Copyright (C) 2016 [Anthony Mills](http://www.anthony-mills.com)

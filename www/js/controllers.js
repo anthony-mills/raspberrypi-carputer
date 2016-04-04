@@ -600,7 +600,7 @@ angular.module('landcruiser.controllers', [])
               draggable: false,
               geodesic: true,
               visible: true,
-              static: true,
+              static: false,
               icons: [{
                   icon: {
                       path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
