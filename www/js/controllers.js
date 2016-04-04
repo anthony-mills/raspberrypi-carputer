@@ -553,8 +553,12 @@ angular.module('landcruiser.controllers', [])
                           longitude: tripData.data_points[i].long
                       }
                     );
+
         avgAltitude += parseInt(tripData.data_points[i].altitude);
-        avgSpeed += parseInt(tripData.data_points[i].speed);         
+
+        if (typeof tripData.data_points[i].speed == 'number') {
+          avgSpeed += parseInt(tripData.data_points[i].speed);       
+        } 
       }    
     }
 
