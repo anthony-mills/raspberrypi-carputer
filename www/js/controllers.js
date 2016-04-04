@@ -538,7 +538,8 @@ angular.module('landcruiser.controllers', [])
 
     var avgSpeed = 0;
     var avgAltitude = 0;
-    var tripDistance = 0 
+    var tripDistance = 0;
+    var topSpeed = 0; 
     var carLog = [];
 
     for (var i = 0; i < tripData.data_points.length; i++) { 
@@ -560,6 +561,7 @@ angular.module('landcruiser.controllers', [])
     $scope.avgAltitude = Math.round(avgAltitude / carLog.length);
     $scope.avgSpeed = Math.round(avgSpeed / carLog.length);   
     $scope.tripDistance = Math.round(tripDistance);
+    $scope.topSpeed = tripData.top_speed;
 
     // Only show a map if we have gone at least 1km
     if (tripDistance < 1) {

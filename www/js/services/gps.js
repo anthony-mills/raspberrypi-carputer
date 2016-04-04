@@ -133,10 +133,17 @@ angular.module('gpsAssist', [])
 				var distanceTravelled = 0;
 			}
 
-			var tripTime = tripData.time + checkFrequency;	
+            var tripTime = parseInt(tripData.time) + parseInt(checkFrequency);
+
+            if (gpsData.speed > tripData.top_speed) {
+                    var topSpeed = gpsData.speed;
+            } else {
+                    var topSpeed = tripData.top_speed;
+            }
 		} else {
 			var distanceTravelled = 0;
 			var tripTime = 0;
+			var topSpeed = 0;
 		}
 
 		/*
@@ -158,6 +165,7 @@ angular.module('gpsAssist', [])
 		var tripDetails = {
 			'distance' : Math.round( distanceTravelled, 2 ),
 			'time' : tripTime,
+            'top_speed' : topSpeed,			
 			'data_points' : dataPoints
 		}		
 
