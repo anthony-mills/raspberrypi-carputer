@@ -101,10 +101,10 @@ angular.module('gpsAssist', [])
 	/**
 	* Maintain a local storage object containing information about a trip
 	*
-	* @param object currentLocation
+	* @param object gpsData
 	* @param integer checkFrequency
 	**/
-	function updateTrip( currentLocation, checkFrequency )
+	function updateTrip( gpsData, checkFrequency )
 	{
 		// Frequency to store a trip data point
 		var dataResolution = 60;
@@ -114,9 +114,10 @@ angular.module('gpsAssist', [])
 
 		if (tripData) {
 			var tripData = JSON.parse( tripData );
+
 			dataPoints = tripData.data_points;
 
-			if ((currentLocation.longitude != dataPoints[dataPoints.length - 1].long) && (currentLocation.latitude != dataPoints[dataPoints.length - 1].lat)) {
+			if ((typeof dataPoints !== "undefined" ) && (gpsData.longitude != dataPoints[dataPoints.length - 1].long) && (gpsData.latitude != dataPoints[dataPoints.length - 1].lat)) {
 				var distanceTravelled = (
 											haversineDistance(
 																{ 
@@ -124,8 +125,8 @@ angular.module('gpsAssist', [])
 																	'lat': dataPoints[dataPoints.length - 1].lat 
 																}, 
 																{
-																	'long': currentLocation.longitude, 
-																	'lat': currentLocation.latitude 
+																	'long': gpsData.longitude, 
+																	'lat': gpsData.latitude 
 																}
 															)
 										);
@@ -149,14 +150,14 @@ angular.module('gpsAssist', [])
 		/*
 		* If we have passed the time resolution value has been passed, store another data point about the trip
 		*/
-		if ((dataPoints[0] === undefined) || ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
-			var gpsAltitude = currentLocation.altitude.replace("m", "");
+		if ((typeof dataPoints !== "undefined" ) && ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
+			var gpsAltitude = gpsData.altitude.replace("m", "");
 
 			dataPoints.push({
-								'lat' : currentLocation.lat,
-								'long' : currentLocation.long,
+								'lat' : gpsData.latitude,
+								'long' : gpsData.longitude,
 								'timestamp' : Date.now(),
-								'speed' : currentLocation.latitude.speed,
+								'speed' : gpsData.speed,
 								'altitude' : gpsAltitude,
 								'distance' : distanceTravelled
 							});
@@ -343,8 +344,8 @@ angular.module('gpsAssist', [])
 			return speedConversion();
 		},
 
-		updateTrip: function( currentLong, currentLat, checkFrequency ) {
-			return updateTrip( currentLong, currentLat, checkFrequency );
+		updateTrip: function( gpsData, checkFrequency ) {
+			return updateTrip( gpsData, checkFrequency );
 		},
 
 		startGPS: function() {
