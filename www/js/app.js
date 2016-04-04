@@ -166,6 +166,8 @@ angular.module(
   $ionicConfigProvider.views.transition('none');
   $ionicConfigProvider.scrolling.jsScrolling(false);
   
+  $ionicConfigProvider.navBar.alignTitle('center');
+  
   // Set a global timeout on notification messages
   growlProvider.globalTimeToLive(1200);
   growlProvider.globalDisableCountDown(true);
