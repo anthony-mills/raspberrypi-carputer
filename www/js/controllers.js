@@ -132,7 +132,9 @@ angular.module('landcruiser.controllers', [])
  
   } 
 
-  // Update the number of items in the playlist
+  /**
+  * Update the number of items in the playlist
+  */
   $scope.updateQueueLength = function() {
     var playlistSongs = mpdAssist.getQueue();
     $scope.playlistCount = playlistSongs.length; 
@@ -140,7 +142,6 @@ angular.module('landcruiser.controllers', [])
 
   /**
   * Stop the music
-  *
   */
   $scope.stopSong = function() {
     mpdClient.stop();
@@ -337,6 +338,12 @@ angular.module('landcruiser.controllers', [])
     }
   }
 
+  /**
+  * Remove playlist item from the queue
+  *
+  * @param integer itemId
+  * @param object playlistIndex
+  */
   $scope.removePlaylistItem = function( itemId, playlistIndex ) {
     $scope.playlistSongs.splice(playlistIndex, 1);
     $scope.playlistCount--;
@@ -470,7 +477,7 @@ angular.module('landcruiser.controllers', [])
   }
 })
 
-/*
+/**
 * Display the current location of the car on a map
 */
 .controller('LocationCtrl', function($scope, $interval, contentFormatting) {
@@ -503,6 +510,7 @@ angular.module('landcruiser.controllers', [])
     $scope.currentDate = contentFormatting.getTime();
   }, 1000);
 
+  // Update the location of the car
   $interval(function() {
     $scope.updateLocation();
   }, 5000);
@@ -510,7 +518,7 @@ angular.module('landcruiser.controllers', [])
   $scope.updateLocation();  
 })
 
-/*
+/**
 * Display the car trip meter
 */
 .controller('TripMeterCtrl', function( $scope, $interval, contentFormatting, mpdAssist, gpsAssist, uiGmapGoogleMapApi ) {
@@ -542,6 +550,10 @@ angular.module('landcruiser.controllers', [])
     var topSpeed = 0; 
     var carLog = [];
 
+    if (typeof tripData.data_points =="undefined") {
+      return;
+    }
+    
     for (var i = 0; i < tripData.data_points.length; i++) { 
 
       if (tripData.data_points[i].distance > 0) {
@@ -580,13 +592,19 @@ angular.module('landcruiser.controllers', [])
     // Calculate the optimum zoom level given the distance traversed
     var mapZoom = function() {
       var latAdjustment = Math.cos( Math.PI * lastPos.lat / 180.0 );
-
       var latArg = 6378140 * 464 * latAdjustment / ( (tripDistance * 1000) * 256.0 );
 
       return Math.floor( Math.log( latArg ) / Math.log( 2.0 ) );
     }
 
-    $scope.tripMap = {center: {latitude: lastPos.lat, longitude: lastPos.long }, zoom: mapZoom(), bounds: {}};
+    $scope.tripMap = {
+                        center: {
+                                  latitude: lastPos.lat, 
+                                  longitude: lastPos.long 
+                                }, 
+                        zoom: mapZoom(), 
+                        bounds: {}
+                     };
 
     $scope.polylines = [];
 
@@ -598,7 +616,7 @@ angular.module('landcruiser.controllers', [])
               path: carLog,
               stroke: {
                   color: '#000',
-                  weight: 2
+                  weight: 3
               },
               editable: false,
               draggable: false,
@@ -636,5 +654,4 @@ angular.module('landcruiser.controllers', [])
 
     return false; 
   }
-
 })
