@@ -323,7 +323,7 @@ angular.module('landcruiser.controllers', [])
 /**
 * Allow management of the current music playlist queue
 */
-.controller('CurrentQueueCtrl', function( $scope, $interval,$timeout, growl, mpdAssist ) {
+.controller('CurrentQueueCtrl', function( $scope, $interval, $timeout, growl, mpdAssist ) {
 
   $scope.playlistSongs = {};
   $scope.playlistCount = 0;
@@ -356,6 +356,9 @@ angular.module('landcruiser.controllers', [])
     growl.success("Song removed from play queue");
   }
 
+  /**
+  * Empty the current MPD play queue
+  */
   $scope.wipePlaylist = function() {
     $scope.playlistCount = 0;
     $scope.playlistSongs = [];
@@ -367,6 +370,9 @@ angular.module('landcruiser.controllers', [])
     $scope.playlistCount = 0;
   }
 
+  /**
+  * Shuffle the contents of the MPD play queue
+  */
   $scope.shuffleQueue = function() {
     mpdClient.shuffleQueue();
 
@@ -451,6 +457,11 @@ angular.module('landcruiser.controllers', [])
     }
   });
 
+  /**
+  * Tell MPD to load the contents of a .m3u playlist file into the current play queue
+  *
+  * @param string playlistPath
+  */
   $scope.loadPlaylist = function( playlistPath ) {
     console.log("Adding playlist " + playlistPath + " to the play queue.");
 
@@ -484,6 +495,9 @@ angular.module('landcruiser.controllers', [])
   $scope.areaMap = null;
   $scope.currentDate = contentFormatting.getTime();
 
+  /**
+  * Update the location of the car marker on the map
+  */
   $scope.updateLocation = function() {
     var gpsData = window.localStorage['gps_data'];
 
@@ -542,6 +556,12 @@ angular.module('landcruiser.controllers', [])
   if (tripData) {
 
     var tripData = JSON.parse(tripData);
+
+    // If the trip is yet to contain any datapoints don't try and continue any further
+    if (typeof tripData.data_points =="undefined") {
+      return;
+    }
+
     tripData.time = contentFormatting.formatSeconds( tripData.time / 1000 )
 
     var avgSpeed = 0;
@@ -549,10 +569,6 @@ angular.module('landcruiser.controllers', [])
     var tripDistance = 0;
     var topSpeed = 0; 
     var carLog = [];
-
-    if (typeof tripData.data_points =="undefined") {
-      return;
-    }
     
     for (var i = 0; i < tripData.data_points.length; i++) { 
 

@@ -111,6 +111,7 @@ angular.module('gpsAssist', [])
 
 		var tripData = window.localStorage['trip_data'];
 		var dataPoints = [];
+		var gpsAltitude = gpsData.altitude.replace("m", "");
 
 		if (tripData) {
 			var tripData = JSON.parse( tripData );
@@ -141,17 +142,23 @@ angular.module('gpsAssist', [])
             } else {
                     var topSpeed = tripData.top_speed;
             }
+
+            if (gpsAltitude > tripData.highest_altitude) {
+                    var highestAltitude = gpsAltitude;
+            } else {
+                    var highestAltitude = tripData.highest_altitude;
+            }            
 		} else {
 			var distanceTravelled = 0;
 			var tripTime = 0;
 			var topSpeed = 0;
+			var highestAltitude = 0;
 		}
 
 		/*
 		* If we have passed the time resolution value has been passed, store another data point about the trip
 		*/
 		if ((typeof dataPoints !== "undefined" ) && ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
-			var gpsAltitude = gpsData.altitude.replace("m", "");
 
 			dataPoints.push({
 								'lat' : gpsData.latitude,
@@ -166,7 +173,8 @@ angular.module('gpsAssist', [])
 		var tripDetails = {
 			'distance' : Math.round( distanceTravelled, 2 ),
 			'time' : tripTime,
-            'top_speed' : topSpeed,			
+            'top_speed' : topSpeed,	
+            'highest_altitude' : highestAltitude,            		
 			'data_points' : dataPoints
 		}		
 
