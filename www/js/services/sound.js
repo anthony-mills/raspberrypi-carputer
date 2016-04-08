@@ -79,6 +79,7 @@ angular.module('landcruiser.sound', [])
 	* Find the album art for an artist
 	*
 	* @param string artistName
+	* @param string imageSize
 	*
 	* @return string albumArt
 	*/
