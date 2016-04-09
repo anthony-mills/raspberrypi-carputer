@@ -232,7 +232,7 @@ angular.module('gpsAssist', [])
 				window.localStorage['speed_limit'] = JSON.stringify(speedData);
 			} else {
 				var speedData = {
-					'speed_limit' : 'Unkown',
+					'speed_limit' : 'Unknown',
 					'age' : Date.now()
 				}
 				window.localStorage['speed_limit'] = JSON.stringify(speedData);				
