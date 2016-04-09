@@ -593,7 +593,14 @@ angular.module('landcruiser.controllers', [])
     $scope.avgAltitude = Math.round(avgAltitude / carLog.length);
     $scope.avgSpeed = Math.round(avgSpeed / carLog.length);   
     $scope.tripDistance = Math.round(tripDistance);
-    $scope.topSpeed = tripData.top_speed;
+
+    if (tripData.top_speed) {
+      $scope.topSpeed = tripData.top_speed;
+    }
+
+    if (tripData.highest_altitude) {
+      $scope.highest_altitude = tripData.highest_altitude;
+    }
 
     // Only show a map if we have gone at least 1km
     if (tripDistance < 1) {

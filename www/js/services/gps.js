@@ -118,7 +118,7 @@ angular.module('gpsAssist', [])
 
 			dataPoints = tripData.data_points;
 
-			if ((typeof dataPoints !== "undefined" ) && (gpsData.longitude != dataPoints[dataPoints.length - 1].long) && (gpsData.latitude != dataPoints[dataPoints.length - 1].lat)) {
+			if ((typeof dataPoints !== "undefined" ) && (typeof dataPoints[dataPoints.length - 1] !=='undefined') && (gpsData.longitude != dataPoints[dataPoints.length - 1].long) && (gpsData.latitude != dataPoints[dataPoints.length - 1].lat)) {
 				var distanceTravelled = (
 											haversineDistance(
 																{ 
@@ -158,7 +158,7 @@ angular.module('gpsAssist', [])
 		/*
 		* If we have passed the time resolution value has been passed, store another data point about the trip
 		*/
-		if ((typeof dataPoints !== "undefined" ) && ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
+		if ((typeof dataPoints !== "undefined" ) && (typeof dataPoints[dataPoints.length-1]!=='undefined') && ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
 
 			dataPoints.push({
 								'lat' : gpsData.latitude,
