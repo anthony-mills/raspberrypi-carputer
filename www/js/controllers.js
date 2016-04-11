@@ -1,6 +1,6 @@
 angular.module('landcruiser.controllers', [])
 
-.controller('AppCtrl', function( $scope, $interval, gpsAssist ) {
+.controller('AppCtrl', function( $scope, $interval, gpsAssist, contentFormatting ) {
 
   /**
   * Get the GPS data from GPSD for the location panel
@@ -8,10 +8,15 @@ angular.module('landcruiser.controllers', [])
   * Default frequency is every second. The interval can prbably be increased for a more responsive speed readout on systems using a Raspberry Pi Model 3
   */
   var updateFrequency = 1000;
+  $scope.currentDate = contentFormatting.getTime();
 
   $scope.gpsData = {}
 
   $scope.getGPS = $interval(function() {
+
+    // Update the current tiem / Data
+    $scope.currentDate = contentFormatting.getTime();
+
     gpsAssist.startGPS().then(function(gpsData) {
       
       if ((gpsData.latitude != 'Unknown') && (gpsData.longitude !='Unknown')) {
@@ -33,7 +38,6 @@ angular.module('landcruiser.controllers', [])
 
   $scope.mpdStatus = "Not connected";
   $scope.currentlyPlaying = false;
-  $scope.currentDate = '';
   $scope.playState = mpdClient.getPlaystate();
 
   var playbackSettings = window.localStorage['playback_settings'];
@@ -59,7 +63,6 @@ angular.module('landcruiser.controllers', [])
   }
 
   $scope.checkConnection = $interval(function() {
-    $scope.currentDate = contentFormatting.getTime();
 
     var mpdState = mpdClient.getState();    
 
@@ -108,8 +111,6 @@ angular.module('landcruiser.controllers', [])
       $scope.mpdStatus = "Not connected";
     }
   }, 1000);
-
-  $scope.currentDate = contentFormatting.getTime();
 
   /**
   * Paused the music
@@ -314,8 +315,13 @@ angular.module('landcruiser.controllers', [])
   * @param object checkObj
   */
   $scope.isEmpty = function ( checkObj ) {
-      for (var i in checkObj) if (checkObj.hasOwnProperty(i)) return false;
-      return true;
+    for (var i in checkObj) {
+      if (checkObj.hasOwnProperty(i)) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   };
  
 })
@@ -333,7 +339,7 @@ angular.module('landcruiser.controllers', [])
     $scope.playlistSongs = mpdAssist.getQueue();
     $scope.playlistCount = $scope.playlistSongs.length;
 
-    if ($scope.playlistLoading) {
+    if ( $scope.playlistLoading ) {
       $scope.playlistLoading = false; 
     }
   }
@@ -493,7 +499,6 @@ angular.module('landcruiser.controllers', [])
 */
 .controller('LocationCtrl', function($scope, $interval, contentFormatting) {
   $scope.areaMap = null;
-  $scope.currentDate = contentFormatting.getTime();
 
   /**
   * Update the location of the car marker on the map
@@ -519,11 +524,6 @@ angular.module('landcruiser.controllers', [])
     }
   }
 
-  // Update the current time
-  $interval(function() {
-    $scope.currentDate = contentFormatting.getTime();
-  }, 1000);
-
   // Update the location of the car
   $interval(function() {
     $scope.updateLocation();
@@ -537,13 +537,6 @@ angular.module('landcruiser.controllers', [])
 */
 .controller('TripMeterCtrl', function( $scope, $interval, contentFormatting, mpdAssist, gpsAssist, uiGmapGoogleMapApi ) {
   $scope.tripData = '';
-
-  $scope.currentDate = contentFormatting.getTime();
-
-  // Update the current time
-  $interval(function() {
-    $scope.currentDate = contentFormatting.getTime();
-  }, 1000);
 
   // Reset the stored trip data
   $scope.resetTrip = function() {
