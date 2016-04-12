@@ -168,7 +168,7 @@ angular.module('landcruiser.sound', [])
 	* Add the url for an artists album image to the 
 	* local storage cache
 	*
-	* @param string artistName
+	* @param string artistSlug
 	* @param string imageUrl
 	*/	
 	function addAlbumArt( artistSlug, imageUrl )

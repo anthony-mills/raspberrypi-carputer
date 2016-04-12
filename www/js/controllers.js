@@ -94,6 +94,7 @@ angular.module('landcruiser.controllers', [])
             nowPlaying.playTime.formatted = contentFormatting.formatSeconds( nowPlaying.playTime.raw );
 
             $scope.currentlyPlaying = nowPlaying;
+
           } else if ( ( $scope.playState === 'play' ) && ($scope.currentlyPlaying.playTime.formatted === $scope.currentlyPlaying.duration.formatted)) {
 
             // Song has ended get the new song and update the queue length
@@ -114,7 +115,6 @@ angular.module('landcruiser.controllers', [])
 
   /**
   * Paused the music
-  *
   */
   $scope.pauseMusic = function() {
     if ($scope.playState === 'play') {
@@ -277,13 +277,14 @@ angular.module('landcruiser.controllers', [])
 
   $timeout(function(){
     if (!$scope.directoryContents) {
-      console.log('Timeout: reloading!');
+      console.log('Timeout trying to load directory contents, attempting reload');
+
       $state.go($state.current, {}, {reload: true});
     }
   }, 2000); 
 
   /**
-  * Add all of the files living under a playlist to the queue
+  * Add all of the files for a directory to the queue
   *
   * @param dirPath
   */
@@ -298,7 +299,7 @@ angular.module('landcruiser.controllers', [])
   }
 
   /**
-  * Add a song by its queue id
+  * Add a song to the play queue via its file path
   *
   * @param integer songPath
   */
