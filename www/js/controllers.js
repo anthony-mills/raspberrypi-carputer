@@ -548,6 +548,9 @@ angular.module('landcruiser.controllers', [])
 
   if (tripData) {
 
+    // Create a URL obj allowing for downloading the current trip data points
+    $scope.exportLink = window.URL.createObjectURL(new Blob([tripData], {type: "application/json"}));
+
     var tripData = JSON.parse(tripData);
 
     // If the trip is yet to contain any datapoints don't try and continue any further
