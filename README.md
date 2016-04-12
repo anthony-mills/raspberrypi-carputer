@@ -21,6 +21,12 @@ GPS functionality can be tested without an active GPS fix or even a GPS device. 
 
 This will force the service to read a static GPS json object from the www/php/data/gps_data.json file. By changing the location values in this file a specific location, altitude or speed can be spoofed to test functionality.
 
+# Trip Data Log
+
+By default the system will log a data point about the cars location data ( speed, location , altitutude ) every 60 seconds during a trip to a JSON object that persists using the HTML5 local storage API. This allows for the calculation of average speeds etc along with being able to map the trip using Google maps.
+
+The data never leaves the local system but at the end of a trip you may want to delete the data associated with a trip due to privacy reasons. To achieve this simply select the "Reset Tripmeter" option on the Tripmeter page to delete the data under the trip_data key. In another use case a button has now also been added to the Trip Meter page that will download the trip_data JSON object as a file to the system for later analysis / testing / debugging.
+
 # Credits
 
 This project makes the use of a number of third party Open Source libraries. You are all fantastic! Thank you for all your hardwork its much appreciated!
@@ -39,6 +45,7 @@ This project makes the use of a number of third party Open Source libraries. You
 In the near future the following features are planned:
 
 * Ability to directly skip to a band or folder in the file browser view by the first letter of its name. This will help save time when trying to find an artist when using larger collections of music.
+* A settings page allowing the user to change system wide settings such as if the trip loger is active etc.
 
 # Screenshots
 
