@@ -196,8 +196,7 @@ angular.module('landcruiser.sound', [])
 	}
 
 	/**
-	* Find playlists within a directory
-	* MPD filesystem
+	* Find playlists within the MPD filesystem
 	*
 	* @param string dirPath
 	* 
@@ -233,8 +232,7 @@ angular.module('landcruiser.sound', [])
 	}
 
 	/**
-	* Get the contents of a directory on the 
-	* MPD filesystem
+	* Get the contents of a directory on the MPD filesystem
 	*
 	* @param string dirPath
 	* 
@@ -265,7 +263,7 @@ angular.module('landcruiser.sound', [])
 							'duration' : contentFormatting.formatSeconds(metaData.time),
 							'artwork' : albumArt
 						}
-						//console.log(itemData);
+
 					}
 				} else {
 					var objPath = directoryItem.getPath();
