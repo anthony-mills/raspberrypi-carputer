@@ -7,6 +7,8 @@ The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http
 
 The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli and PHP5-curl packages must be installed on the system. The application also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This API is poorly supported so either Chromium or Chrome needs to be used for displaying the application.
 
+The UI was designed for use on a car computer built on the Raspberry Pi platform ( has been tested with the 2 & 3 Model B ) combined with the official 7 inch Raspberry Pi touch screen display (800x480). Although it will run happily at other resolutions with the majority of development and testing taking place in [Chromium](https://www.chromium.org/Home) on a standard desktop computer.
+
 # Installation
 
 * Install all of the required dependencies.
@@ -20,6 +22,12 @@ The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli
 GPS functionality can be tested without an active GPS fix or even a GPS device. To enable the GPS testing mode change the value of the gpsd-debug option in the application config file to true. 
 
 This will force the service to read a static GPS json object from the www/php/data/gps_data.json file. By changing the location values in this file a specific location, altitude or speed can be spoofed to test functionality.
+
+# Trip Data Log
+
+By default the system will log a data point about the cars location data ( speed, location , altitutude ) every 60 seconds during a trip to a JSON object that persists using the HTML5 local storage API. This allows for the calculation of average speeds etc along with being able to map the trip using Google maps.
+
+The data never leaves the local system but at the end of a trip you may want to delete the data associated with a trip due to privacy reasons. To achieve this simply select the "Reset Tripmeter" option on the Tripmeter page to delete the data under the trip_data key. In another use case a button has now also been added to the Trip Meter page that will download the trip_data JSON object as a file to the system for later analysis / testing / debugging.
 
 # Credits
 
@@ -39,6 +47,8 @@ This project makes the use of a number of third party Open Source libraries. You
 In the near future the following features are planned:
 
 * Ability to directly skip to a band or folder in the file browser view by the first letter of its name. This will help save time when trying to find an artist when using larger collections of music.
+* A settings page allowing the user to change system wide settings such as if the trip loger is active etc.
+* The ability to save a play queue to the MPD filesystem as a playlist
 
 # Screenshots
 

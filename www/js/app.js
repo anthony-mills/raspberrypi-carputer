@@ -34,7 +34,7 @@ angular.module(
   };
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, ImgCacheProvider, growlProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $compileProvider, ImgCacheProvider, growlProvider) {
   $stateProvider
 
     // Handler for the side menu
@@ -159,6 +159,8 @@ angular.module(
   });
 
   ImgCacheProvider.manualInit = true;  
+
+  $compileProvider.aHrefSanitizationWhitelist(/^s*(https?|ftp|blob|mailto|chrome-extension):/);
 
   /**
   * Disable the page transistions

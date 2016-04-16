@@ -52,9 +52,9 @@ angular.module('contentFormatting', [])
 	}
 
 	/**
-	* Format the day of the month into something a little more presentatable
+	* Format the day of the month into something a little more presentable
 	*	
-	* @param dateObj
+	* @param dayNumber
 	*
 	* @return string
 	*/
@@ -102,6 +102,10 @@ angular.module('contentFormatting', [])
 	return {
 		getTime: function() {
 			return getTime();
+		},
+
+		dateFormat: function( dayNumber ) {
+			return dateFormat( dayNumber );
 		},
 
 		formatSeconds: function( timeSeconds ) {

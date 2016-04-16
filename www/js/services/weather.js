@@ -1,12 +1,12 @@
 angular.module('weatherAssist', [])
 
 /**
- * Service providing playback and mpd queue functionality 
+ * Service providing weather retrival functionality 
  */
 .factory('weatherAssist', function($http, $log, $rootScope) {
 	
 	/**
-	* Get the weather forecast for an area
+	* Get the weather forecast for a given location
 	*
 	* @param integer latitude
 	* @param integer longitude
@@ -20,8 +20,10 @@ angular.module('weatherAssist', [])
 			var weatherData = JSON.parse(weatherData);
 		}
 
-		// Cache weather data for an hour
+		// Cache the weather data for an hour
 		if (!weatherData || ( (Date.now() - weatherData.age) > 3600) ) {
+			window.localStorage['weather_forecast'] =  false;
+			
 			var weatherRequest = getWeatherCall('/php/services.php?action=weather-forecast&location=' + latitude + ',' + longitude);
 
 			weatherRequest.then(function(resultSet) {
@@ -29,6 +31,7 @@ angular.module('weatherAssist', [])
 				// Check first for an error message
 				if ( resultSet.data.Message != undefined ) {
 					console.error('Weather API Error: ' + resultSet.data.Message);
+
 					return;
 				}
 

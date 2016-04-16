@@ -54,10 +54,22 @@
             </div>
               
             <div class="button-bar"> 
-              <button class="button button-assertive icon-left ion-ios-stopwatch-outline" ng-click="resetTrip()">Reset</button>
+              <button class="button button-assertive icon-left ion-ios-stopwatch-outline" ng-click="resetTrip()">
+                Reset
+              </button>
 
+              <a download="trip-data.json" href="{{exportLink}}" class="button button-positive icon-left ion-android-share-alt">
+                  Export Data
+              </a>
+
+            </div> 
+
+            <br />
+
+            <div class="button-bar"> 
               <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
-            </div>             
+            </div>                   
+
           </div>
         </div>
 
