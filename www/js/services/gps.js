@@ -158,7 +158,7 @@ angular.module('gpsAssist', [])
 		/*
 		* If we have passed the time resolution value has been passed, store another data point about the trip
 		*/
-		if ((typeof dataPoints !== "undefined" ) && (typeof dataPoints[dataPoints.length-1]!=='undefined') && ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
+		if ((typeof dataPoints[0] === "undefined" ) || (typeof dataPoints !== "undefined" ) && (typeof dataPoints[dataPoints.length-1]!=='undefined') && ((Date.now() - dataPoints[dataPoints.length-1].timestamp) / 1000 > dataResolution)) {
 
 			dataPoints.push({
 								'lat' : gpsData.latitude,
