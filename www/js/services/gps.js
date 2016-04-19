@@ -106,8 +106,8 @@ angular.module('gpsAssist', [])
 	**/
 	function updateTrip( gpsData, checkFrequency )
 	{
-		// Frequency to store a trip data point
-		var dataResolution = 60;
+		// Frequency to store a trip data point in seconds
+		var dataResolution = 30;
 
 		var tripData = window.localStorage['trip_data'];
 		var dataPoints = [];
@@ -137,16 +137,27 @@ angular.module('gpsAssist', [])
 
             var tripTime = parseInt(tripData.time) + parseInt(checkFrequency);
 
-            if (gpsData.speed > tripData.top_speed) {
-                    var topSpeed = gpsData.speed;
+            if ((!isNaN(gpsData.speed)) && (parseInt(gpsData.speed) > parseInt(tripData.top_speed))) {
+            	/**
+            	* If the speed is under 80km/h assume its correct as a top speed any higher check it isn't anymore than 30km/h
+            	* faster than the last stored datapoint.
+            	* The extra scrutiny has been added to try and stamp out invalid one off GPS speeds recieved such as 750km/h, 
+            	* my car simply can't go that fast :-(
+            	*/
+            	if (parseInt(gpsData.speed) < 80) {
+                    var topSpeed = parseInt(gpsData.speed);
+            	} else if ((typeof dataPoints[dataPoints.length - 1].speed !=="undefined") && 
+            			  (parseInt(gpsData.speed) - parseInt(dataPoints[dataPoints.length - 1].speed) < 30)) {
+            		var topSpeed = parseInt(gpsData.speed);
+            	}
             } else {
-                    var topSpeed = tripData.top_speed;
+                    var topSpeed = parseInt(tripData.top_speed);
             }
 
-            if (gpsAltitude > tripData.highest_altitude) {
-                    var highestAltitude = gpsAltitude;
+            if ((!isNaN(gpsAltitude)) && (parseInt(gpsAltitude) > parseInt(tripData.highest_altitude))) {
+                    var highestAltitude = parseInt(gpsAltitude);
             } else {
-                    var highestAltitude = tripData.highest_altitude;
+                    var highestAltitude = parseInt(tripData.highest_altitude);
             }            
 		} else {
 			var distanceTravelled = 0;
