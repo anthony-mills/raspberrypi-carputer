@@ -384,8 +384,10 @@ angular.module('landcruiser.controllers', [])
     mpdClient.shuffleQueue();
 
     $timeout(function() {
+      console.log('Refreshing play queue');
+      
       $scope.playQueue();
-    }, 800);
+    }, 5000);
 
     growl.success("Play queue contents shuffled"); 
   }
