@@ -61,7 +61,11 @@
 }
 
 .night-mode-theme .exit-night {
-  padding-top: 30px;
+  padding-top: 10px;
+}
+
+.night-mode {
+  padding-top: 5px;
 }
 
 .night-wrap {
