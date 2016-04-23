@@ -9,6 +9,14 @@
   font-weight: bold;
 }
 
+.track-details {
+	margin-left: 5px;
+}
+
+.track-details h2{
+	margin-left: -3px;
+}
+
 .now-playing-image {
   padding: 20px;
 }

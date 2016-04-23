@@ -1,0 +1,59 @@
+<div class="card" ng-if="currentlyPlaying">
+  <div class="item item-divider page-heading bar-header page-heading heading-text" >
+       Now Playing: 
+       {{currentlyPlaying.name}} - {{currentlyPlaying.playTime.formatted}} / {{currentlyPlaying.duration.formatted}}
+  </div>
+
+  <div class="row">
+    <div class="col-35">
+      <img class="now-playing-image" img-cache ic-src="{{currentlyPlaying.image}}">
+    </div>
+
+    <div class="col-65"> 
+
+      <div ng-if="currentlyPlaying.artist" class="track-details">
+        <h2>{{currentlyPlaying.name}}</h2>
+
+        <strong>{{currentlyPlaying.artist}}</strong>
+
+        <br />
+
+        <span class="song-album" ng-if="currentlyPlaying.album">
+          {{currentlyPlaying.album}}
+          <span ng-if="currentlyPlaying.year">
+            ( {{currentlyPlaying.year}} )
+          </span>
+        </span>          
+      </div>
+
+      <div ng-else class="track-details">{{currentlyPlaying.name}}</div>
+
+      <div class="track-play-time track-details">
+        Now Playing: 
+        {{currentlyPlaying.playTime.formatted}} / {{currentlyPlaying.duration.formatted}}
+      </div>
+
+      <div ng-if="currentlyPlaying.next" class="track-details">
+        <strong>Next Up:</strong> 
+        <br />
+        <span ng-if="currentlyPlaying.next.artist">
+          {{currentlyPlaying.next.name}} - {{currentlyPlaying.next.artist}}
+          <br />
+          ( Duration: {{currentlyPlaying.next.duration}} )
+        </span>
+
+        <span ng-else>{{currentlyPlaying.next.name}}</span>
+      </div>
+    </div>
+
+  </div>   
+
+  <div class="button-bar">
+    <button ng-click="stopSong()" class="button button-assertive icon-right ion-stop">Stop</button>         
+
+    <button ng-if="playState == 'pause'"  ng-click="pauseMusic()" class="button button-positive icon-right ion-play">Resume</button>
+    <button ng-else ng-click="pauseMusic()" class="button button-positive icon-right ion-pause">Pause</button>
+
+    <button ng-if="currentlyPlaying.next.artist" ng-click="nextSong()" class="button button-positive icon-right ion-skip-forward">Next</button>              
+  </div>
+</div>    
