@@ -41,7 +41,7 @@ angular.module(
     .state('app', {
       url: '/app',
       abstract: true,
-      templateUrl: 'templates/menu.html',
+      templateUrl: 'templates/partials/menu.html',
       controller: 'AppCtrl'
     })
 
@@ -50,7 +50,7 @@ angular.module(
       url: '/home',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/home.html',
+          templateUrl: 'templates/pages/home.html',
           controller: 'HomeCtrl'
         }
       },
@@ -62,7 +62,7 @@ angular.module(
       url: '/music-files/:param1',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/files.html',
+          templateUrl: 'templates/pages/files.html',
           controller: 'FilesCtrl'
         }
       },
@@ -74,7 +74,7 @@ angular.module(
       url: '/night-mode',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/night-mode.html',
+          templateUrl: 'templates/pages/night-mode.html',
           controller: 'NightModeCtrl'
         }
       },
@@ -86,7 +86,7 @@ angular.module(
       url: '/playlists',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/playlists.html',
+          templateUrl: 'templates/pages/playlists.html',
           controller: 'PlaylistsCtrl'
         }
       },
@@ -98,7 +98,7 @@ angular.module(
       url: '/current-queue',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/current-queue.html',
+          templateUrl: 'templates/pages/current-queue.html',
           controller: 'CurrentQueueCtrl'
         }
       },
@@ -110,7 +110,7 @@ angular.module(
       url: '/weather',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/weather.html',
+          templateUrl: 'templates/pages/weather.html',
           controller: 'WeatherCtrl'
         }
       }
@@ -121,7 +121,7 @@ angular.module(
       url: '/car-location',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/car-location.html',
+          templateUrl: 'templates/pages/car-location.html',
           controller: 'LocationCtrl'
         }
       }
@@ -132,7 +132,7 @@ angular.module(
       url: '/trip-meter',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/trip-meter.html',
+          templateUrl: 'templates/pages/trip-meter.html',
           controller: 'TripMeterCtrl'
         }
       }
@@ -143,7 +143,7 @@ angular.module(
       url: '/reference',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/reference.html',
+          templateUrl: 'templates/pages/reference.html',
           controller: 'ReferenceCtrl'
         }
       }
