@@ -72,3 +72,7 @@
   text-rendering: optimizeLegibility;   
   color: #ccc !important;
 }
+
+.weather-outlook {
+  line-height: 25px;
+}
