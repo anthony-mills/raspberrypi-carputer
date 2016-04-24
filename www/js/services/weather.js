@@ -60,6 +60,65 @@ angular.module('weatherAssist', [])
 	}
 
 	/**
+	* Rewrite the here.com weather icon into the location of a local image 
+	*
+	* @param string iconUrl
+	*
+	* @return string weatherIcon
+	*/
+	function getWeatherIcon( iconUrl )
+	{
+		var iconFile = iconUrl.substring(iconUrl.lastIndexOf('/')+1);
+
+		iconFile = parseInt(iconFile.slice(0, -4));
+		var weatherIcon = 'sunny.png';
+
+		if (iconFile === 1) {
+
+			var weatherIcon = 'sunny.png';
+
+		} else if ( iconFile > 1 && iconFile < 5 || iconFile === 9 || iconFile === 12 || iconFile === 17 || iconFile === 25 ) {
+			
+			var weatherIcon = 'clouds.png';
+
+		} else if ( iconFile === 5 || iconFile === 10 || iconFile === 22 || iconFile === 26 ) {
+			
+			var weatherIcon = 'rain.png';			
+
+		} else if ( iconFile === 6 || iconFile === 7 || iconFile === 11 || iconFile === 15 ) {
+			
+			var weatherIcon = 'stormy.png';
+
+		} else if ( iconFile === 8 || iconFile === 13 ) {
+			
+			var weatherIcon = 'haze.png';
+
+		} else if ( iconFile === 14 || iconFile === 21 || iconFile === 23 || iconFile === 24 ) {
+			
+			var weatherIcon = 'moon_clouds.png';
+
+		} else if ( iconFile === 16 ) {
+			
+			var weatherIcon = 'clear_night.png';
+
+		} else if ( iconFile === 18 || iconFile === 19 || iconFile === 20 || iconFile === 28 ) {
+			
+			var weatherIcon = 'snow.png';
+
+		} else if ( iconFile === 27 ) {
+
+			var weatherIcon = 'showers.png';
+
+		} else if ( iconFile > 28 && iconFile < 33) {
+			
+			var weatherIcon = 'windy.png';
+
+		} 
+
+		return '/img/weather_icons/' +  weatherIcon;
+	}
+
+	/**
 	* Getweather data from here.com
 	*
 	* @param string dataEndpoint
@@ -75,6 +134,10 @@ angular.module('weatherAssist', [])
 	return {
 		getForecast: function(latitude, longitude) {
 			return getForecast(latitude, longitude);
+		},
+
+		getWeatherIcon: function(iconUrl) {
+			return getWeatherIcon(iconUrl);
 		}
 
 	}

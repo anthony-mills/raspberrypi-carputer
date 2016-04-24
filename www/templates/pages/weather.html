@@ -26,51 +26,54 @@
 
             <div class="item item-text-wrap">
               <div class="row">
-                <div class="col-80 pad-column">
+                <div class="col-50 pad-column">
+                  <img src="{{ getIcon(weatherItem.iconLink) }}" />
+                </div>
+                
+                <div class="col-50 pad-column">
                   <p>{{weatherItem.description}}</p>
+
+                  <br />
+
+                  <ul>
+                    <li>
+                      <p> 
+                        <strong>Min Temp:</strong> 
+                        {{weatherItem.lowTemperature | number:0 | number }} Celcius
+                      </p>
+                    </li>
+
+                    <li>
+                      <p>
+                        <strong>Max Temp:</strong>
+                        {{weatherItem.highTemperature | number:0 | number }} Celcius
+                      </p>
+                    </li>
+
+                    <li>
+                      <p>
+                        <strong>Chance Of Rain:</strong>
+                        {{weatherItem.precipitationProbability}}%
+                      </p>
+                    </li>
+
+                    <li>
+                      <p>
+                        <strong>Humidity:</strong>
+                        {{weatherItem.humidity}}%
+                      </p>
+                    </li>   
+
+                    <li>
+                      <p>
+                        <strong>Wind:</strong>
+                        {{weatherItem.windSpeed | number:0 | number }}km/h {{weatherItem.windDescShort}}
+                      </p>
+                    </li>
+                  </ul>                  
                 </div>
 
-                <div class="col-20 pad-column">
-                  <img src="{{weatherItem.iconLink}}" />
-                </div>
               </div>
-
-              <ul>
-                <li>
-                  <p> 
-                    <strong>Min Temp:</strong> 
-                    {{weatherItem.lowTemperature | number:0 | number }} Celcius
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    <strong>Max Temp:</strong>
-                    {{weatherItem.highTemperature | number:0 | number }} Celcius
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    <strong>Chance Of Rain:</strong>
-                    {{weatherItem.precipitationProbability}}%
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    <strong>Humidity:</strong>
-                    {{weatherItem.humidity}}%
-                  </p>
-                </li>   
-
-                <li>
-                  <p>
-                    <strong>Wind:</strong>
-                    {{weatherItem.windSpeed | number:0 | number }}km/h {{weatherItem.windDescShort}}
-                  </p>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

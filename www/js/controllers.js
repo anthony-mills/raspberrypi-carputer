@@ -486,6 +486,10 @@ angular.module('landcruiser.controllers', [])
 .controller('WeatherCtrl', function($scope, weatherAssist) {
   $weatherConditions = null;
 
+  $scope.getIcon = function ( urlPath ) {
+    return weatherAssist.getWeatherIcon( urlPath );
+  }
+
   var gpsData = window.localStorage['gps_data'];
 
   if (gpsData) {
