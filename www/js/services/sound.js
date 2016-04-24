@@ -253,11 +253,14 @@ angular.module('landcruiser.sound', [])
 					if (typeof objPath != 'undefined') {
 						
 						var albumArt = findAlbumArt(directoryItem.getArtist());
+						var artistName = directoryItem.getArtist();
+						var itemIndex = artistName.charAt(0);
 
 						var itemData = {
 							'type' : 'file',
 							'path' : objPath,
-							'artist' : directoryItem.getArtist(),
+							'index' : itemIndex.toLowerCase(),
+							'artist' : artistName,
 							'album' : directoryItem.getAlbum(),
 							'track' : directoryItem.getTrack(),
 							'duration' : contentFormatting.formatSeconds(metaData.time),
@@ -270,11 +273,13 @@ angular.module('landcruiser.sound', [])
 
 					if (typeof objPath != 'undefined') {
 						var dirName = objPath.replace(/\//g, '<br />');					
+						var itemIndex = dirName.charAt(0);
 
 						var itemData = {
 							'name' : dirName,
 							'type' : 'directory',
 							'path' : objPath,
+							'index' : itemIndex.toLowerCase(),
 							'link' : encodeURIComponent(objPath.replace("/", "@!@")),
 							'artwork' : '/img/folder.png'
 						}

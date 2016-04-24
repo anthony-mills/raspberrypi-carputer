@@ -46,7 +46,6 @@ This project makes the use of a number of third party Open Source libraries. You
 
 In the near future the following features are planned:
 
-* Ability to directly skip to a band or folder in the file browser view by the first letter of its name. This will help save time when trying to find an artist when using larger collections of music.
 * A settings page allowing the user to change system wide settings such as if the trip loger is active etc.
 * The ability to save a play queue to the MPD filesystem as a playlist
 

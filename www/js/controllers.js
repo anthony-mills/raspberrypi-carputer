@@ -244,10 +244,17 @@ angular.module('landcruiser.controllers', [])
 /**
 * Browse and manage music files in the MPD servers filesystem
 */
-.controller('FilesCtrl', function( $scope, $state, $stateParams, $ionicHistory, $timeout, growl, mpdAssist) {
+.controller('FilesCtrl', function( $scope, $state, $stateParams, $anchorScroll, $location, $ionicHistory, $timeout, growl, mpdAssist) {
   $scope.mpdConn = mpdAssist.checkConnection();
   $scope.directoryContents = {};
   $scope.homeButton = 0;
+
+  $scope.scrollTo = function(id) {
+    $location.hash(id);
+
+    console.log('Scrolling to: ' + id);
+    $anchorScroll();
+  }
 
   $scope.goBack = function() {
     $ionicHistory.goBack();

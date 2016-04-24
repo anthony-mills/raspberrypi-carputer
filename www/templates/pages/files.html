@@ -39,44 +39,102 @@
               </div>
             </ion-item>
 
+            <ion-item class="item-text-wrap" ng-show="!isEmpty(directoryContents)">
+              Skip to:
+
+              <div class="file-index">
+                <button class="button button-positive file-index-button" ng-click="scrollTo('a')">A</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('b')">B</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('c')">C</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('d')">D</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('e')">E</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('f')">F</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('g')">G</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('h')">H</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('i')">I</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('j')">J</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('k')">K</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('l')">L</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('m')">M</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('o')">O</button> 
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('p')">P</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('q')">Q</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('r')">R</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('s')">S</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('t')">T</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('u')">U</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('v')">V</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('w')">W</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('x')">X</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('y')">Y</button>
+
+                <button class="button button-positive file-index-button" ng-click="scrollTo('v')">Z</button>
+              </div>
+            </ion-item>
+
             <ion-item class="item-text-wrap" ng-repeat="directoryItem in directoryContents">
-                <div ng-if="directoryItem.type === 'file'">
-                  <div class="row">
-                    <div class="col-33">
-                      
-                      <img img-cache ic-src="{{::directoryItem.artwork}}"/>
+              <div id="{{directoryItem.index}}">
+                  <div ng-if="directoryItem.type === 'file'">
+                    <div class="row">
+                      <div class="col-33">
+                        
+                        <img img-cache ic-src="{{::directoryItem.artwork}}"/>
+                      </div>
+
+                      <div class="col-66"> 
+                        <h2 ng-if="directoryItem.title && directoryItem.artist">{{::directoryItem.title}}</h2>
+                        <h2 ng-else ><div ng-bind-html="::formatPath(directoryItem.path)"></div></h2>
+
+                        <p>Duration: {{::directoryItem.duration}}</p>
+                      </div>
                     </div>
 
-                    <div class="col-66"> 
-                      <h2 ng-if="directoryItem.title && directoryItem.artist">{{::directoryItem.title}}</h2>
-                      <h2 ng-else ><div ng-bind-html="::formatPath(directoryItem.path)"></div></h2>
-
-                      <p>Duration: {{::directoryItem.duration}}</p>
+                    <div class="button-bar">
+                      <button class="button button-positive icon-left ion-plus-circled" ng-click="addSong(directoryItem.path)">Add To Queue</button>           
                     </div>
                   </div>
 
-                  <div class="button-bar">
-                    <button class="button button-positive icon-left ion-plus-circled" ng-click="addSong(directoryItem.path)">Add To Queue</button>           
-                  </div>
-                </div>
+                  <div ng-if="directoryItem.type === 'directory'">
 
-                <div ng-if="directoryItem.type === 'directory'">
+                    <div class="row">
+                      <div class="col-33">
+                        <img src="{{::directoryItem.artwork}}"/>
+                      </div>
 
-                  <div class="row">
-                    <div class="col-33">
-                      <img src="{{::directoryItem.artwork}}"/>
+                      <div class="col-66">                    
+                        <h2><div ng-bind-html="directoryItem.name"></div></h2>
+                      </div>
+                    </div>                   
+
+                    <div class="button-bar">
+                      <button class="button button-positive icon-left ion-plus-circled" ng-click="addDirectory(directoryItem.path)">Add To Queue</button> 
+                      <a class="button button-positive icon-left ion-log-in" href="#/app/music-files/{{::directoryItem.link}}">See Contents</a>                                     
                     </div>
-
-                    <div class="col-66">                    
-                      <h2><div ng-bind-html="directoryItem.name"></div></h2>
-                    </div>
-                  </div>                   
-
-                  <div class="button-bar">
-                    <button class="button button-positive icon-left ion-plus-circled" ng-click="addDirectory(directoryItem.path)">Add To Queue</button> 
-                    <a class="button button-positive icon-left ion-log-in" href="#/app/music-files/{{::directoryItem.link}}">See Contents</a>                                     
-                  </div>
-                </div>                
+                  </div>   
+              </div>             
             </ion-item>
 
             <div ng-if="homeButton" class="button-bar">
