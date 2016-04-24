@@ -268,8 +268,11 @@ angular.module('landcruiser.sound', [])
 				} else {
 					var objPath = directoryItem.getPath();
 
-					if (typeof objPath != 'undefined') {					
+					if (typeof objPath != 'undefined') {
+						var dirName = objPath.replace(/\//g, '<br />');					
+
 						var itemData = {
+							'name' : dirName,
 							'type' : 'directory',
 							'path' : objPath,
 							'link' : encodeURIComponent(objPath.replace("/", "@!@")),

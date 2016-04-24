@@ -253,10 +253,6 @@ angular.module('landcruiser.controllers', [])
     $ionicHistory.goBack();
   };  
 
-  $scope.formatPath = function (directoryPath) {
-    return directoryPath.replace(/\//g, '<br />');
-  }
-
   if ($stateParams.param1 === 'root') {
     basePath = '/';
   } else {
