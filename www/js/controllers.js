@@ -53,7 +53,9 @@ angular.module('landcruiser.controllers', [])
 
     window.localStorage['playback_settings'] = JSON.stringify(playbackSettings);
   } else {
+
     var playbackSettings = JSON.parse(playbackSettings);
+
     $scope.randomPlayback = playbackSettings.random;
     $scope.consumePlayback = playbackSettings.consume;
   }
@@ -69,6 +71,7 @@ angular.module('landcruiser.controllers', [])
     $scope.playState = mpdClient.getPlaystate();
 
     if (mpdState.connected) {
+
       $scope.mpdStatus = "Connected";
 
       if (!$scope.playlistCount) {
@@ -81,6 +84,7 @@ angular.module('landcruiser.controllers', [])
       }
 
       if ( $scope.playState === 'play') {
+
           if (typeof $scope.currentlyPlaying == "object") {
             var nowPlaying =  $scope.currentlyPlaying;
           } else {
@@ -158,9 +162,11 @@ angular.module('landcruiser.controllers', [])
     var songId = $scope.currentlyPlaying.next.id;
 
     console.log('Switching to song: ' + songId);
+
     mpdClient.stop();
     mpdClient.removeSongFromQueueById( $scope.currentlyPlaying.id );
     mpdClient.playById( songId );
+
     $scope.playState = 'play';
 
     $scope.updateQueueLength(); 
@@ -272,6 +278,7 @@ angular.module('landcruiser.controllers', [])
     $scope.homeButton = 1;
   }
   console.log('Getting path:' + basePath);
+
   $scope.dirData = mpdAssist.getDirectory(basePath);
 
   $scope.$watch('dirData', function ( dirData ) {
@@ -372,6 +379,7 @@ angular.module('landcruiser.controllers', [])
   $scope.wipePlaylist = function() {
     $scope.playlistCount = 0;
     $scope.playlistSongs = [];
+
     mpdClient.clearQueue(); 
 
     growl.success("Play queue cleared"); 
@@ -453,7 +461,9 @@ angular.module('landcruiser.controllers', [])
 */
 .controller('PlaylistsCtrl', function( $scope, growl, mpdAssist ) {
   $scope.storedPlaylists = '';
+
   mpdClient.lsPlaylists();
+
   $scope.PlaylistData = mpdClient.getPlaylists();
   $scope.$watch('PlaylistData', function (playlistData) {
 
@@ -559,12 +569,19 @@ angular.module('landcruiser.controllers', [])
   if (tripData) {
 
     // Create a URL obj allowing for downloading the current trip data points
-    $scope.exportLink = window.URL.createObjectURL(new Blob([tripData], {type: "application/json"}));
+    $scope.exportLink = window.URL.createObjectURL(
+                                                    new Blob(
+                                                              [tripData], 
+                                                              {
+                                                                type: "application/json"
+                                                              }
+                                                            )
+                                                  );
 
     var tripData = JSON.parse(tripData);
 
     // If the trip is yet to contain any datapoints don't try and continue any further
-    if (typeof tripData.data_points =="undefined") {
+    if (typeof tripData.data_points == "undefined") {
       return;
     }
 

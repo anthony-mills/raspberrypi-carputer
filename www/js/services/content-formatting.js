@@ -90,6 +90,7 @@ angular.module('contentFormatting', [])
 	{
 	    var date = new Date(1970,0,1);
 	    date.setSeconds(timeSeconds);
+	    
 	    var playTime = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
 
 	    if (playTime.substring(0, 3) == '00:') {
