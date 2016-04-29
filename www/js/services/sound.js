@@ -246,34 +246,36 @@ angular.module('landcruiser.sound', [])
 
 			directoryFiles.forEach(function(directoryItem){
 				var metaData = directoryItem.getMetadata();
-				console.log(metaData);
+
+				var artistName = directoryItem.getArtist();
+				
+				if (typeof artistName != 'undefined') {
+					var itemIndex = artistName.charAt(0);
+				} else {
+					var itemIndex = ' ';
+				}
+
 				if ((typeof metaData.directory === 'undefined') && (typeof metaData.playlist === 'undefined')) {
 					var objPath = directoryItem.getPath();
-
-					if (typeof objPath != 'undefined') {
 						
-						var albumArt = findAlbumArt(directoryItem.getArtist());
-						var artistName = directoryItem.getArtist();
-						var itemIndex = artistName.charAt(0);
+					var albumArt = findAlbumArt(directoryItem.getArtist());
 
-						var itemData = {
-							'type' : 'file',
-							'path' : objPath,
-							'index' : itemIndex.toLowerCase(),
-							'artist' : artistName,
-							'album' : directoryItem.getAlbum(),
-							'track' : directoryItem.getTrack(),
-							'duration' : contentFormatting.formatSeconds(metaData.time),
-							'artwork' : albumArt
-						}
-
+					var itemData = {
+						'type' : 'file',
+						'path' : objPath,
+						'index' : itemIndex.toLowerCase(),
+						'artist' : artistName,
+						'album' : directoryItem.getAlbum(),
+						'track' : directoryItem.getTrack(),
+						'duration' : contentFormatting.formatSeconds(metaData.time),
+						'artwork' : albumArt
 					}
+
 				} else {
 					var objPath = directoryItem.getPath();
 
 					if (typeof objPath != 'undefined') {
 						var dirName = objPath.replace(/\//g, '<br />');					
-						var itemIndex = dirName.charAt(0);
 
 						var itemData = {
 							'name' : dirName,
@@ -289,6 +291,7 @@ angular.module('landcruiser.sound', [])
 				directoryContents.push(itemData);
 			});
     	});
+		console.log(directoryContents);
 
 		return directoryContents;
 	}
