@@ -247,15 +247,15 @@ angular.module('landcruiser.sound', [])
 			directoryFiles.forEach(function(directoryItem){
 				var metaData = directoryItem.getMetadata();
 
-				var artistName = directoryItem.getArtist();
-				
-				if (typeof artistName != 'undefined') {
-					var itemIndex = artistName.charAt(0);
-				} else {
-					var itemIndex = ' ';
-				}
-
 				if ((typeof metaData.directory === 'undefined') && (typeof metaData.playlist === 'undefined')) {
+					var artistName = directoryItem.getArtist();
+					
+					if (typeof artistName != 'undefined') {
+						var itemIndex = artistName.charAt(0);
+					} else {
+						var itemIndex = ' ';
+					}
+
 					var objPath = directoryItem.getPath();
 						
 					var albumArt = findAlbumArt(directoryItem.getArtist());
@@ -276,7 +276,8 @@ angular.module('landcruiser.sound', [])
 
 					if (typeof objPath != 'undefined') {
 						var dirName = objPath.replace(/\//g, '<br />');					
-
+						var itemIndex = dirName.charAt(0);
+						
 						var itemData = {
 							'name' : dirName,
 							'type' : 'directory',
