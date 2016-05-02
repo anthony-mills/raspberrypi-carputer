@@ -39,68 +39,21 @@
               </div>
             </ion-item>
 
-            <ion-item class="item-text-wrap" ng-show="!isEmpty(directoryContents)">
+            <ion-item class="item-text-wrap" ng-if="directoryIndexes">
               Skip to:
 
               <div class="file-index">
-                <button class="button button-positive file-index-button" ng-click="scrollTo('a')">A</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('b')">B</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('c')">C</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('d')">D</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('e')">E</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('f')">F</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('g')">G</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('h')">H</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('i')">I</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('j')">J</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('k')">K</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('l')">L</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('m')">M</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('o')">O</button> 
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('p')">P</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('q')">Q</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('r')">R</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('s')">S</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('t')">T</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('u')">U</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('v')">V</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('w')">W</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('x')">X</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('y')">Y</button>
-
-                <button class="button button-positive file-index-button" ng-click="scrollTo('v')">Z</button>
+                <button ng-repeat="directoryIndex in directoryIndexes track by $index" class="button button-positive file-index-button" ng-click="scrollTo( directoryIndex )">
+                  {{ directoryIndex | uppercase }}
+                </button>
               </div>
             </ion-item>
 
-            <ion-item class="item-text-wrap" ng-repeat="directoryItem in directoryContents">
-              <div id="{{directoryItem.index}}">
+            <ion-item class="item-text-wrap" ng-repeat="directoryItem in directoryContents track by $index">
+              <div id="{{::directoryItem.index}}">
                   <div ng-if="directoryItem.type === 'file'">
                     <div class="row">
-                      <div class="col-33">
-                        
+                      <div class="col-33">                       
                         <img img-cache ic-src="{{::directoryItem.artwork}}"/>
                       </div>
 

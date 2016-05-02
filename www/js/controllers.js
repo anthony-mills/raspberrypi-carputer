@@ -253,6 +253,7 @@ angular.module('landcruiser.controllers', [])
 .controller('FilesCtrl', function( $scope, $state, $stateParams, $anchorScroll, $location, $ionicHistory, $timeout, growl, mpdAssist) {
   $scope.mpdConn = mpdAssist.checkConnection();
   $scope.directoryContents = {};
+  $scope.directoryIndexes = false;
   $scope.homeButton = 0;
 
   $scope.scrollTo = function(id) {
@@ -277,12 +278,19 @@ angular.module('landcruiser.controllers', [])
     // Show a home button in the header if its not the root directory
     $scope.homeButton = 1;
   }
-  console.log('Getting path:' + basePath);
 
   $scope.dirData = mpdAssist.getDirectory(basePath);
 
   $scope.$watch('dirData', function ( dirData ) {
-    $scope.directoryContents = dirData;
+    $scope.directoryContents = dirData.directoryContents;
+
+    // Only show the letter indexes in the root directory of the filesystem
+    if ((!basePath) || (basePath === '/')) {
+      $scope.directoryIndexes = dirData.directoryIndexes;      
+    } else {
+      $scope.directoryIndexes = false;
+    }
+
   });
 
   $timeout(function(){
@@ -291,7 +299,7 @@ angular.module('landcruiser.controllers', [])
 
       $state.go($state.current, {}, {reload: true});
     }
-  }, 2000); 
+  }, 5000); 
 
   /**
   * Add all of the files for a directory to the queue

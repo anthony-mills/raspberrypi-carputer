@@ -241,8 +241,9 @@ angular.module('landcruiser.sound', [])
 	function getDirectory( dirPath )
 	{
 		var directoryContents = [];
+		var directoryIndexes = [];
 
-		mpdClient.getDirectoryContents(dirPath, function(directoryFiles){
+		mpdClient.getDirectoryContents(dirPath, function( directoryFiles ){
 
 			directoryFiles.forEach(function(directoryItem){
 				var metaData = directoryItem.getMetadata();
@@ -277,7 +278,7 @@ angular.module('landcruiser.sound', [])
 					if (typeof objPath != 'undefined') {
 						var dirName = objPath.replace(/\//g, '<br />');					
 						var itemIndex = dirName.charAt(0);
-						
+
 						var itemData = {
 							'name' : dirName,
 							'type' : 'directory',
@@ -289,12 +290,15 @@ angular.module('landcruiser.sound', [])
 					}
 				}
 
-				directoryContents.push(itemData);
+				if ( itemData.index !=="undefined" && itemData.index != " " ) {
+					directoryIndexes.push( itemData.index );
+				}	
+				directoryContents.push( itemData );
 			});
-    	});
-		console.log(directoryContents);
 
-		return directoryContents;
+    	});
+
+		return { directoryContents, directoryIndexes };
 	}
 
 	/**
