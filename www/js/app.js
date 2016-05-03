@@ -169,6 +169,9 @@ angular.module(
   $ionicConfigProvider.scrolling.jsScrolling(false);
   
   $ionicConfigProvider.navBar.alignTitle('center');
+
+  // Disable angular ng-scope and isolate scope classes see https://medium.com/@hackupstate/improving-angular-performance-with-1-line-of-code-a1fb814a6476#.3a2pttrtc
+  $compileProvider.debugInfoEnabled(false);
   
   // Set a global timeout on notification messages
   growlProvider.globalTimeToLive(1200);
