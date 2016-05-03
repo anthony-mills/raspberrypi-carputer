@@ -19,7 +19,7 @@ The UI was designed for use on a car computer built on the Raspberry Pi platform
 
 # Running with out a GPS device
 
-GPS functionality can be tested without an active GPS fix or even a GPS device. To enable the GPS testing mode change the value of the gpsd-debug option in the application config file to true. 
+GPS functionality can be fudged without an active GPS fix or even a GPS device for development or testing purposes. To enable the GPS testing mode change the value of the gpsd-debug option in the application config file to true. 
 
 This will force the service to read a static GPS json object from the www/php/data/gps_data.json file. By changing the location values in this file a specific location, altitude or speed can be spoofed to test functionality.
 

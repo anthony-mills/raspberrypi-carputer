@@ -238,10 +238,29 @@ angular.module('gpsAssist', [])
 	}	
 
 	/**
+	* Calculate the optimum zoom level for a map
+	*
+	* @param float mapLatitude
+	* @param float distanceTravelled
+	*
+	* @return integer mapZoom
+	*/
+	function getMapZoom( mapLatitude, distanceTravelled ) {
+
+    	var latAdjustment = Math.cos( Math.PI * mapLatitude / 180.0 );
+    	var latArg = 6378140 * 464 * latAdjustment / ( ( distanceTravelled * 1000 ) * 256.0 );
+
+    	var zoomLevel = Math.floor( Math.log( latArg ) / Math.log( 2.0 ) );
+
+		return zoomLevel;
+
+	}
+
+	/**
 	* Get the speed limit for an area
 	*
-	* @param integer latitude
-	* @param integer longitude
+	* @param float latitude
+	* @param float longitude
 	*/
 	function speedLimit(latitude, longitude) {
 
@@ -374,6 +393,14 @@ angular.module('gpsAssist', [])
 	return {
 		speedConversion: function() {
 			return speedConversion();
+		},
+
+		getMapZoom: function( mapLatitude, distanceTravelled ) {
+			return getMapZoom( mapLatitude, distanceTravelled );
+		},
+
+		updateTrip: function( gpsData, checkFrequency ) {
+			return updateTrip( gpsData, checkFrequency );
 		},
 
 		updateTrip: function( gpsData, checkFrequency ) {

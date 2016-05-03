@@ -35,9 +35,9 @@ angular.module('landcruiser.controllers', [])
 */
 .controller('HomeCtrl', function( $scope, $interval, $timeout, growl, mpdAssist, contentFormatting) {
   $scope.playlistCount = 0;
-
   $scope.mpdStatus = "Not connected";
   $scope.currentlyPlaying = false;
+
   $scope.playState = mpdClient.getPlaystate();
 
   var playbackSettings = window.localStorage['playback_settings'];
@@ -79,6 +79,7 @@ angular.module('landcruiser.controllers', [])
         $scope.updateQueueLength(); 
       }
 
+      // Music is not currently playing just return 
       if ( $scope.playState === 'stop' || $scope.playState === 'pause' ) {
         return;
       }
@@ -91,6 +92,7 @@ angular.module('landcruiser.controllers', [])
             var nowPlaying = mpdAssist.getPlaying(); 
           }
 
+          // Song is currently playing increment the playback timer
           if ( ( $scope.playState === 'play' ) && ( nowPlaying.playTime.raw > 0) && (nowPlaying.playTime.raw < nowPlaying.duration.raw)) {
             
             nowPlaying.playTime.raw++;
@@ -99,7 +101,7 @@ angular.module('landcruiser.controllers', [])
 
             $scope.currentlyPlaying = nowPlaying;
 
-          } else if ( ( $scope.playState === 'play' ) && ($scope.currentlyPlaying.playTime.formatted === $scope.currentlyPlaying.duration.formatted)) {
+          } else if ( ( $scope.playState === 'play' ) && ( $scope.currentlyPlaying.playTime.formatted === $scope.currentlyPlaying.duration.formatted )) {
 
             // Song has ended get the new song and update the queue length
             $scope.currentlyPlaying = mpdAssist.getPlaying(); 
@@ -141,14 +143,18 @@ angular.module('landcruiser.controllers', [])
   * Update the number of items in the playlist
   */
   $scope.updateQueueLength = function() {
+
     var playlistSongs = mpdAssist.getQueue();
+
     $scope.playlistCount = playlistSongs.length; 
+
   }
 
   /**
   * Stop the music
   */
   $scope.stopSong = function() {
+
     mpdClient.stop();
     mpdClient.removeSongFromQueueById( $scope.currentlyPlaying.id );
 
@@ -183,17 +189,21 @@ angular.module('landcruiser.controllers', [])
   * @param boolean currentStatus
   */
   $scope.toggleRandom = function(currentStatus) {
+
     if (currentStatus) {
+
       mpdClient.enableRandomPlay();
 
       $scope.randomPlayback = true;
       growl.success("Random playback enabled"); 
 
     } else {
+
       mpdClient.disableRandomPlay();
 
       $scope.randomPlayback = false;
       growl.success("Random playback disabled"); 
+
     }
 
     var playbackSettings = {
@@ -210,16 +220,21 @@ angular.module('landcruiser.controllers', [])
   * @param boolean currentStatus  
   */
   $scope.toggleConsumption = function(currentStatus) {
+
     if (currentStatus) {
+
       mpdClient.enablePlayConsume();
 
       $scope.consumePlayback = true;
       growl.success("Consumption playback enabled"); 
+
     } else {
+
       mpdClient.disablePlayConsume();
 
       $scope.consumePlayback = false;
       growl.success("Consumption playback disabled"); 
+
     }
 
     var playbackSettings = {
@@ -234,15 +249,19 @@ angular.module('landcruiser.controllers', [])
   * Trigger an MPD refresh of the media store
   */
   $scope.refreshMedia = function() {
+
       mpdClient.updateDatabase();
       growl.success("Media store refresh triggered");
+
   }
 
   /**
   * Destroy the periodic process on state change
   */
   $scope.$on('$destroy', function() {
+
     $interval.cancel($scope.checkConnection);
+
   });
 
 })
@@ -251,54 +270,74 @@ angular.module('landcruiser.controllers', [])
 * Browse and manage music files in the MPD servers filesystem
 */
 .controller('FilesCtrl', function( $scope, $state, $stateParams, $anchorScroll, $location, $ionicHistory, $timeout, growl, mpdAssist) {
+
   $scope.mpdConn = mpdAssist.checkConnection();
   $scope.directoryContents = {};
   $scope.directoryIndexes = false;
   $scope.homeButton = 0;
 
   $scope.scrollTo = function(id) {
+
     $location.hash(id);
 
     console.log('Scrolling to: ' + id);
     $anchorScroll();
+
   }
 
   $scope.goBack = function() {
+
     $ionicHistory.goBack();
+
   };  
 
   if ($stateParams.param1 === 'root') {
+
     basePath = '/';
+
   } else {
+
     basePath = $stateParams.param1;
     
     basePath = decodeURIComponent(basePath);
+
+    // Replace the custom directory seperator as we cannot pass slashes via the URL
     var basePath = basePath.replace("@!@", "/");
 
     // Show a home button in the header if its not the root directory
     $scope.homeButton = 1;
+
   }
 
   $scope.dirData = mpdAssist.getDirectory(basePath);
 
   $scope.$watch('dirData', function ( dirData ) {
+
     $scope.directoryContents = dirData.directoryContents;
 
     // Only show the letter indexes in the root directory of the filesystem
     if ((!basePath) || (basePath === '/')) {
-      $scope.directoryIndexes = dirData.directoryIndexes;      
+
+      $scope.directoryIndexes = dirData.directoryIndexes;  
+
     } else {
+
       $scope.directoryIndexes = false;
+
     }
 
   });
 
   $timeout(function(){
+
     if (!$scope.directoryContents) {
+
       console.log('Timeout trying to load directory contents, attempting reload');
 
       $state.go($state.current, {}, {reload: true});
+
     }
+
   }, 5000); 
 
   /**
@@ -307,6 +346,7 @@ angular.module('landcruiser.controllers', [])
   * @param dirPath
   */
   $scope.addDirectory = function( dirPath ) {
+
     var dirPath = decodeURIComponent(dirPath);
     var dirPath = dirPath.replace("@!@", "/");    
 
@@ -322,10 +362,12 @@ angular.module('landcruiser.controllers', [])
   * @param integer songPath
   */
   $scope.addSong = function( songPath ) {
+
     console.log('Added song to playlist: ' + songPath);
 
     growl.success("Song added to play queue");
     mpdClient.addSongToQueueByFile(songPath);
+
   } 
 
   /**
@@ -334,13 +376,21 @@ angular.module('landcruiser.controllers', [])
   * @param object checkObj
   */
   $scope.isEmpty = function ( checkObj ) {
+
     for (var i in checkObj) {
+
       if (checkObj.hasOwnProperty(i)) {
+
         return false;
+
       } else {
+
         return true;
+
       }
+
     }
+
   };
  
 })
@@ -355,12 +405,16 @@ angular.module('landcruiser.controllers', [])
   $scope.playlistLoading = true;  
 
   $scope.playQueue = function() {
+
     $scope.playlistSongs = mpdAssist.getQueue();
     $scope.playlistCount = $scope.playlistSongs.length;
 
     if ( $scope.playlistLoading ) {
+
       $scope.playlistLoading = false; 
+
     }
+
   }
 
   /**
@@ -373,8 +427,6 @@ angular.module('landcruiser.controllers', [])
     $scope.playlistSongs.splice(playlistIndex, 1);
     $scope.playlistCount--;
 
-    console.log('Remove song from playlist:' + itemId);
-
     $scope.playlistLoading = true;
     mpdClient.removeSongFromQueueByPosition(playlistIndex);
 
@@ -385,6 +437,7 @@ angular.module('landcruiser.controllers', [])
   * Empty the current MPD play queue
   */
   $scope.wipePlaylist = function() {
+
     $scope.playlistCount = 0;
     $scope.playlistSongs = [];
 
@@ -394,21 +447,26 @@ angular.module('landcruiser.controllers', [])
 
     $scope.playlistSongs = {};
     $scope.playlistCount = 0;
+
   }
 
   /**
   * Shuffle the contents of the MPD play queue
   */
   $scope.shuffleQueue = function() {
+
     mpdClient.shuffleQueue();
 
     $timeout(function() {
+
       console.log('Refreshing play queue');
       
       $scope.playQueue();
+
     }, 5000);
 
     growl.success("Play queue contents shuffled"); 
+
   }
 
   /**
@@ -418,11 +476,13 @@ angular.module('landcruiser.controllers', [])
   * @param integer queueIndex
   */
   $scope.playSong = function(songId, queueIndex) {
+
     console.log('Starting playback of track: ' + songId);
     mpdClient.play(songId);
 
     $scope.playlistSongs[queueIndex].playing = 1;
-    growl.success("Music playback started");    
+    growl.success("Music playback started");  
+
   }
 
   /**
@@ -432,9 +492,10 @@ angular.module('landcruiser.controllers', [])
   * @param integer queueIndex
   */
   $scope.stopSong = function(songId, queueIndex) {
-    console.log('Stopping playback of track: ' + songId);
+
     mpdClient.stop();
     $scope.playlistSongs[queueIndex].playing = 0;
+
   } 
 
   /**
@@ -443,16 +504,22 @@ angular.module('landcruiser.controllers', [])
   * believe that the application has crashed with really large play queues.
   */
   $timeout(function() {
+
     $scope.updateQueue = $interval(function() {
+
       $scope.playQueue();
+
     }, 2000);
+
   }, 500);
 
   /**
   * Destroy the periodic process on state change
   */
   $scope.$on('$destroy', function() {
+
     $interval.cancel($scope.checkConnection);
+
   });  
 })
 
@@ -468,6 +535,7 @@ angular.module('landcruiser.controllers', [])
 * Show the playlists stored under MPD
 */
 .controller('PlaylistsCtrl', function( $scope, growl, mpdAssist ) {
+
   $scope.storedPlaylists = '';
 
   mpdClient.lsPlaylists();
@@ -480,9 +548,13 @@ angular.module('landcruiser.controllers', [])
       var storedPlaylists = playlistData;
 
       if (storedPlaylists.length > 0) {
+
         $scope.storedPlaylists = storedPlaylists;
+
       } else {
+
         $scope.storedPlaylists = false;
+
       }
     }
   });
@@ -493,7 +565,6 @@ angular.module('landcruiser.controllers', [])
   * @param string playlistPath
   */
   $scope.loadPlaylist = function( playlistPath ) {
-    console.log("Adding playlist " + playlistPath + " to the play queue.");
 
     mpdClient.loadPlaylistIntoQueue(playlistPath);
 
@@ -552,9 +623,11 @@ angular.module('landcruiser.controllers', [])
     }
   }
 
-  // Update the location of the car
+  // Update the current location of the car
   $interval(function() {
+
     $scope.updateLocation();
+
   }, 5000);
 
   $scope.updateLocation();  
@@ -568,8 +641,10 @@ angular.module('landcruiser.controllers', [])
 
   // Reset the stored trip data
   $scope.resetTrip = function() {
+
     $scope.tripData = '';
     window.localStorage['trip_data'] = '';
+
   }
 
   var tripData = window.localStorage['trip_data'];
@@ -626,15 +701,19 @@ angular.module('landcruiser.controllers', [])
     $scope.tripDistance = Math.round(tripDistance);
 
     if (tripData.top_speed) {
+
       $scope.topSpeed = tripData.top_speed;
+
     }
 
     if (tripData.highest_altitude) {
+
       $scope.highest_altitude = tripData.highest_altitude;
+
     }
 
     // Only show a map if we have gone at least 1km
-    if (tripDistance < 1) {
+    if ( tripDistance < 1 ) {
       return;
     }
 
@@ -644,21 +723,18 @@ angular.module('landcruiser.controllers', [])
                   }
 
     // Calculate the optimum zoom level given the distance traversed
-    var mapZoom = function() {
-      var latAdjustment = Math.cos( Math.PI * lastPos.lat / 180.0 );
-      var latArg = 6378140 * 464 * latAdjustment / ( (tripDistance * 1000) * 256.0 );
-
-      return Math.floor( Math.log( latArg ) / Math.log( 2.0 ) );
-    }
+    var mapZoom = gpsAssist.getMapZoom( lastPos.lat , tripDistance );
 
     $scope.tripMap = {
                         center: {
                                   latitude: lastPos.lat, 
                                   longitude: lastPos.long 
                                 }, 
-                        zoom: mapZoom(), 
+                        zoom: mapZoom, 
                         bounds: {}
                      };
+
+    console.log($scope.tripMap);
 
     $scope.polylines = [];
 
@@ -696,7 +772,7 @@ angular.module('landcruiser.controllers', [])
 * Static page with external links out of the application 
 * to static resource files.
 */
-.controller('ReferenceCtrl', function($scope) {
+.controller('ReferenceCtrl', function( $scope ) {
 
   /**
   * Open a file with the external system handler
