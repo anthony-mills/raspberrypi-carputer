@@ -277,12 +277,17 @@ angular.module('landcruiser.controllers', [])
   $scope.directoryIndexes = false;
   $scope.homeButton = 0;
 
-  $scope.scrollTo = function(id) {
+  $scope.scrollTo = function( id ) {
 
     $location.hash(id);
 
-    console.log('Scrolling to: ' + id);
     $anchorScroll();
+
+  }
+
+  $scope.formatPath = function( filePath ) {
+
+    return filePath.split("/").pop();
 
   }
 

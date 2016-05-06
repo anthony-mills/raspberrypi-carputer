@@ -59,7 +59,7 @@
 
                       <div class="col-66"> 
                         <h2 ng-if="directoryItem.title && directoryItem.artist">{{::directoryItem.title}}</h2>
-                        <h2 ng-else ><div ng-bind-html="::formatPath(directoryItem.path)"></div></h2>
+                        <h2 ng-else >{{::formatPath(directoryItem.path)}}</h2>
 
                         <p>Duration: {{::directoryItem.duration}}</p>
                       </div>
