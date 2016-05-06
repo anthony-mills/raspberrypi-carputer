@@ -270,6 +270,7 @@ angular.module('landcruiser.controllers', [])
 * Browse and manage music files in the MPD servers filesystem
 */
 .controller('FilesCtrl', function( $scope, $state, $stateParams, $anchorScroll, $location, $ionicHistory, $timeout, growl, mpdAssist) {
+  var dirSeperator = "@!@";
 
   $scope.mpdConn = mpdAssist.checkConnection();
   $scope.directoryContents = {};
@@ -302,7 +303,7 @@ angular.module('landcruiser.controllers', [])
     basePath = decodeURIComponent(basePath);
 
     // Replace the custom directory seperator as we cannot pass slashes via the URL
-    var basePath = basePath.replace("@!@", "/");
+    var basePath = basePath.replace( dirSeperator, "/" );
 
     // Show a home button in the header if its not the root directory
     $scope.homeButton = 1;
@@ -348,7 +349,7 @@ angular.module('landcruiser.controllers', [])
   $scope.addDirectory = function( dirPath ) {
 
     var dirPath = decodeURIComponent(dirPath);
-    var dirPath = dirPath.replace("@!@", "/");    
+    var dirPath = dirPath.replace( dirSeperator, "/" );    
 
     growl.success("Directory added to play queue");
 
