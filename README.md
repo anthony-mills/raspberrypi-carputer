@@ -39,8 +39,8 @@ This project makes the use of a number of third party Open Source libraries. You
 * [angular-imgcache.js](https://github.com/jBenes/angular-imgcache.js)
 * [angular-growl-2](https://github.com/JanStevens/angular-growl-2)
 * [websockify](https://github.com/kanaka/websockify)
-* [mpd](http://www.catb.org/gpsd/)
-* [gpsd](http://www.musicpd.org/)
+* [mpd](http://www.musicpd.org/)
+* [gpsd](http://www.catb.org/gpsd/)
 
 # Immediate Roadmap
 
