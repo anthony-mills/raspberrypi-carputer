@@ -4,6 +4,7 @@ angular.module('gpsAssist', [])
  * Service providing playback and mpd queue functionality 
  */
 .factory('gpsAssist', function($http, $log, $rootScope, $interval) {
+	
 	/**
 	* Get data fromt the Gpsd service
 	*
