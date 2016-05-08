@@ -42,8 +42,10 @@ class apiServices {
 	* Get the speed limit for a particular location
 	*
 	* @param string $currentLocation
+	*
+	* @return string $apiResponse // JSON Object	
 	*/
-	public function getSpeed($currentLocation) {
+	public function getSpeed( $currentLocation ) {
 		
 		if (!$currentLocation) {
 			die('No location provided');
@@ -60,7 +62,7 @@ class apiServices {
 				if ($apiResponse > 0) {
 					$apiResponse = round($apiResponse * 18 / 5);
 				} 
-				echo $apiResponse;
+				return $apiResponse;
 			}
 		}	
 	}
@@ -70,19 +72,24 @@ class apiServices {
 	*
 	* @param string $curLongitude	
 	* @param string $curLatitude
+	*
+	* @return string $apiResponse // JSON Object
 	*/
-	public function getWeather($curLongitude, $curLatitude) {
+	public function getWeather( $curLongitude, $curLatitude ) {
+
 		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . '&product=observation&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {
-			echo $apiResponse;
+			return $apiResponse;
 		}
+
 	}
 
 	/**
 	* Talk to the GPSD daemon and hopefully get some location data
 	*
+	* @return string $gpsResponse // JSON Object from the GPSD Daemon
 	*/
 	public function getLocation() {
 
@@ -97,20 +104,22 @@ class apiServices {
 			$gpsResponse = $this->_gpsdCall();
 		}
 
-		echo $gpsResponse;
+		return $gpsResponse;
 	}
 	/**
 	* Get the current weather forecast
 	*
 	* @param string $curLongitude	
 	* @param string $curLatitude
+	*
+	* @return string $apiResponse // JSON Object	
 	*/
 	public function getForecast($curLongitude, $curLatitude) {
 		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . '&product=forecast_7days_simple&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {
-			echo $apiResponse;
+			return $apiResponse;
 		}
 	}
 
@@ -118,6 +127,7 @@ class apiServices {
 	* Make a CURL request to an API endpoint
 	*
 	* @param string $apiUrl
+	*
 	* @return string
 	*/
 	protected function apiCall($apiUrl) {
@@ -166,6 +176,7 @@ class apiServices {
             if (!$gpsResponse) {
                     $gpsResponse = '{"class":"ERROR","message":"no response from GPS daemon"}';
             }
+
             return $gpsResponse;            
     }
 }
