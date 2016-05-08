@@ -6,11 +6,11 @@ angular.module('gpsAssist', [])
 .factory('gpsAssist', function($http, $log, $rootScope, $interval) {
 	
 	/**
-	* Get data fromt the Gpsd service
+	* Get data from the Gpsd service
 	*
 	* @return object 
 	*/
-	function startGPS() {
+	function getLocationData() {
 		var getGps = getGpsData('/php/services.php?action=get-location');
 		var gpsData = getGps.then(function(resultSet) {
 				if (typeof resultSet.data.tpv ==='undefined' || typeof resultSet.data.tpv[0].lat ==='undefined' || typeof resultSet.data.tpv[0].lon ==='undefined') {
@@ -65,7 +65,7 @@ angular.module('gpsAssist', [])
 					if (limitData.speed_limit === 'Unknown') {
 						var estSpeedLimit = limitData.speed_limit;
 					} else {
-						var estSpeedLimit = limitData.speed_limit + ' kmh';					
+						var estSpeedLimit = limitData.speed_limit + ' km/h';					
 					}
 
 					if ( typeof resultSet.alt === 'undefined' ) {
@@ -195,6 +195,7 @@ angular.module('gpsAssist', [])
 										   );
 
 		}
+
 		var tripDetails = {
 			'distance' : totalDistance,
 			'time' : tripTime,
@@ -393,23 +394,33 @@ angular.module('gpsAssist', [])
 
 	return {
 		speedConversion: function() {
+
 			return speedConversion();
+
 		},
 
 		getMapZoom: function( mapLatitude, distanceTravelled ) {
+
 			return getMapZoom( mapLatitude, distanceTravelled );
+
 		},
 
 		updateTrip: function( gpsData, checkFrequency ) {
+
 			return updateTrip( gpsData, checkFrequency );
+
 		},
 
 		updateTrip: function( gpsData, checkFrequency ) {
+
 			return updateTrip( gpsData, checkFrequency );
+
 		},
 
-		startGPS: function() {
-			return startGPS();
+		getLocationData: function() {
+
+			return getLocationData();
+
 		}
 
 	}

@@ -17,7 +17,7 @@ angular.module('landcruiser.controllers', [])
     // Update the current tiem / Data
     $scope.currentDate = contentFormatting.getTime();
 
-    gpsAssist.startGPS().then(function(gpsData) {
+    gpsAssist.getLocationData().then(function(gpsData) {
       
       if ((gpsData.latitude != 'Unknown') && (gpsData.longitude !='Unknown')) {
           window.localStorage['gps_data'] = JSON.stringify( gpsData ); 
@@ -533,9 +533,7 @@ angular.module('landcruiser.controllers', [])
 * Night mode is a cutback interface with a a black back ground to minimise glare from the screen
 * when travelling at night.
 */
-.controller('NightModeCtrl', function( $scope ) {
-
-})
+.controller('NightModeCtrl', function( $scope ) {})
 
 /**
 * Show the playlists stored under MPD
