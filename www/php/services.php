@@ -21,24 +21,24 @@ switch ($requestedAction) {
 	case 'speed-limit':
 		$currentLocation = filter_input(INPUT_GET, 'location', FILTER_SANITIZE_SPECIAL_CHARS);
 
-		$serviceObj->getSpeed($currentLocation);
+		echo $serviceObj->getSpeed($currentLocation);
 	break;
 
 	case 'get-location':
-		$serviceObj->getLocation();
+		echo $serviceObj->getLocation();
 	break;
 
 	case 'weather-outlook':
 		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
 		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
 
-		$serviceObj->getWeather($curLongitude, $curLatitude);
+		echo $serviceObj->getWeather($curLongitude, $curLatitude);
 	break;
 
 	case 'weather-forecast':
 		$curLatitide = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
 		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
 
-		$serviceObj->getForecast($curLongitude, $curLatitude);
+		echo $serviceObj->getForecast($curLongitude, $curLatitude);
 	break;
 }
