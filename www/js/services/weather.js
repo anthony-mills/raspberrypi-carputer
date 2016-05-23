@@ -4,7 +4,10 @@ angular.module('weatherAssist', [])
  * Service providing weather retrival functionality 
  */
 .factory('weatherAssist', function($http, $log, $rootScope) {
-	
+
+	// Cache the weather forecast for at least an hour
+	var weatherCacheTTL = 360000;
+
 	/**
 	* Get the weather forecast for a given location
 	*
@@ -21,7 +24,8 @@ angular.module('weatherAssist', [])
 		}
 
 		// Cache the weather data for an hour
-		if (!weatherData || ( (Date.now() - weatherData.age) > 3600) ) {
+		if ( (typeof weatherData.created==='undefined') || ( Date.now() - weatherData.created > weatherCacheTTL ) ) {
+			console.log(Date.now() - weatherData.created);
 			window.localStorage['weather_forecast'] =  false;
 			
 			var weatherRequest = getWeatherCall('/php/services.php?action=weather-forecast&location=' + latitude + ',' + longitude);

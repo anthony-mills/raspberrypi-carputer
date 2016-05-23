@@ -590,9 +590,11 @@ angular.module('landcruiser.controllers', [])
 
   if (gpsData) {
     var gpsData = JSON.parse( gpsData );
-    
+
     if (gpsData.latitude && gpsData.longitude) {
+
       $scope.weatherData = weatherAssist.getForecast( gpsData.latitude, gpsData.longitude );
+
     }
   }
 })
