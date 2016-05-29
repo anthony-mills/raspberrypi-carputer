@@ -96,13 +96,13 @@
             </div>            
           </div>
 
-          <div class="card" ng-if="mpdConn === 0">
-            <div class="item item-divider bar bar-header bar-assertive heading-text">
+          <div ng-if="mpdConn === 0">
+            <div class="item item-divider page-heading bar-header page-heading heading-text">
                 ERROR: No MPD Connection
             </div>
         
             <div class="item item-text-wrap">
-              An active MPD connection is needed to browse the music collection.
+              A connection to the MPD server is needed to browse the music collection.
             </div>
           </div>
       </div>
