@@ -5,8 +5,8 @@ angular.module('weatherAssist', [])
  */
 .factory('weatherAssist', function($http, $log, $rootScope) {
 
-	// Cache the weather forecast for at least an hour
-	var weatherCacheTTL = 360000;
+	// Length of time to cache the weather result for in seconds
+	var weatherCacheTTL = 3600;
 
 	/**
 	* Get the weather forecast for a given location
@@ -24,7 +24,7 @@ angular.module('weatherAssist', [])
 		}
 
 		// Cache the weather data for an hour
-		if ( (typeof weatherData.created==='undefined') || ( Date.now() - weatherData.created > weatherCacheTTL ) ) {
+		if ( (typeof weatherData.created === 'undefined') || ( Date.now() - weatherData.created > (weatherCacheTTL * 1000) ) ) {
 			console.log(Date.now() - weatherData.created);
 			window.localStorage['weather_forecast'] =  false;
 			

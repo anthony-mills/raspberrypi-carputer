@@ -8,6 +8,7 @@ angular.module('landcruiser.controllers', [])
   * Default frequency is every second. The interval can prbably be increased for a more responsive speed readout on systems using a Raspberry Pi Model 3
   */
   var updateFrequency = 1000;
+  
   $scope.currentDate = contentFormatting.getTime();
 
   $scope.gpsData = {}
