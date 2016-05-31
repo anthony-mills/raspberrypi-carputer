@@ -133,9 +133,14 @@ angular.module('landcruiser.sound', [])
 	            }
 	        } else {
 				getAlbumArt(artistName).then(function(res){
-				  var results = res.data.results.pop();
+				  var albumArt = res.data.results.pop();
 
-				  addAlbumArt(artistSlug, results.artworkUrl100);
+				  if ( (typeof albumArt.artworkUrl100 !== "undefined") && (albumArt.artworkUrl100.length > 0) ) {
+					addAlbumArt(artistSlug, albumArt.artworkUrl100);		  	
+				  } else {
+					addAlbumArt('/img/no_image.png', albumArt.artworkUrl100);
+				  }
+
 				});	 	        	
 	        } 
 		}
@@ -251,7 +256,7 @@ angular.module('landcruiser.sound', [])
 				if ((typeof metaData.directory === 'undefined') && (typeof metaData.playlist === 'undefined')) {
 					var artistName = directoryItem.getArtist();
 					
-					if (typeof artistName != 'undefined') {
+					if ((typeof artistName != 'undefined') && (artistName.charAt(0).match(/[a-z0-9]/i))) {
 						var itemIndex = artistName.charAt(0);
 					} else {
 						var itemIndex = ' ';
@@ -277,7 +282,12 @@ angular.module('landcruiser.sound', [])
 
 					if (typeof objPath != 'undefined') {
 						var dirName = objPath.replace(/\//g, '<br />');					
-						var itemIndex = dirName.charAt(0);
+
+						if (dirName.charAt(0).match(/[a-z0-9]/i)) {
+							var itemIndex = dirName.charAt(0);
+						} else {
+							var itemIndex = ' ';
+						}
 
 						var itemData = {
 							'name' : dirName,
@@ -289,9 +299,11 @@ angular.module('landcruiser.sound', [])
 						}
 					}
 				}
-
+				console.log( itemData );
 				if ( itemData.index !=="undefined" && itemData.index != " " ) {
-					directoryIndexes.push( itemData.index );
+					if ( !directoryIndexes.includes(itemData.index) ) {
+						directoryIndexes.push( itemData.index );
+					} 
 				}	
 				directoryContents.push( itemData );
 			});

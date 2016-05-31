@@ -324,7 +324,7 @@ angular.module('landcruiser.controllers', [])
 
     // Only show the letter indexes in the root directory of the filesystem
     if ((!basePath) || (basePath === '/')) {
-
+      console.log(dirData.directoryIndexes);
       $scope.directoryIndexes = dirData.directoryIndexes;  
 
     } else {
