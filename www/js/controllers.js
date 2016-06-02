@@ -1,6 +1,6 @@
 angular.module('landcruiser.controllers', [])
 
-.controller('AppCtrl', function( $scope, $interval, gpsAssist, contentFormatting ) {
+.controller('AppCtrl', function( $scope, $window, $interval, gpsAssist, contentFormatting ) {
 
   /**
   * Get the GPS data from GPSD for the location panel
@@ -28,6 +28,13 @@ angular.module('landcruiser.controllers', [])
       $scope.gpsData = gpsData;
     });
   }, updateFrequency);
+
+  /**
+  * Perform a hard refresh on the application from the browser
+  */
+  $scope.reloadApp = function() {
+    $window.location.reload(true);
+  }
 })
 
 /**
@@ -53,6 +60,7 @@ angular.module('landcruiser.controllers', [])
     }
 
     window.localStorage['playback_settings'] = JSON.stringify(playbackSettings);
+    
   } else {
 
     var playbackSettings = JSON.parse(playbackSettings);
