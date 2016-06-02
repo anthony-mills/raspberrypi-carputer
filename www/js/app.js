@@ -149,6 +149,17 @@ angular.module(
       }
     })
 
+    // Application settings page
+    .state('app.settings', {
+      url: '/settings',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/pages/settings.html',
+          controller: 'SettingsCtrl'
+        }
+      }
+    })
+
   // Default route (used as a fallback should the request not match any of the defined routes)
   $urlRouterProvider.otherwise('/app/home');
 

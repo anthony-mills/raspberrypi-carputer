@@ -800,3 +800,11 @@ angular.module('landcruiser.controllers', [])
     return false; 
   }
 })
+
+/*
+* Page for controllling application settings such as speed, distance temperature etc measurements
+*/
+.controller('SettingsCtrl', function( $scope ) {
+
+
+})

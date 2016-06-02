@@ -1,0 +1,113 @@
+<ion-view title="{{currentDate}}" cache-view="false" align-title="center">
+  <ion-nav-bar class="page-heading">
+    <ion-nav-buttons side="left" class="bar bar-header">
+      <button menu-toggle="left" class="button button-icon icon ion-navicon menu-icon" ng-hide="$exposeAside.active"></button>
+    </ion-nav-buttons>
+  </ion-nav-bar> 
+
+  <ion-content class="has-header body-element pane-background">
+
+    <!-- Start the parent content container -->
+    <div class="row">
+      <!-- Start the speed and location column -->   
+      <div class="col-33 pad-column">
+        <ng-include src="'/templates/partials/location.html'"></ng-include>
+      </div>
+      <!-- End the speed and location column -->
+
+      <div class="col-66 pad-column">  
+        <!-- Start system settings area -->
+
+        <!-- Start speed unit card -->
+        <div class="card">
+          <div class="item item-divider page-heading bar-header page-heading heading-text" >
+              Speed
+          </div>
+
+          <div bindonce="item item-text-wrap">
+
+            <div class="list">
+              <div class="item range range-positive">
+                KMH
+                <input type="range" name="volume" min="0" max="1" value="0">
+                MPH
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End speed unit card -->        
+
+        <!-- Start distance unit card -->
+        <div class="card">
+          <div class="item item-divider page-heading bar-header page-heading heading-text" >
+              Distance
+          </div>
+
+          <div bindonce="item item-text-wrap">
+
+            <div class="list">
+              <div class="item range range-positive">
+                Kilometers
+                <input type="range" name="volume" min="0" max="1" value="0">
+                Miles
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End distance unit card --> 
+
+        <!-- Start temperature unit card -->
+        <div class="card">
+          <div class="item item-divider page-heading bar-header page-heading heading-text" >
+              Distance
+          </div>
+
+          <div bindonce="item item-text-wrap">
+
+            <div class="list">
+              <div class="item range range-positive">
+                Celcius
+                <input type="range" name="volume" min="0" max="1" value="0">
+                Fahrenheit
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End temperature unit card -->          
+
+        <!-- Start altitude unit card -->
+        <div class="card">
+          <div class="item item-divider page-heading bar-header page-heading heading-text" >
+              Altitude
+          </div>
+
+          <div bindonce="item item-text-wrap">
+
+            <div class="list">
+              <div class="item range range-positive">
+                Metres
+                <input type="range" name="volume" min="0" max="1" value="0">
+                Feet
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End altitude unit card --> 
+
+        <div class="card">       
+            <div class="item item-text-wrap">
+              <div class="button-bar ">         
+                <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
+              </div>  
+            </div>            
+          </div>
+        </div>
+        <!-- End file listing area -->
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
