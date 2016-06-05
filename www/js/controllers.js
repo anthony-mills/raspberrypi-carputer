@@ -1,6 +1,21 @@
 angular.module('landcruiser.controllers', [])
 
 .controller('AppCtrl', function( $scope, $window, $interval, gpsAssist, contentFormatting ) {
+  var appSettings = window.localStorage['app_settings'];
+
+  if (typeof appSettings === "undefined") {
+    var appSettings = {
+      "speed" : 0,
+      "distance" : 0,
+      "temperature" : 0,
+      "altitude" : 0      
+    }
+    
+    $scope.appSettings = appSettings; 
+    window.localStorage['app_settings'] = JSON.stringify(appSettings);
+  } else {
+    $scope.appSettings = JSON.parse(appSettings); 
+  }
 
   /**
   * Get the GPS data from GPSD for the location panel
@@ -805,6 +820,14 @@ angular.module('landcruiser.controllers', [])
 * Page for controllling application settings such as speed, distance temperature etc measurements
 */
 .controller('SettingsCtrl', function( $scope ) {
-
+  /**
+  * Update the value for an applications setting
+  *
+  * @param integer appSettings
+  */
+  $scope.saveValue = function( appSettings ) {
+    console.log( appSettings )
+    window.localStorage['app_settings'] = JSON.stringify(appSettings);
+  }
 
 })

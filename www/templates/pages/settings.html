@@ -29,7 +29,7 @@
             <div class="list">
               <div class="item range range-positive">
                 KMH
-                <input type="range" name="volume" min="0" max="1" value="0">
+                <input type="range" name="speed" min="0" max="1" ng-change="saveValue( appSettings )" ng-model="appSettings.speed"/>
                 MPH
               </div>
             </div>
@@ -49,7 +49,7 @@
             <div class="list">
               <div class="item range range-positive">
                 Kilometers
-                <input type="range" name="volume" min="0" max="1" value="0">
+                <input type="range" name="distance" min="0" max="1" value="0" ng-change="saveValue( appSettings )" ng-model="appSettings.distance"/>
                 Miles
               </div>
             </div>
@@ -69,7 +69,7 @@
             <div class="list">
               <div class="item range range-positive">
                 Celcius
-                <input type="range" name="volume" min="0" max="1" value="0">
+                <input type="range" name="temperature" min="0" max="1" value="0" ng-change="saveValue( appSettings )" ng-model="appSettings.temperature"/>
                 Fahrenheit
               </div>
             </div>
@@ -89,7 +89,7 @@
             <div class="list">
               <div class="item range range-positive">
                 Metres
-                <input type="range" name="volume" min="0" max="1" value="0">
+                <input type="range" name="altitude" min="0" max="1" ng-change="saveValue( appSettings )" ng-model="appSettings.altitude">
                 Feet
               </div>
             </div>
