@@ -128,6 +128,20 @@ angular.module('contentFormatting', [])
 	    return speedMph;
 	}
 
+	/**
+	* Convert an altitude from metres to feet
+	*
+	* @param integer heightMetres
+	*
+	* @return integer heightFeet
+	*/
+	function metresToFeet( heightMetres )
+	{
+	    var heightFeet = Math.round( speedKm x 1.609344 );
+
+	    return heightFeet;
+	}
+
 	return {
 		getTime: function() {
 			return getTime();
@@ -143,6 +157,10 @@ angular.module('contentFormatting', [])
 
 		kmhToMph: function( speedKm ) {
 			return kmhToMph( speedKm );
+		},
+
+		metresToFeet: function( heightMetres ) {
+			return metresToFeet( heightMetres );
 		},
 
 		formatSeconds: function( timeSeconds ) {
