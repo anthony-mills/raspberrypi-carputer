@@ -100,6 +100,34 @@ angular.module('contentFormatting', [])
 	    return playTime;
 	}
 
+	/**
+	* Convert celcius to farenheit
+	*
+	* @param integer degreesCelcius
+	*
+	* @return string 
+	*/
+	function celciusToFarenheit( degreesCelcius )
+	{
+	    var degressFarenheit = Math.round( degreesCelcius * 9 / 5 + 32 );
+
+	    return degressFarenheit;
+	}
+
+	/**
+	* Convert a speed from km/h to mp/h 
+	*
+	* @param integer speedKm
+	*
+	* @return integer speedMph
+	*/
+	function kmhToMph( speedKm )
+	{
+	    var speedMph = Math.round( speedKm x 1.609344 );
+
+	    return speedMph;
+	}
+
 	return {
 		getTime: function() {
 			return getTime();
@@ -107,6 +135,14 @@ angular.module('contentFormatting', [])
 
 		dateFormat: function( dayNumber ) {
 			return dateFormat( dayNumber );
+		},
+
+		celciusToFarenheit: function( degreesCelcius ) {
+			return celciusToFarenheit( degreesCelcius );
+		},
+
+		kmhToMph: function( speedKm ) {
+			return kmhToMph( speedKm );
 		},
 
 		formatSeconds: function( timeSeconds ) {
