@@ -137,7 +137,7 @@ angular.module('contentFormatting', [])
 	*/
 	function metresToFeet( heightMetres )
 	{
-	    var heightFeet = Math.round( speedKm x 1.609344 );
+	    var heightFeet = Math.round( heightMetres x 1.609344 );
 
 	    return heightFeet;
 	}
