@@ -107,8 +107,7 @@ angular.module('contentFormatting', [])
 	*
 	* @return string 
 	*/
-	function celciusToFarenheit( degreesCelcius )
-	{
+	function celciusToFarenheit( degreesCelcius ) {
 	    var degressFarenheit = Math.round( degreesCelcius * 9 / 5 + 32 );
 
 	    return degressFarenheit;
@@ -121,9 +120,9 @@ angular.module('contentFormatting', [])
 	*
 	* @return integer speedMph
 	*/
-	function kmhToMph( speedKm )
-	{
-	    var speedMph = Math.round( speedKm x 1.609344 );
+	function kmhToMph( speedKm ) {
+
+	    var speedMph = Math.round( speedKm * 1.609344 );
 
 	    return speedMph;
 	}
@@ -135,9 +134,8 @@ angular.module('contentFormatting', [])
 	*
 	* @return integer heightFeet
 	*/
-	function metresToFeet( heightMetres )
-	{
-	    var heightFeet = Math.round( heightMetres x 1.609344 );
+	function metresToFeet( heightMetres ) {
+	    var heightFeet = Math.round( heightMetres * 1.609344 );
 
 	    return heightFeet;
 	}

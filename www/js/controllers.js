@@ -30,7 +30,7 @@ angular.module('landcruiser.controllers', [])
 
   $scope.getGPS = $interval(function() {
 
-    // Update the current tiem / Data
+    // Update the current time & GPS data
     $scope.currentDate = contentFormatting.getTime();
 
     gpsAssist.getLocationData().then(function(gpsData) {

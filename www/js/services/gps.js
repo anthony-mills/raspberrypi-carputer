@@ -29,6 +29,8 @@ angular.module('gpsAssist', [])
 					var resultSet = resultSet.data.tpv[0];
 
 					var speedLimitData = window.localStorage['speed_limit'];
+					var appSettings = JSON.parse(window.localStorage['app_settings']);
+
 					var currentTime = Date.now();
 					if (!speedLimitData) {
 
@@ -65,13 +67,17 @@ angular.module('gpsAssist', [])
 					if (limitData.speed_limit === 'Unknown') {
 						var estSpeedLimit = limitData.speed_limit;
 					} else {
-						var estSpeedLimit = limitData.speed_limit + ' km/h';					
+						if ( typeof appSettings.speed !=="undefined" && appSettings.speed === 1) {
+							var estSpeedLimit = limitData.speed_limit + ' mph';					
+						} else {
+							var estSpeedLimit = limitData.speed_limit + ' kmh';
+						}
 					}
 
 					if ( typeof resultSet.alt === 'undefined' ) {
 						var gpsAltitude = 'Unknown';
 					} else {
-						var gpsAltitude = resultSet.alt + 'm';
+						var gpsAltitude = resultSet.alt;
 					}
 
 					if ( typeof resultSet.track === 'undefined' ) {
