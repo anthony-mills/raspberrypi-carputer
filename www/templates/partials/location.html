@@ -7,19 +7,43 @@
         <strong>Current Speed:</strong>
         <div class="speed-data">
             <span ng-if="gpsData.speed_warn == 1" class="current-speed warn-speed">
-                {{gpsData.speed}}
+                <span ng-if="appSettings.speed==0" >
+                    {{gpsData.speed}}
+                </span>
+
+                <span ng-else>
+                    {{convertSpeed(gpsData.speed)}}
+                </span>  
             </span>
 
             <span ng-else class="current-speed">
-                {{gpsData.speed}}
+                <span ng-if="appSettings.speed==0" >
+                    {{gpsData.speed}}
+                </span>
+
+                <span ng-else>
+                    {{convertSpeed(gpsData.speed)}}
+                </span>  
             </span>
 
             <span ng-if="gpsData.speed_warn == 1" class="speed-unit warn-speed">
-                km/h
+                <span ng-if="appSettings.speed==0" >
+                    km/h
+                </span>
+
+                <span ng-else>
+                    mph
+                </span>   
             </span>
 
             <span ng-else class="speed-unit">
-                km/h
+                <span ng-if="appSettings.speed==0" >
+                    km/h
+                </span>
+
+                <span ng-else>
+                    mph
+                </span>                
             </span>
         </div>
 
@@ -51,6 +75,14 @@
             <br />
 
             {{gpsData.altitude}}
+
+            <span ng-if="appSettings.altitude==0" >
+                m
+            </span>
+
+            <span ng-else>
+                ft
+            </span>
         </div>
 
         <div class="gps-data">

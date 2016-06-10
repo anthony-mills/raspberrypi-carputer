@@ -11,7 +11,8 @@ angular.module('landcruiser.controllers', [])
       "altitude" : 0      
     }
     
-    $scope.appSettings = appSettings; 
+    $scope.appSettings = appSettings;
+
     window.localStorage['app_settings'] = JSON.stringify(appSettings);
   } else {
     $scope.appSettings = JSON.parse(appSettings); 
@@ -43,6 +44,15 @@ angular.module('landcruiser.controllers', [])
       $scope.gpsData = gpsData;
     });
   }, updateFrequency);
+
+  /**
+  * Convert a speed from kmh to mph
+  *
+  * @param integer speedKmh
+  */
+  $scope.convertSpeed = function( speedKmh ) {
+    return contentFormatting.kmhToMph( speedKmh );
+  }
 
   /**
   * Perform a hard refresh on the application from the browser

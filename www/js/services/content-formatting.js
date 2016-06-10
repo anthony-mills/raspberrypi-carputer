@@ -122,7 +122,7 @@ angular.module('contentFormatting', [])
 	*/
 	function kmhToMph( speedKm ) {
 
-	    var speedMph = Math.round( speedKm * 1.609344 );
+	    var speedMph = Math.round( speedKm * 0.621371 );
 
 	    return speedMph;
 	}
@@ -135,7 +135,7 @@ angular.module('contentFormatting', [])
 	* @return integer heightFeet
 	*/
 	function metresToFeet( heightMetres ) {
-	    var heightFeet = Math.round( heightMetres * 1.609344 );
+	    var heightFeet = Math.round( heightMetres * 3.28084 );
 
 	    return heightFeet;
 	}

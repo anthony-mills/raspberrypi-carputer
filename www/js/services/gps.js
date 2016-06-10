@@ -85,7 +85,7 @@ angular.module('gpsAssist', [])
 					} else {
 						var gpsHeading = Math.round(resultSet.track) + ' degrees - ' + convertBearing(resultSet.track);
 					}
-										
+
 					var gpsStatus = {
 						'status' : 'Has Fix',
 						'latitude' : resultSet.lat,
@@ -118,7 +118,8 @@ angular.module('gpsAssist', [])
 
 		var tripData = window.localStorage['trip_data'];
 		var dataPoints = [];
-		var gpsAltitude = gpsData.altitude.replace("m", "");
+
+		var gpsAltitude = gpsData.altitude;
 
 		if (tripData) {
 			var tripData = JSON.parse( tripData );
