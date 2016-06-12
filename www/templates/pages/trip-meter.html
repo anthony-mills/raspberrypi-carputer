@@ -37,11 +37,13 @@
 	            </div>
 
 	            <div ng-if="avgSpeed">
-	            	<strong>Average Speed:</strong> {{avgSpeed}} km/h
+	            	<strong>Average Speed:</strong> {{convertSpeed(avgSpeed)}} 
+                <span ng-if="appSettings.speed==0" >km/h</span><span ng-else>mph</span>  
 	            </div>
 
 	            <div ng-if="topSpeed">
-	            	<strong>Top Speed:</strong> {{topSpeed}} km/h
+	            	<strong>Top Speed:</strong> {{convertSpeed(topSpeed)}}
+                <span ng-if="appSettings.speed==0" >km/h</span><span ng-else>mph</span>
 	            </div>
 
 	            <div ng-if="highestAltitude">
