@@ -46,23 +46,22 @@ angular.module('landcruiser.controllers', [])
   }, updateFrequency);
 
   /**
-  * Convert a speed from kmh to mph
-  *
-  * @param integer speedKmh
-  */
-  $scope.convertSpeed = function( speedKmh ) {
-    return contentFormatting.kmhToMph( speedKmh );
-  }
-
-
-  /**
-  * Convert a distance km to miles
+  * Convert a distance / speed km to miles
   *
   * @param integer distanceKm
   */
-  $scope.convertDistance = function( distanceKm ) {
+  $scope.kmToMiles = function( distanceKm ) {
     return contentFormatting.kmToMiles( distanceKm );
   }
+
+  /**
+  * Convert an altitude from m to ft if needed 
+  *
+  * @param integer altitudeM
+  */
+  $scope.convertAltitude = function( altitudeM ) {
+    return contentFormatting.metresToFeet( altitudeM );
+  }  
 
   /**
   * Perform a hard refresh on the application from the browser

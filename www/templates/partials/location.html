@@ -1,6 +1,6 @@
 <div class="card">
     <div class="item item-divider bar bar-header page-heading heading-text" >
-        GPS: {{gpsData.status}}
+        GPS: {{ gpsData.status }}
     </div>
 
     <div class="item item-text-wrap">
@@ -8,21 +8,21 @@
         <div class="speed-data">
             <span ng-if="gpsData.speed_warn == 1" class="current-speed warn-speed">
                 <span ng-if="appSettings.speed==0" >
-                    {{gpsData.speed}}
+                    {{ gpsData.speed }}
                 </span>
 
                 <span ng-else>
-                    {{convertSpeed(gpsData.speed)}}
+                    {{ kmToMiles(gpsData.speed) }}
                 </span>  
             </span>
 
             <span ng-else class="current-speed">
                 <span ng-if="appSettings.speed==0" >
-                    {{gpsData.speed}}
+                    {{ gpsData.speed }}
                 </span>
 
                 <span ng-else>
-                    {{convertSpeed(gpsData.speed)}}
+                    {{ kmToMiles(gpsData.speed) }}
                 </span>  
             </span>
 
@@ -52,11 +52,11 @@
 
             <br /><br />
             <div class="warn-speed" align="center">
-                <strong>{{gpsData.speed_limit}}</strong>
+                <strong>{{ gpsData.speed_limit }}</strong>
             </div>
             
             <div ng-if="gpsData.speed_limit_age > 0" align="center">
-                {{gpsData.speed_limit_age}}  
+                {{ gpsData.speed_limit_age }}  
             </div>
          
         </div>
@@ -66,7 +66,7 @@
 
             <br />
 
-            {{gpsData.heading}}
+            {{ gpsData.heading }}
         </div>
 
         <div class="gps-data">        
@@ -74,7 +74,7 @@
 
             <br />
 
-            {{gpsData.altitude}}
+            {{ gpsData.altitude }}
 
             <span ng-if="appSettings.altitude==0" >
                 m
@@ -90,7 +90,7 @@
 
             <br />
 
-            {{gpsData.latitude}}
+            {{ gpsData.latitude }}
         </div>
 
         <div class="gps-data">
@@ -98,7 +98,7 @@
 
             <br />
 
-            {{gpsData.longitude}}
+            {{ gpsData.longitude }}
 
         </div>        
     </div>

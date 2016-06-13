@@ -19,7 +19,7 @@
 
         <div ng-if="tripData" class="card">
           <div class="item item-divider bar bar-header page-heading heading-text" >
-                Trip Log - Distance: {{convertSpeed(tripDistance)}}
+                Trip Log - Distance: {{ kmToMiles(tripDistance) }}
                 <span ng-if="appSettings.distance==0" >km</span><span ng-else>miles</span>
           </div>
 
@@ -35,27 +35,27 @@
 
 	            <div class="no-playlists">
 					     <p>
-                  Travelled {{convertSpeed(tripDistance)}}
+                  Travelled {{ kmToMiles(tripDistance) }}
                   <span ng-if="appSettings.distance==0" >km</span><span ng-else>miles</span> in {{ tripData.time }}.
                 </p>   
 	            </div>
 
 	            <div ng-if="avgSpeed">
-	            	<strong>Average Speed:</strong> {{convertSpeed(avgSpeed)}} 
+	            	<strong>Average Speed:</strong> {{ kmToMiles(avgSpeed) }} 
                 <span ng-if="appSettings.speed==0" >km/h</span><span ng-else>mph</span>  
 	            </div>
 
 	            <div ng-if="topSpeed">
-	            	<strong>Top Speed:</strong> {{convertSpeed(topSpeed)}}
+	            	<strong>Top Speed:</strong> {{ kmToMiles(topSpeed) }}
                 <span ng-if="appSettings.speed==0" >km/h</span><span ng-else>mph</span>
 	            </div>
 
 	            <div ng-if="highestAltitude">
-	            	<strong>Highest Altitude:</strong> {{highestAltitude}} m
+	            	<strong>Highest Altitude:</strong> {{ convertAltitude(highestAltitude) }} m
 	            </div>
 
 	            <div ng-if="avgAltitude">
-	            	<strong>Average Altitude:</strong> {{avgAltitude}} m
+	            	<strong>Average Altitude:</strong> {{ convertAltitude(avgAltitude) }} m
 	            </div>	            
             </div>
               
