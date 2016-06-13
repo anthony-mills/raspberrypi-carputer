@@ -54,6 +54,16 @@ angular.module('landcruiser.controllers', [])
     return contentFormatting.kmhToMph( speedKmh );
   }
 
+
+  /**
+  * Convert a distance km to miles
+  *
+  * @param integer distanceKm
+  */
+  $scope.convertDistance = function( distanceKm ) {
+    return contentFormatting.kmToMiles( distanceKm );
+  }
+
   /**
   * Perform a hard refresh on the application from the browser
   */

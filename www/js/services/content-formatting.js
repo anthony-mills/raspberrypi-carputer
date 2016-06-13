@@ -120,11 +120,11 @@ angular.module('contentFormatting', [])
 	*
 	* @return integer speedMph
 	*/
-	function kmhToMph( speedKm ) {
+	function kmToMiles( distanceKm ) {
 
-	    var speedMph = Math.round( speedKm * 0.621371 );
+	    var distanceMiles = Math.round( distanceKm * 0.621371 );
 
-	    return speedMph;
+	    return distanceMiles;
 	}
 
 	/**
@@ -154,7 +154,11 @@ angular.module('contentFormatting', [])
 		},
 
 		kmhToMph: function( speedKm ) {
-			return kmhToMph( speedKm );
+			return kmToMiles( speedKm );
+		},
+
+		kmToMiles: function( distanceKm ) {
+			return kmToMiles( distanceKm );
 		},
 
 		metresToFeet: function( heightMetres ) {
