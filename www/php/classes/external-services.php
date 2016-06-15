@@ -17,6 +17,13 @@ class apiServices {
 	protected $_gpsdHost = 'localhost';
 	protected $_gpsdPort = 2947;	
 
+	// Weather variables
+	protected $_metricWeather = true;
+	protected $_defaultLocation = array(
+									'longitude' => 151.206939,
+									'latitude' => -33.873427
+								  );	
+
 	/**
 	* Set the config parameters for the HERE.com API
 	* 
@@ -75,15 +82,52 @@ class apiServices {
 	*
 	* @return string $apiResponse // JSON Object
 	*/
-	public function getWeather( $curLongitude, $curLatitude ) {
+	public function getWeather( $curLongitude=false, $curLatitude=false ) {
+		if ((!$curLongitude) || (!$curLatitude)) {
+			$curLongitude = $this->_defaultLocation['longitude'];
+			$curLatitude = $this->_defaultLocation['latitude'];			
+		}
 
-		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . '&product=observation&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
+		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . 
+					'&product=observation&app_code=' . $this->_hereAppCode . 
+					'&longitude=' . $curLongitude . 
+					'&latitude=' . $curLatitude .
+					'&metric=' . $this->_metricWeather;
+
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {
 			return $apiResponse;
 		}
 
+	}
+
+	/**
+	* Get the current weather forecast
+	*
+	* @param string $curLongitude	
+	* @param string $curLatitude
+	*
+	* @return string $apiResponse // JSON Object	
+	*/
+	public function getForecast( $curLongitude=false, $curLatitude=false ) {
+
+		if ((!$curLongitude) || (!$curLatitude)) {
+			$curLongitude = $this->_defaultLocation['longitude'];
+			$curLatitude = $this->_defaultLocation['latitude'];			
+		}		
+		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . 
+					'&product=forecast_7days_simple' . 
+					'&app_code=' . $this->_hereAppCode . 
+					'&longitude=' . $curLongitude . 
+					'&latitude=' . $curLatitude .
+					'&metric=' . $this->_metricWeather;
+					
+		$apiResponse = $this->apiCall($apiUrl);
+
+		if ($apiResponse) {
+			return $apiResponse;
+		}
 	}
 
 	/**
@@ -105,22 +149,6 @@ class apiServices {
 		}
 
 		return $gpsResponse;
-	}
-	/**
-	* Get the current weather forecast
-	*
-	* @param string $curLongitude	
-	* @param string $curLatitude
-	*
-	* @return string $apiResponse // JSON Object	
-	*/
-	public function getForecast($curLongitude, $curLatitude) {
-		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . '&product=forecast_7days_simple&app_code=' . $this->_hereAppCode . '&longitude=151.206939&latitude=-33.873427';
-		$apiResponse = $this->apiCall($apiUrl);
-
-		if ($apiResponse) {
-			return $apiResponse;
-		}
 	}
 
 	/**

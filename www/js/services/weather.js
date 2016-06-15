@@ -24,8 +24,7 @@ angular.module('weatherAssist', [])
 		}
 
 		// Cache the weather data for an hour
-		if ( (typeof weatherData.created === 'undefined') || ( Date.now() - weatherData.created > (weatherCacheTTL * 1000) ) ) {
-			console.log(Date.now() - weatherData.created);
+		if ( (typeof weatherData === "undefined") ||  (typeof weatherData.created === "undefined") || ( Date.now() - weatherData.created > (weatherCacheTTL * 1000) ) ) {
 			window.localStorage['weather_forecast'] =  false;
 			
 			var weatherRequest = getWeatherCall('/php/services.php?action=weather-forecast&location=' + latitude + ',' + longitude);
