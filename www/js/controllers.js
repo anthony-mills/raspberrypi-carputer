@@ -622,9 +622,25 @@ angular.module('landcruiser.controllers', [])
 /*
 * Manage the weather forecast
 */
-.controller('WeatherCtrl', function($scope, weatherAssist) {
+.controller('WeatherCtrl', function($scope, weatherAssist, contentFormatting) {
   $weatherConditions = null;
 
+  /**
+  * Convert a temperature from celcius to farenheit 
+  *
+  * @param integer tempC
+  */
+  $scope.convertTemperature = function( tempC) {
+    return contentFormatting.celciusToFarenheit( tempC );
+  }    
+
+  /**
+  * Get the appropriate icon for the weather conditions
+  *
+  * @param string urlPath
+  *
+  * @return string 
+  */
   $scope.getIcon = function ( urlPath ) {
     return weatherAssist.getWeatherIcon( urlPath );
   }

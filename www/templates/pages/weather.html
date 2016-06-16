@@ -39,14 +39,28 @@
                     <li>
                       <p> 
                         <strong>Min Temp:</strong> 
-                        {{weatherItem.lowTemperature | number:0 | number }} Celcius
+
+                        <span ng-if="appSettings.temperature==0" >
+                          {{ weatherItem.lowTemperature | number:0 | number }}  Celcius
+                        </span>
+
+                        <span ng-else>
+                          {{ convertTemperature(weatherItem.lowTemperature) }}  Fahrenheit
+                        </span> 
                       </p>
                     </li>
 
                     <li>
                       <p>
                         <strong>Max Temp:</strong>
-                        {{weatherItem.highTemperature | number:0 | number }} Celcius
+
+                        <span ng-if="appSettings.temperature==0" >
+                            {{ weatherItem.highTemperature | number:0 | number }}  Celcius
+                        </span>
+
+                        <span ng-else>
+                          {{ convertTemperature(weatherItem.highTemperature) }} Fahrenheit
+                        </span>                         
                       </p>
                     </li>
 

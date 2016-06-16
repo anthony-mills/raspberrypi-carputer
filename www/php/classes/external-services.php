@@ -18,7 +18,7 @@ class apiServices {
 	protected $_gpsdPort = 2947;	
 
 	// Weather variables
-	protected $_metricWeather = true;
+	protected $_metricWeather = "true";
 	protected $_defaultLocation = array(
 									'longitude' => 151.206939,
 									'latitude' => -33.873427

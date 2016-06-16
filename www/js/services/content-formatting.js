@@ -108,9 +108,9 @@ angular.module('contentFormatting', [])
 	* @return string 
 	*/
 	function celciusToFarenheit( degreesCelcius ) {
-	    var degressFarenheit = Math.round( degreesCelcius * 9 / 5 + 32 );
+	    var degreesFarenheit = Math.round( degreesCelcius * 9 / 5 + 32 );
 
-	    return degressFarenheit;
+	    return degreesFarenheit;
 	}
 
 	/**
