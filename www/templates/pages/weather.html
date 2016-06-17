@@ -81,7 +81,16 @@
                     <li>
                       <p>
                         <strong>Wind:</strong>
-                        {{weatherItem.windSpeed | number:0 | number }}km/h {{weatherItem.windDescShort}}
+
+                        <span ng-if="appSettings.speed==0" >
+                          {{weatherItem.windSpeed | number:0 | number }}km/h 
+                        </span>
+
+                        <span ng-else>
+                          {{kmToMiles(weatherItem.windSpeed)}}mph
+                        </span>                          
+                        
+                        {{weatherItem.windDescShort}}
                       </p>
                     </li>
                   </ul>                  
