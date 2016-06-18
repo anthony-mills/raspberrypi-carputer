@@ -622,15 +622,16 @@ angular.module('landcruiser.controllers', [])
 /*
 * Manage the weather forecast
 */
-.controller('WeatherCtrl', function($scope, weatherAssist, contentFormatting) {
+.controller('WeatherCtrl', function($scope, $timeout, weatherAssist, contentFormatting) {
   $weatherConditions = null;
+  $scope.loadingData = true;
 
   /**
   * Convert a temperature from celcius to farenheit 
   *
   * @param integer tempC
   */
-  $scope.convertTemperature = function( tempC) {
+  $scope.convertTemperature = function( tempC ) {
     return contentFormatting.celciusToFarenheit( tempC );
   }    
 
@@ -653,6 +654,17 @@ angular.module('landcruiser.controllers', [])
     if (gpsData.latitude && gpsData.longitude) {
 
       $scope.weatherData = weatherAssist.getForecast( gpsData.latitude, gpsData.longitude );
+
+      if (!$scope.weatherData) {
+        $timeout(function(){
+          $scope.weatherData = weatherAssist.getForecast( gpsData.latitude, gpsData.longitude );
+
+          // Unable to get data throw an error
+          if (!$scope.weatherData) {
+            $scope.loadingData = false;
+          }
+        }, 8000); 
+      }
 
     }
   }

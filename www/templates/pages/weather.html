@@ -102,12 +102,26 @@
         </div>
 
         <div class="card" ng-else>
-            <div class="item item-divider bar bar-header page-heading heading-text" >
-                Data Error!
+            <div ng-if="loadingData">
+              <div class="item item-divider bar bar-header page-heading heading-text" >
+                  Loading
+              </div>
+
+              <div class="item item-text-wrap">
+                <div class="standby-loading">
+                  <strong>Attemping to retrieve weather data...</strong>
+                </div> 
+              </div>
             </div>
 
-            <div class="item item-text-wrap">
-              Error retrieving weather data check console log for more information. 
+            <div ng-else>
+              <div class="item item-divider bar bar-header page-heading heading-text" >
+                  Data Error!
+              </div>
+
+              <div class="item item-text-wrap">
+                Error retrieving weather data check console log for more information. 
+              </div>
             </div>
         </div>
         <!-- End weather related tags -->
