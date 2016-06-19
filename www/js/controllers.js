@@ -622,7 +622,7 @@ angular.module('landcruiser.controllers', [])
 /*
 * Manage the weather forecast
 */
-.controller('WeatherCtrl', function($scope, $timeout, weatherAssist, contentFormatting) {
+.controller('WeatherCtrl', function( $scope, $timeout, weatherAssist, contentFormatting ) {
   $weatherConditions = null;
   $scope.loadingData = true;
 
@@ -673,7 +673,7 @@ angular.module('landcruiser.controllers', [])
 /**
 * Display the current location of the car on a map
 */
-.controller('LocationCtrl', function($scope, $interval, contentFormatting) {
+.controller('LocationCtrl', function( $scope, $interval, contentFormatting ) {
   $scope.areaMap = null;
 
   /**
@@ -867,13 +867,14 @@ angular.module('landcruiser.controllers', [])
 * Page for controllling application settings such as speed, distance temperature etc measurements
 */
 .controller('SettingsCtrl', function( $scope ) {
+  
   /**
   * Update the value for an applications setting
   *
   * @param integer appSettings
   */
   $scope.saveValue = function( appSettings ) {
-    console.log( appSettings )
+
     window.localStorage['app_settings'] = JSON.stringify(appSettings);
   }
 
