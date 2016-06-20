@@ -29,6 +29,8 @@ By default the system will log a data point about the cars location data ( speed
 
 The data never leaves the local system but at the end of a trip you may want to delete the data associated with a trip due to privacy reasons. To achieve this simply select the "Reset Tripmeter" option on the Tripmeter page to delete the data under the trip_data key. In another use case a button has now also been added to the Trip Meter page that will download the trip_data JSON object as a file to the system for later analysis / testing / debugging.
 
+A set of real world data set are stored in the www/php/data folder by inserting these into a local storage object under the trip_data key for development and debugging purposes.
+
 # Credits
 
 This project makes the use of a number of third party Open Source libraries. You are all fantastic! Thank you for all your hardwork its much appreciated!
