@@ -13,6 +13,11 @@ class apiServices {
 	protected $_debugGps = false;
 	protected $_gpsDebugFile = '../data/gps_data.json';
 
+	// Location IQ Related Parameters
+	protected $_locationIqKey = 'MYAPIKEY';
+	protected $_locationIqEndpoint = 'http://osm1.unwiredlabs.com/locationiq/v1/reverse.php';
+	protected $_locationIqFormat = 'json'; // Valid options are json,jsonv2,html or xml
+
 	// GPSD server settings
 	protected $_gpsdHost = 'localhost';
 	protected $_gpsdPort = 2947;	
@@ -23,6 +28,15 @@ class apiServices {
 									'longitude' => 151.206939,
 									'latitude' => -33.873427
 								  );	
+
+	/**
+	* Set the config parameters for the LocationIq.com API
+	* 
+	* @param array $locationIqConf
+	*/
+	public function setLocationIqConf( $locationIqConf ) {
+		$this->_locationIqKey = $locationIqConf['locationiq-key'];				
+	}
 
 	/**
 	* Set the config parameters for the HERE.com API
@@ -123,6 +137,33 @@ class apiServices {
 					'&latitude=' . $curLatitude .
 					'&metric=' . $this->_metricWeather;
 					
+		$apiResponse = $this->apiCall($apiUrl);
+
+		if ($apiResponse) {
+			return $apiResponse;
+		}
+	}
+
+	/**
+	* Lookup human readable information about car position
+	*
+	* @param string $curLongitude	
+	* @param string $curLatitude
+	*
+	* @return string $apiResponse // JSON Object	
+	*/
+	public function getLocationInfo( $curLongitude=false, $curLatitude=false ) {
+
+		if ((!$curLongitude) || (!$curLatitude)) {
+			$curLongitude = $this->_defaultLocation['longitude'];
+			$curLatitude = $this->_defaultLocation['latitude'];			
+		}		
+		
+		$apiUrl = $this->_locationIqEndpoint . '?key=' . $this->_locationIqKey .
+					'&format=' . $this->_locationIqFormat . 
+					'&lat=' . $curLatitude . 
+					'&lon=' . $curLongitude;
+		print_r($apiUrl);
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {

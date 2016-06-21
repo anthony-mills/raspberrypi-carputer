@@ -16,12 +16,20 @@ $serviceObj = new apiServices();
 
 $serviceObj->setHereConf( $appConfig['here-api'] );
 $serviceObj->setGpsConf( $appConfig['gpsd'] );
+$serviceObj->setLocationIqConf( $appConfig['location-iq'] );
 
 switch ($requestedAction) {
 	case 'speed-limit':
 		$currentLocation = filter_input(INPUT_GET, 'location', FILTER_SANITIZE_SPECIAL_CHARS);
 
 		echo $serviceObj->getSpeed($currentLocation);
+	break;
+
+	case 'location-address':
+		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
+		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
+
+		echo $serviceObj->getLocationInfo($curLongitude, $curLatitude);
 	break;
 
 	case 'get-location':
