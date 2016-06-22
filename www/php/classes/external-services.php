@@ -163,7 +163,7 @@ class apiServices {
 					'&format=' . $this->_locationIqFormat . 
 					'&lat=' . $curLatitude . 
 					'&lon=' . $curLongitude;
-		print_r($apiUrl);
+
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {

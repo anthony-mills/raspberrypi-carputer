@@ -673,7 +673,7 @@ angular.module('landcruiser.controllers', [])
 /**
 * Display the current location of the car on a map
 */
-.controller('LocationCtrl', function( $scope, $interval, contentFormatting ) {
+.controller('LocationCtrl', function( $scope, $interval, gpsAssist, contentFormatting ) {
   $scope.areaMap = null;
 
   /**
@@ -681,11 +681,15 @@ angular.module('landcruiser.controllers', [])
   */
   $scope.updateLocation = function() {
     var gpsData = window.localStorage['gps_data'];
+    $scope.locationInfo = false;
 
     if (gpsData) {
       var gpsData = JSON.parse( gpsData );
 
       if (gpsData.latitude && gpsData.longitude) {
+
+        $scope.locationInfo = gpsAssist.locationInfo( gpsData.latitude, gpsData.longitude );
+        console.log($scope.locationInfo);
 
         $scope.areaMap = {
             center: {

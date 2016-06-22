@@ -17,6 +17,7 @@
 
       <div class="col-66 pad-column">    
 
+
         <div ng-if="areaMap" class="card">
           <div class="item item-divider bar bar-header page-heading heading-text" >
                 Current Location
@@ -26,7 +27,12 @@
             <div class="col">
               <ui-gmap-google-map center='areaMap.center' zoom='areaMap.zoom'>
                 <ui-gmap-marker coords="areaMap.center" idkey="areaMap.id">
-              </ui-gmap-google-map>    
+              </ui-gmap-google-map>   
+
+              <br />
+              <div ng-if="locationInfo.location_info.display_name" class="center">
+                {{locationInfo.location_info.display_name}}
+              </div>               
             </div>
 
             <div class="button-bar ">         

@@ -293,6 +293,33 @@ angular.module('gpsAssist', [])
 	}
 
 	/**
+	* Get information about the current location
+	*
+	* @param float latitude
+	* @param float longitude
+	*/
+	function locationInfo(latitude, longitude) {
+		var locationInfo = window.localStorage['location_info'];
+
+		if ((typeof locationInfo ==="undefined") || ((Date.now() - locationInfo.age) > 600)) {
+			var getGps = getGpsData('/php/services.php?action=location-info&latitude=' + latitude + '&longitude=' + longitude);
+
+			return getGps.then(function(resultSet) {
+				if (resultSet.data) {
+
+					var locationInfo = {
+						'location_info' : resultSet.data,
+						'age' : Date.now()
+					}
+					window.localStorage['location_info'] = JSON.stringify(locationInfo);
+				}
+			});
+		} else {
+			return JSON.parse( locationInfo );
+		}
+	}
+
+	/**
 	* Get the current GPS data
 	*
 	* @param string dataEndpoint
@@ -409,6 +436,12 @@ angular.module('gpsAssist', [])
 		getMapZoom: function( mapLatitude, distanceTravelled ) {
 
 			return getMapZoom( mapLatitude, distanceTravelled );
+
+		},
+
+		locationInfo: function( carLat, carLong ) {
+
+			return locationInfo( carLat, carLong );
 
 		},
 

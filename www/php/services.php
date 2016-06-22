@@ -25,7 +25,7 @@ switch ($requestedAction) {
 		echo $serviceObj->getSpeed($currentLocation);
 	break;
 
-	case 'location-address':
+	case 'location-info':
 		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
 		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
 
