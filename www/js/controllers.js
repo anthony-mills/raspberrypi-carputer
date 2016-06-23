@@ -8,7 +8,8 @@ angular.module('landcruiser.controllers', [])
       "speed" : 0,
       "distance" : 0,
       "temperature" : 0,
-      "altitude" : 0      
+      "altitude" : 0,     
+      "locationiq" : 1 
     }
     
     $scope.appSettings = appSettings;
@@ -687,9 +688,11 @@ angular.module('landcruiser.controllers', [])
       var gpsData = JSON.parse( gpsData );
 
       if (gpsData.latitude && gpsData.longitude) {
+        console.log($scope.appSettings);
+        if (parseInt($scope.appSettings.locationiq) === 1) {
+          $scope.locationInfo = gpsAssist.locationInfo( gpsData.latitude, gpsData.longitude );
+        }
 
-        $scope.locationInfo = gpsAssist.locationInfo( gpsData.latitude, gpsData.longitude );
-        console.log($scope.locationInfo);
 
         $scope.areaMap = {
             center: {

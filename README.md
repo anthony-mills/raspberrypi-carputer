@@ -12,7 +12,7 @@ The UI was designed for use on a car computer built on the Raspberry Pi platform
 # Installation
 
 * Install all of the required dependencies.
-* Edit the application config file at config/config.ini and enter your [Here.com API](https://developer.here.com/plans/api/consumer-mapping) details - Required for speed limit and weather information. 
+* Edit the application config file at config/config.ini and enter your [Here.com API](https://developer.here.com/plans/api/consumer-mapping) details - Required for speed limit and weather information. In order to translate the cars location from a latititude, longitude pair to a human readble address you will also need to get an API key from [locationIQ](http://locationiq.org/).
 * Also check the GPSD daemon setting in application config file - Should work with the defaults on most setups
 * From the command line run the start.sh script to start a and instance of the internal PHP webserver on port 8000.
 * Open Chrome or Chromium and visit localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Official touch screen in mind i.e 800x468 so if your on a desktop / laptop you may want to use developer tools to switch to a 800x468 viewport. To get get a more realistic idea of what the UI will look like on the end device.

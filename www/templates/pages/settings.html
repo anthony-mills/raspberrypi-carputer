@@ -98,6 +98,26 @@
         </div>
         <!-- End altitude unit card --> 
 
+        <!-- Start human readable addresses card -->
+        <div class="card">
+          <div class="item item-divider page-heading bar-header page-heading heading-text" >
+              Human Readable Addresses
+          </div>
+
+          <div bindonce="item item-text-wrap">
+
+            <div class="list">
+              <div class="item range range-positive">
+                Off
+                <input type="range" name="locationiq" min="0" max="1" ng-change="saveValue( appSettings )" ng-model="appSettings.locationiq">
+                On
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- End human readable addresses card -->
+
         <div class="card">       
             <div class="item item-text-wrap">
               <div class="button-bar ">         
