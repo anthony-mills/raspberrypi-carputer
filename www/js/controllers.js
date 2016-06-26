@@ -22,7 +22,7 @@ angular.module('landcruiser.controllers', [])
   /**
   * Get the GPS data from GPSD for the location panel
   *
-  * Default frequency is every second. The interval can prbably be increased for a more responsive speed readout on systems using a Raspberry Pi Model 3
+  * Default frequency is every second. The interval can probably be increased for a more responsive speed readout on systems using a Raspberry Pi Model 3
   */
   var updateFrequency = 1000;
   
