@@ -32,6 +32,7 @@ angular.module('gpsAssist', [])
 					var appSettings = JSON.parse(window.localStorage['app_settings']);
 
 					var currentTime = Date.now();
+
 					if (!speedLimitData) {
 
 						speedLimit(resultSet.lat, resultSet.lon);
@@ -70,7 +71,7 @@ angular.module('gpsAssist', [])
 						if ( typeof appSettings.speed !=="undefined" && appSettings.speed === 1) {
 							var estSpeedLimit = limitData.speed_limit + ' mph';					
 						} else {
-							var estSpeedLimit = limitData.speed_limit + ' kmh';
+							var estSpeedLimit = limitData.speed_limit + ' km/h';
 						}
 					}
 
@@ -195,11 +196,7 @@ angular.module('gpsAssist', [])
 
 		} else {
 
-			var totalDistance = Math.round( 
-											(
-												tripData.distance + distanceTravelled
-											), 2 
-										   );
+			var totalDistance = tripData.distance + distanceTravelled;
 
 		}
 
@@ -232,7 +229,7 @@ angular.module('gpsAssist', [])
 	  var lon2 = coords2.long;
 	  var lat2 = coords2.lat;
 
-	  var R = 6371; // km
+	  var R = 6371; // Radius of the earth in km
 
 	  var x1 = lat2 - lat1;
 	  var dLat = toRad(x1);

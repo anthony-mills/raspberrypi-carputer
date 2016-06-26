@@ -775,7 +775,7 @@ angular.module('landcruiser.controllers', [])
         avgAltitude += parseInt(tripData.data_points[i].altitude);
 
         if (typeof tripData.data_points[i].speed == 'number') {
-          avgSpeed += parseInt(tripData.data_points[i].speed);       
+          avgSpeed += parseInt( tripData.data_points[i].speed );       
         } 
       }    
     }
