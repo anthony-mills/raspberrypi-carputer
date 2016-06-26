@@ -115,7 +115,7 @@ angular.module('gpsAssist', [])
 	function updateTrip( gpsData, checkFrequency )
 	{
 		// Frequency to store a trip data point in seconds
-		var dataResolution = 30;
+		var dataResolution = 60;
 
 		var tripData = window.localStorage['trip_data'];
 		var dataPoints = [];
