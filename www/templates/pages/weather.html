@@ -16,7 +16,23 @@
       <!-- End the speed and location column -->
 
       <!-- Start the music control column -->
-      <div class="col-66 pad-column">    
+      <div class="col-66 pad-column">   
+
+        <div ng-if="locationInfo.location_info.display_name" class="card">
+          <div class="item item-divider bar bar-header page-heading heading-text" >
+                Weather Outlook
+          </div>
+
+          <div class="item item-text-wrap">
+              <div ng-if="locationInfo.location_info.address.state" class="center">
+                {{locationInfo.location_info.address.suburb}},
+                {{locationInfo.location_info.address.postcode}}, 
+                {{locationInfo.location_info.address.state}} 
+                ( {{ gpsData.latitude }}, {{ gpsData.longitude }} )
+              </div>                           
+          </div>
+        </div>
+
         <!-- Start weather related tags -->
         <div ng-if="weatherData.forecast">
           <div ng-repeat="weatherItem in weatherData.forecast track by $index" class="card">

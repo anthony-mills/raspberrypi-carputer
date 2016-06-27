@@ -623,9 +623,14 @@ angular.module('landcruiser.controllers', [])
 /*
 * Manage the weather forecast
 */
-.controller('WeatherCtrl', function( $scope, $timeout, weatherAssist, contentFormatting ) {
+.controller('WeatherCtrl', function( $scope, $timeout, weatherAssist, gpsAssist, contentFormatting ) {
   $weatherConditions = null;
   $scope.loadingData = true;
+  $scope.locationInfo = false;
+
+  if (parseInt($scope.appSettings.locationiq) === 1) {
+    $scope.locationInfo = gpsAssist.locationInfo( $scope.gpsData.latitude, $scope.gpsData.longitude );
+  }
 
   /**
   * Convert a temperature from celcius to farenheit 
