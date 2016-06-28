@@ -42,6 +42,8 @@
   background-color: #000;
   padding-left:10px;
   color: #ccc;
+  overflow-y: hidden;
+  overflow-x: hidden; 
 }
 
 .night-mode-theme .item{
