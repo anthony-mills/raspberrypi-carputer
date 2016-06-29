@@ -165,7 +165,7 @@ angular.module(
 
   // Set options for the ImgCache module
   ImgCacheProvider.setOptions({
-      debug: true,
+      debug: false,
       usePersistentCache: true
   });
 
