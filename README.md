@@ -5,7 +5,7 @@ This repository is the UI component of a Raspberry Pi car computer set up. [Visi
 # Prerequisites
 The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So to have the frontend work properly these two daemons must be installed and configured. Although for development and testing, a fake GPS data set can be used in place of a live GPS stream to make things easier ( see below under "No GPS" for more details). 
 
-The system uses PHP for getting GPS data so at minimum the PHP5-common, PHP5-cli and PHP5-curl packages must be installed on the system. The application also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This API is poorly supported so either Chromium or Chrome needs to be used for displaying the application.
+The system uses PHP for getting GPS and other data from external services so at minimum the PHP5-common, PHP5-cli and PHP5-curl packages must be installed on the system. The application also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This HTML5 API is poorly supported so either Chromium or Chrome needs to be used with the application for the local image cache to function correctly.
 
 The UI was designed for use on a car computer built on the Raspberry Pi platform ( has been tested with the 2 & 3 Model B ) combined with the official 7 inch Raspberry Pi touch screen display (800x480). Although it will run happily at other resolutions with the majority of development and testing taking place in [Chromium](https://www.chromium.org/Home) on a standard desktop computer.
 
@@ -49,6 +49,8 @@ This project makes the use of a number of third party Open Source libraries. You
 In the near future the following features are planned:
 
 * The ability to save a play queue to the MPD filesystem as a playlist
+
+* PHP script that acts as a podcast agregator finding and downloading new episodes as they are released and then making them available to the MPD daemon.
 
 # Screenshots
 
