@@ -55,8 +55,10 @@
                 <strong>{{ gpsData.speed_limit }}</strong>
             </div>
             
-            <div ng-if="gpsData.speed_limit_age > 0" align="center">
-                {{ gpsData.speed_limit_age }}  
+            <div ng-if="gpsData.speed_limit_age" align="center">
+                <span class="small-text">
+                    {{ gpsData.speed_limit_age }} 
+                </span>
             </div>
          
         </div>

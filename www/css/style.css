@@ -30,6 +30,10 @@
   color: #fff;
 }
 
+.small-text {
+  font-size: 12px;
+}
+
 /*--- Start heading bar related styles ---*/
 .bar-heading {
   padding-top: 10px;

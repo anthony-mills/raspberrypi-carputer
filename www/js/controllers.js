@@ -1,6 +1,7 @@
 angular.module('landcruiser.controllers', [])
 
 .controller('AppCtrl', function( $scope, $window, $interval, gpsAssist, contentFormatting ) {
+
   var appSettings = window.localStorage['app_settings'];
 
   if (typeof appSettings === "undefined") {
@@ -42,6 +43,7 @@ angular.module('landcruiser.controllers', [])
 
           gpsAssist.updateTrip( gpsData, updateFrequency );
       }
+      console.log(gpsData);
       $scope.gpsData = gpsData;
     });
   }, updateFrequency);
