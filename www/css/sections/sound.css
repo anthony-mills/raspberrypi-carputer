@@ -3,6 +3,9 @@
 * Styles related to sound and music playback functionality
 *
 */
+.album-art {
+	padding: 0px 10px 15px 10px;
+}
 
 .song-album {
   font-style: italic;
