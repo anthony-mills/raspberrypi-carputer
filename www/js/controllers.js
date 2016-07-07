@@ -365,7 +365,8 @@ angular.module('landcruiser.controllers', [])
 
   $scope.$watch('dirData', function ( dirData ) {
 
-    $scope.directoryContents = dirData.directoryContents;
+    var directoryContents = dirData.directoryContents;
+    $scope.directoryContents = directoryContents;
 
     // Only show the letter indexes in the root directory of the filesystem
     if ((!basePath) || (basePath === '/')) {

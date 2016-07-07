@@ -34,6 +34,7 @@ angular.module('landcruiser.sound', [])
 			var songArtist = currentSong.getArtist();
 			var albumArt = findAlbumArt(songArtist, 'feature');
 			var trackMetadata = currentSong.getMetadata()
+			console.log(trackMetadata);
 			var songObj = {
 	            'id' :  currentSong.getId(),
 	            'name' :  currentSong.getDisplayName(),
@@ -57,7 +58,8 @@ angular.module('landcruiser.sound', [])
 
 	        if (nextSong) {
 
-	        	var albumArt = findAlbumArt(nextSong.getArtist());
+	        	var albumArt = findAlbumArt( nextSong.getArtist() );
+
 				var nextSongObj = {
 		            'id' :  nextSong.getId(),
 		            'name' :  nextSong.getDisplayName(),
@@ -248,7 +250,7 @@ angular.module('landcruiser.sound', [])
 		var directoryContents = [];
 		var directoryIndexes = [];
 
-		mpdClient.getDirectoryContents(dirPath, function( directoryFiles ){
+		mpdClient.getDirectoryContents(dirPath, function( directoryFiles ) {
 
 			directoryFiles.forEach(function(directoryItem){
 				var metaData = directoryItem.getMetadata();
