@@ -483,7 +483,7 @@ angular.module('landcruiser.controllers', [])
     $scope.playlistLoading = true;
     mpdClient.removeSongFromQueueByPosition(playlistIndex);
 
-    growl.success("Song removed from play queue");
+    growl.success("Song removed from the current play queue");
   }
 
   /**
@@ -496,7 +496,7 @@ angular.module('landcruiser.controllers', [])
 
     mpdClient.clearQueue(); 
 
-    growl.success("Play queue cleared"); 
+    growl.success("The play queue has been cleared"); 
 
     $scope.playlistSongs = {};
     $scope.playlistCount = 0;
@@ -518,7 +518,7 @@ angular.module('landcruiser.controllers', [])
 
     }, 5000);
 
-    growl.success("Play queue contents shuffled"); 
+    growl.success("Shuffling the play queue contents"); 
 
   }
 
@@ -530,7 +530,6 @@ angular.module('landcruiser.controllers', [])
   */
   $scope.playSong = function(songId, queueIndex) {
 
-    console.log('Starting playback of track: ' + songId);
     mpdClient.play(songId);
 
     $scope.playlistSongs[queueIndex].playing = 1;

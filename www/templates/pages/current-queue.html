@@ -21,8 +21,12 @@
       <!-- Start the music control column -->
       <div class="col-66">
         <div class="card">
-          <div class="item item-divider page-heading bar-header page-heading heading-text" >
+          <div ng-if="playlistCount > 0" class="item item-divider page-heading bar-header page-heading heading-text" >
             Current Play Queue: {{playlistCount}} Songs
+          </div>
+
+          <div ng-else class="item item-divider page-heading bar-header page-heading heading-text" >
+            Current Play Queue: Currently Empty
           </div>
 
           <div class="button-bar">
