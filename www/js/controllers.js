@@ -10,7 +10,7 @@ angular.module('landcruiser.controllers', [])
       "distance" : 0,
       "temperature" : 0,
       "altitude" : 0,     
-      "locationiq" : 1 
+      "locationiq" : 0 
     }
     
     $scope.appSettings = appSettings;
@@ -531,6 +531,7 @@ angular.module('landcruiser.controllers', [])
     mpdClient.play(songId);
 
     $scope.playlistSongs[queueIndex].playing = 1;
+
     growl.success("Music playback started");  
 
   }
@@ -589,10 +590,11 @@ angular.module('landcruiser.controllers', [])
   mpdClient.lsPlaylists();
 
   $scope.PlaylistData = mpdClient.getPlaylists();
+
   $scope.$watch('PlaylistData', function (playlistData) {
 
     if (playlistData) {
-      console.log(playlistData);
+
       var storedPlaylists = playlistData;
 
       if (storedPlaylists.length > 0) {
