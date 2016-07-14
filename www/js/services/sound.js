@@ -33,8 +33,8 @@ angular.module('landcruiser.sound', [])
 		if (currentSong) {
 			var songArtist = currentSong.getArtist();
 			var albumArt = findAlbumArt(songArtist, 'feature');
-			var trackMetadata = currentSong.getMetadata()
-			console.log(trackMetadata);
+			var trackMetadata = currentSong.getMetadata();
+
 			var songObj = {
 	            'id' :  currentSong.getId(),
 	            'name' :  currentSong.getDisplayName(),
@@ -104,7 +104,10 @@ angular.module('landcruiser.sound', [])
 					getAlbumArt(artistName).then(function(res){
 					  var results = res.data.results.pop();
 
-					  addAlbumArt(artistSlug, results.artworkUrl100);
+					  if ( typeof results.artworkUrl100 != undefined ) {
+					  	addAlbumArt(artistSlug, results.artworkUrl100);					  	
+					  }
+
 					});	            
 						
 	            } else {

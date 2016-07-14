@@ -370,7 +370,9 @@ angular.module('landcruiser.controllers', [])
 
     // Only show the letter indexes in the root directory of the filesystem
     if ((!basePath) || (basePath === '/')) {
+
       console.log(dirData.directoryIndexes);
+
       $scope.directoryIndexes = dirData.directoryIndexes;  
 
     } else {
@@ -510,13 +512,9 @@ angular.module('landcruiser.controllers', [])
 
     mpdClient.shuffleQueue();
 
-    $timeout(function() {
-
-      console.log('Refreshing play queue');
-      
-      $scope.playQueue();
-
-    }, 5000);
+    $scope.playlistSongs = {};
+    $scope.playlistLoading = true;  
+    $scope.playlistSongs = mpdAssist.getQueue();
 
     growl.success("Shuffling the play queue contents"); 
 
@@ -695,7 +693,7 @@ angular.module('landcruiser.controllers', [])
       var gpsData = JSON.parse( gpsData );
 
       if (gpsData.latitude && gpsData.longitude) {
-        console.log($scope.appSettings);
+
         if (parseInt($scope.appSettings.locationiq) === 1) {
           $scope.locationInfo = gpsAssist.locationInfo( gpsData.latitude, gpsData.longitude );
         }
