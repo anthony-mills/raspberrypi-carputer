@@ -10,7 +10,8 @@ angular.module('landcruiser.controllers', [])
       "distance" : 0,
       "temperature" : 0,
       "altitude" : 0,     
-      "locationiq" : 0 
+      "locationiq" : 0,
+      "night_mode" : 0
     }
     
     $scope.appSettings = appSettings;
@@ -578,7 +579,32 @@ angular.module('landcruiser.controllers', [])
 * Night mode is a cutback interface with a a black back ground to minimise glare from the screen
 * when travelling at night.
 */
-.controller('NightModeCtrl', function( $scope ) {})
+.controller('NightModeCtrl', function( $scope ) {
+
+  $scope.leaveNight = function() {
+    $scope.toggleNight(0);
+
+    $scope.goHome();
+  }
+
+  /**
+  * Toggle the status of night mode in the application settings object.
+  * The purpose of having night mode persist is that it can be annoying when stopping for short periods petrol etc, starting the car and
+  * have the application boot back into the default interface.
+  *
+  * @param integer nightStatus
+  */
+  $scope.toggleNight = function( nightStatus ) {
+      var appSettings = $scope.appSettings;
+
+      appSettings.nightMode = nightStatus;
+
+      window.localStorage['app_settings'] = JSON.stringify(appSettings); 
+  }
+
+  $scope.toggleNight(1);
+
+})
 
 /**
 * Show the playlists stored under MPD
@@ -759,7 +785,7 @@ angular.module('landcruiser.controllers', [])
       return;
     }
 
-    tripData.time = contentFormatting.formatSeconds( tripData.time / 1000 )
+    tripData.time = contentFormatting.formatSeconds( tripData.time / 1000 );
 
     var avgSpeed = 0;
     var avgAltitude = 0;
@@ -824,8 +850,6 @@ angular.module('landcruiser.controllers', [])
                         zoom: mapZoom, 
                         bounds: {}
                      };
-
-    console.log($scope.tripMap);
 
     $scope.polylines = [];
 
