@@ -47,6 +47,7 @@ This project makes the use of a number of third party Open Source libraries. You
 * [websockify](https://github.com/kanaka/websockify)
 * [mpd](http://www.musicpd.org/)
 * [gpsd](http://www.catb.org/gpsd/)
+* [Angular Google Maps](https://github.com/angular-ui/angular-google-maps)
 
 # Immediate Roadmap
 
