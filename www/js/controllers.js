@@ -79,10 +79,19 @@ angular.module('landcruiser.controllers', [])
 * Manage the connection to the MPD instance 
 * and display main application navigation.
 */
-.controller('HomeCtrl', function( $scope, $interval, $timeout, growl, mpdAssist, contentFormatting) {
+.controller('HomeCtrl', function( $scope, $interval, $timeout, $location, growl, mpdAssist, contentFormatting) {
   $scope.playlistCount = 0;
   $scope.mpdStatus = "Not connected";
   $scope.currentlyPlaying = false;
+
+  /**
+  * Return to night mode if that was the last state the UI was in
+  *
+  */
+  if ($scope.appSettings.night_mode === 1) {
+    console.log('here');
+    $location.path('/app/night-mode');
+  }
 
   $scope.playState = mpdClient.getPlaystate();
 
@@ -597,7 +606,7 @@ angular.module('landcruiser.controllers', [])
   $scope.toggleNight = function( nightStatus ) {
       var appSettings = $scope.appSettings;
 
-      appSettings.nightMode = nightStatus;
+      appSettings.night_mode = nightStatus;
 
       window.localStorage['app_settings'] = JSON.stringify(appSettings); 
   }
