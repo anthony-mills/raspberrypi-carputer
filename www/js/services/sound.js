@@ -81,7 +81,7 @@ angular.module('landcruiser.sound', [])
 	* Find the album art for an artist
 	*
 	* @param string artistName
-	* @param string imageSize
+	* @param string imageSize - Possible values original, feature or big
 	*
 	* @return string albumArt
 	*/
@@ -236,8 +236,6 @@ angular.module('landcruiser.sound', [])
 			});
     	});
 
-		console.log(directoryPlaylists);
-
 		return directoryPlaylists;
 	}
 
@@ -304,7 +302,7 @@ angular.module('landcruiser.sound', [])
 						}
 					}
 				}
-				console.log( itemData );
+
 				if ( itemData.index !=="undefined" && itemData.index != " " ) {
 					if ( !directoryIndexes.includes(itemData.index) ) {
 						directoryIndexes.push( itemData.index );

@@ -418,9 +418,13 @@ angular.module('gpsAssist', [])
 	*/
 	function speedConversion( gpsSpeed )
 	{
-		var carSpeed = gpsSpeed / 1000 * 3600;
+		if (isNaN(gpsSpeed)) {
+			return 0;
+		} else {
+			var carSpeed = gpsSpeed / 1000 * 3600;
 
-		return Math.floor(carSpeed);
+			return Math.floor(carSpeed);
+		}
 	}
 
 	return {

@@ -86,9 +86,8 @@ angular.module('landcruiser.controllers', [])
 
   /**
   * Return to night mode if that was the last state the UI was in
-  *
   */
-  if ($scope.appSettings.night_mode === 1) {
+  if ($scope.appSettings.night_mode === 1) {  
     $location.path('/app/night-mode');
   }
 
@@ -175,7 +174,7 @@ angular.module('landcruiser.controllers', [])
   }, 1000);
 
   /**
-  * Paused the music
+  * Pause / resume music playback
   */
   $scope.pauseMusic = function() {
     if ($scope.playState === 'play') {
@@ -892,8 +891,8 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
-* Static page with external links out of the application 
-* to static resource files.
+* Static page with links to external resources out of the application 
+* i.e maps, car workshop manuals etc
 */
 .controller('ReferenceCtrl', function( $scope ) {
 
@@ -910,7 +909,7 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
-* Page for controllling application settings such as speed, distance temperature etc measurements
+* Page for controllling application settings such as the preferred unit for speed, distance temperature etc
 */
 .controller('SettingsCtrl', function( $scope ) {
   
