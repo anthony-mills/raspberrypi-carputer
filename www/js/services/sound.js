@@ -303,7 +303,7 @@ angular.module('landcruiser.sound', [])
 					}
 				}
 
-				if ( itemData.index !=="undefined" && itemData.index != " " ) {
+				if ( ( typeof itemData !=="undefined" ) && ( typeof itemData.index !=="undefined" ) && itemData.index != " " ) {
 					if ( !directoryIndexes.includes(itemData.index) ) {
 						directoryIndexes.push( itemData.index );
 					} 

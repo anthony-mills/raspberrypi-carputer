@@ -44,7 +44,7 @@ angular.module('landcruiser.controllers', [])
 
           gpsAssist.updateTrip( gpsData, updateFrequency );
       }
-      console.log(gpsData);
+
       $scope.gpsData = gpsData;
     });
   }, updateFrequency);
