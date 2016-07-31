@@ -44,7 +44,7 @@ switch ($requestedAction) {
 	break;
 
 	case 'weather-forecast':
-		$curLatitide = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
+		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
 		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
 
 		echo $serviceObj->getForecast($curLongitude, $curLatitude);
