@@ -7,7 +7,7 @@ class apiServices {
 	protected $_hereAppId = 'MYAPPID';
 	protected $_hereAppCode = 'MYAPPCODE';	
 	protected $_baseWeatherAPI = 'https://weather.cit.api.here.com/weather/1.0/report.json';
-	protected $_baseSpeedAPI = 'http://route.st.nlp.nokia.com/routing/6.2/getlinkinfo.xml';
+	protected $_baseSpeedAPI = 'http://route.st.nlp.nokia.com/routing/7.2/getlinkinfo.xml';
 
 	// Live or debug GPS data
 	protected $_debugGps = false;
@@ -62,17 +62,19 @@ class apiServices {
 	/**
 	* Get the speed limit for a particular location
 	*
-	* @param string $currentLocation
+	* @param float $currentLat	
+	* @param float $currentLong
 	*
 	* @return string $apiResponse // JSON Object	
 	*/
-	public function getSpeed( $currentLocation ) {
+	public function getSpeed( $currentLat, $currentLong) {
 		
-		if (!$currentLocation) {
+		if ((!$currentLat) || (!$currentLong)) {
 			die('No location provided');
 		}
 
-		$apiUrl = $this->_baseSpeedAPI . '?app_id=' . $this->_hereAppId . '&app_code=' . $this->_hereAppCode . '&waypoint='.$currentLocation.'&linkattributes=all';
+		$apiUrl = $this->_baseSpeedAPI . '?app_id=' . $this->_hereAppId . '&app_code=' . $this->_hereAppCode . '&waypoint=' . $currentLong . ',' . $currentLat . '&linkattributes=all';
+
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {

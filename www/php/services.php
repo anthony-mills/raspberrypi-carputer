@@ -18,17 +18,15 @@ $serviceObj->setHereConf( $appConfig['here-api'] );
 $serviceObj->setGpsConf( $appConfig['gpsd'] );
 $serviceObj->setLocationIqConf( $appConfig['location-iq'] );
 
+$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
+$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
+
 switch ($requestedAction) {
 	case 'speed-limit':
-		$currentLocation = filter_input(INPUT_GET, 'location', FILTER_SANITIZE_SPECIAL_CHARS);
-
-		echo $serviceObj->getSpeed($currentLocation);
+		echo $serviceObj->getSpeed($curLongitude, $curLatitude);
 	break;
 
 	case 'location-info':
-		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
-		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
-
 		echo $serviceObj->getLocationInfo($curLongitude, $curLatitude);
 	break;
 
@@ -37,16 +35,10 @@ switch ($requestedAction) {
 	break;
 
 	case 'weather-outlook':
-		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
-		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
-
 		echo $serviceObj->getWeather($curLongitude, $curLatitude);
 	break;
 
 	case 'weather-forecast':
-		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
-		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
-
 		echo $serviceObj->getForecast($curLongitude, $curLatitude);
 	break;
 }

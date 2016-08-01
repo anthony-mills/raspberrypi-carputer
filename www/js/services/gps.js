@@ -270,7 +270,7 @@ angular.module('gpsAssist', [])
 	*/
 	function speedLimit(latitude, longitude) {
 
-		var getGps = getGpsData('/php/services.php?action=speed-limit&location=' + latitude + ',' + longitude);
+		var getGps = getGpsData('/php/services.php?action=speed-limit&latitude=' + latitude + '&longitude=' + longitude);
 
 		getGps.then(function(resultSet) {
 			if (resultSet.data) {
