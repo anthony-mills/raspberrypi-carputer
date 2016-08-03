@@ -62,18 +62,15 @@ class apiServices {
 	/**
 	* Get the speed limit for a particular location
 	*
-	* @param float $currentLat	
-	* @param float $currentLong
+	* @param array $curLocation
 	*
 	* @return string $apiResponse // JSON Object	
 	*/
-	public function getSpeed( $currentLat, $currentLong) {
+	public function getSpeedLimit( $curLocation ) {
 		
-		if ((!$currentLat) || (!$currentLong)) {
-			die('No location provided');
-		}
+		$curLocation = $this->_checkLocation( $curLocation );
 
-		$apiUrl = $this->_baseSpeedAPI . '?app_id=' . $this->_hereAppId . '&app_code=' . $this->_hereAppCode . '&waypoint=' . $currentLong . ',' . $currentLat . '&linkattributes=all';
+		$apiUrl = $this->_baseSpeedAPI . '?app_id=' . $this->_hereAppId . '&app_code=' . $this->_hereAppCode . '&waypoint=' . $curLocation['longitude'] . ',' . $curLocation['latitude'] . '&linkattributes=all';
 
 		$apiResponse = $this->apiCall($apiUrl);
 
@@ -93,21 +90,17 @@ class apiServices {
 	/**
 	* Get the current weather outlook
 	*
-	* @param string $curLongitude	
-	* @param string $curLatitude
+	* @param array $curLocation
 	*
 	* @return string $apiResponse // JSON Object
 	*/
-	public function getWeather( $curLongitude=false, $curLatitude=false ) {
-		if ((!$curLongitude) || (!$curLatitude)) {
-			$curLongitude = $this->_defaultLocation['longitude'];
-			$curLatitude = $this->_defaultLocation['latitude'];			
-		}
+	public function getWeather( $curLocation ) {
+		$curLocation = $this->_checkLocation( $curLocation );
 
 		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . 
 					'&product=observation&app_code=' . $this->_hereAppCode . 
-					'&longitude=' . $curLongitude . 
-					'&latitude=' . $curLatitude .
+					'&longitude=' . $curLocation['longitude'] . 
+					'&latitude=' . $curLocation['latitude'] .
 					'&metric=' . $this->_metricWeather;
 
 		$apiResponse = $this->apiCall($apiUrl);
@@ -121,22 +114,19 @@ class apiServices {
 	/**
 	* Get the current weather forecast
 	*
-	* @param string $curLongitude	
-	* @param string $curLatitude
+	* @param array $curLocation
 	*
 	* @return string $apiResponse // JSON Object	
 	*/
-	public function getForecast( $curLongitude=false, $curLatitude=false ) {
+	public function getForecast( $curLocation ) {
 
-		if ((!$curLongitude) || (!$curLatitude)) {
-			$curLongitude = $this->_defaultLocation['longitude'];
-			$curLatitude = $this->_defaultLocation['latitude'];			
-		}		
+		$curLocation = $this->_checkLocation( $curLocation );
+
 		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . 
 					'&product=forecast_7days_simple' . 
 					'&app_code=' . $this->_hereAppCode . 
-					'&longitude=' . $curLongitude . 
-					'&latitude=' . $curLatitude .
+					'&longitude=' . $curLocation['longitude'] . 
+					'&latitude=' . $curLocation['latitude'] .
 					'&metric=' . $this->_metricWeather;
 					
 		$apiResponse = $this->apiCall($apiUrl);
@@ -149,22 +139,18 @@ class apiServices {
 	/**
 	* Lookup human readable information about car position
 	*
-	* @param string $curLongitude	
-	* @param string $curLatitude
+	* @param array $curLocation
 	*
 	* @return string $apiResponse // JSON Object	
 	*/
-	public function getLocationInfo( $curLongitude=false, $curLatitude=false ) {
+	public function getLocationInfo( $curLocation ) {
 
-		if ((!$curLongitude) || (!$curLatitude)) {
-			$curLongitude = $this->_defaultLocation['longitude'];
-			$curLatitude = $this->_defaultLocation['latitude'];			
-		}		
+		$curLocation = $this->_checkLocation( $curLocation );
 		
 		$apiUrl = $this->_locationIqEndpoint . '?key=' . $this->_locationIqKey .
 					'&format=' . $this->_locationIqFormat . 
-					'&lat=' . $curLatitude . 
-					'&lon=' . $curLongitude;
+					'&lat=' . $curLocation['longitude'] . 
+					'&lon=' . $curLocation['latitude'];
 
 		$apiResponse = $this->apiCall($apiUrl);
 
@@ -249,5 +235,23 @@ class apiServices {
             }
 
             return $gpsResponse;            
+    }
+
+    /**
+    * Check the provided location
+    * 
+    * param array $curLocation
+    *
+    * return array $curLocation
+    */
+    protected function _checkLocation( $curLocation ) {
+		if ((!$curLocation['longitude']) || (!$curLocation['latitude'])) {
+			$curLocation = array(
+									'longitude' => $this->_defaultLocation['longitude'],
+									'latitude' => $this->_defaultLocation['latitude']
+								);
+		}		
+
+		return $curLocation;
     }
 }

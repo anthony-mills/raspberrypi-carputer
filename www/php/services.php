@@ -18,16 +18,18 @@ $serviceObj->setHereConf( $appConfig['here-api'] );
 $serviceObj->setGpsConf( $appConfig['gpsd'] );
 $serviceObj->setLocationIqConf( $appConfig['location-iq'] );
 
-$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
-$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
+$curLocation = array(
+						'latitude' => filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS),
+						'longitude' => filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS)
+					);
 
 switch ($requestedAction) {
 	case 'speed-limit':
-		echo $serviceObj->getSpeed($curLongitude, $curLatitude);
+		echo $serviceObj->getSpeedLimit($curLocation);
 	break;
 
 	case 'location-info':
-		echo $serviceObj->getLocationInfo($curLongitude, $curLatitude);
+		echo $serviceObj->getLocationInfo($curLocation);
 	break;
 
 	case 'get-location':
@@ -35,10 +37,10 @@ switch ($requestedAction) {
 	break;
 
 	case 'weather-outlook':
-		echo $serviceObj->getWeather($curLongitude, $curLatitude);
+		echo $serviceObj->getWeather($curLocation);
 	break;
 
 	case 'weather-forecast':
-		echo $serviceObj->getForecast($curLongitude, $curLatitude);
+		echo $serviceObj->getForecast($curLocation);
 	break;
 }
