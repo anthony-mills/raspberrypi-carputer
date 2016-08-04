@@ -21,6 +21,7 @@ class apiServices {
 	// GPSD server settings
 	protected $_gpsdHost = 'localhost';
 	protected $_gpsdPort = 2947;	
+	protected $_pollDelay = '400';
 
 	// Weather variables
 	protected $_metricWeather = "true";
@@ -211,16 +212,15 @@ class apiServices {
             $gpsdSock = @fsockopen( $this->_gpsdHost, $this->_gpsdPort, $errNo, $errStr, 2 );
 
             @fwrite($gpsdSock, "?WATCH={\"enable\":true}\n");
-            usleep(500);
+            usleep( $this->_pollDelay );
 
             @fwrite($gpsdSock, "?POLL;\n");
-            usleep(500);
+            usleep( $this->_pollDelay );
 
             for($connectAttempts = 0; $connectAttempts < 10; $connectAttempts++){
                     $gpsResponse = @fread($gpsdSock, 2000);
                     $jsonOb = json_decode($gpsResponse);
 
-                    //print_r($jsonOb);
                     if (preg_match('/{"class":"POLL".+}/i', $gpsResponse, $respMatch)){
 
                             $gpsResponse = $respMatch[0];
