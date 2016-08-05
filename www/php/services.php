@@ -5,7 +5,7 @@
 $requestedAction = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if (!$requestedAction) {
-	die('No action found.');
+	die('{"class":"ERROR","message":"No action requested."}');
 }
 
 $appConfig = parse_ini_file( __DIR__ . '/../../config/config.ini', TRUE);
@@ -42,5 +42,9 @@ switch ($requestedAction) {
 
 	case 'weather-forecast':
 		echo $serviceObj->getForecast($curLocation);
+	break;
+
+	default:
+		echo '{"class":"ERROR","message":"Invalid action provided."}';
 	break;
 }
