@@ -19,8 +19,9 @@
 
         <div ng-if="tripData" class="card">
           <div class="item item-divider bar bar-header page-heading heading-text" >
-                Trip Log - Distance: {{ kmToMiles(tripDistance) }}
-                <span ng-if="appSettings.distance==0" >km</span><span ng-else>miles</span>
+                Trip Log - Distance: 
+                <span ng-if="appSettings.distance==0" >{{tripDistance}} km</span>
+                <span ng-else>{{ kmToMiles(tripDistance) }} miles</span>                
           </div>
 
           <div class="item item-text-wrap">
@@ -35,8 +36,11 @@
 
 	            <div class="no-playlists">
 					     <p>
-                  Travelled {{ kmToMiles(tripDistance) }}
-                  <span ng-if="appSettings.distance==0" >km</span><span ng-else>miles</span> in {{ tripData.time }}.
+                  Travelled 
+
+                  <span ng-if="appSettings.distance==0" >{{tripDistance}} km</span>
+                  <span ng-else>{{ kmToMiles(tripDistance) }} miles</span>
+                   in {{ tripData.time }}.
                 </p>   
 	            </div>
 

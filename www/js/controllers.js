@@ -273,7 +273,7 @@ angular.module('landcruiser.controllers', [])
   *
   * @param boolean currentStatus  
   */
-  $scope.toggleConsumption = function(currentStatus) {
+  $scope.toggleConsumption = function( currentStatus ) {
 
     if (currentStatus) {
 
@@ -331,9 +331,14 @@ angular.module('landcruiser.controllers', [])
   $scope.directoryIndexes = false;
   $scope.homeButton = 0;
 
-  $scope.scrollTo = function( id ) {
+  /**
+  * Scroll down the page to the selected element
+  *
+  * @param string elementId
+  */
+  $scope.scrollTo = function( elementId ) {
 
-    $location.hash(id);
+    $location.hash(elementId);
 
     $anchorScroll();
 
@@ -378,8 +383,6 @@ angular.module('landcruiser.controllers', [])
 
     // Only show the letter indexes in the root directory of the filesystem
     if ((!basePath) || (basePath === '/')) {
-
-      console.log(dirData.directoryIndexes);
 
       $scope.directoryIndexes = dirData.directoryIndexes;  
 
@@ -429,8 +432,8 @@ angular.module('landcruiser.controllers', [])
     console.log('Added song to playlist: ' + songPath);
 
     growl.success("Song added to play queue");
-    mpdClient.addSongToQueueByFile(songPath);
 
+    mpdClient.addSongToQueueByFile(songPath);
   } 
 
   /**
@@ -801,9 +804,8 @@ angular.module('landcruiser.controllers', [])
     var carLog = [];
     
     for (var i = 0; i < tripData.data_points.length; i++) { 
-
-      if (tripData.data_points[i].distance > 0) {
-        tripDistance += parseInt(tripData.data_points[i].distance);  
+      if ( (typeof tripData.data_points[i].distance === 'number' )) {
+        tripDistance += parseFloat(tripData.data_points[i].distance);  
 
         carLog.push(
                       {
@@ -814,7 +816,7 @@ angular.module('landcruiser.controllers', [])
 
         avgAltitude += parseInt(tripData.data_points[i].altitude);
 
-        if (typeof tripData.data_points[i].speed == 'number') {
+        if (typeof tripData.data_points[i].speed === 'number') {
           avgSpeed += parseInt( tripData.data_points[i].speed );       
         } 
       }    
@@ -824,6 +826,7 @@ angular.module('landcruiser.controllers', [])
     $scope.avgSpeed = Math.round(avgSpeed / carLog.length);   
     $scope.tripDistance = Math.round(tripDistance);
 
+    console.log($scope.tripDistance)
     if (tripData.top_speed) {
 
       $scope.topSpeed = tripData.top_speed;
