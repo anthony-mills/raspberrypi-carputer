@@ -101,6 +101,36 @@ angular.module('contentFormatting', [])
 	}
 
 	/**
+	* Format a trip time into a human readable format i.e 1 hours x 5 minutes format 
+	*
+	* @param integer timeSeconds
+	*
+	* @return string tripData.time
+	*/
+	function formatTripTime( timeSeconds )
+	{
+		var tripTime = formatSeconds( timeSeconds );
+
+	    tripTime = tripTime.split(":");
+
+	    switch (tripTime.length) {
+	      case 1:
+	        tripTime = tripTime[0] + ' seconds';
+	      break;
+
+	      case 2:
+	        tripTime = tripTime[0] + ' minutes';
+	      break;
+
+	      case 3:
+	        tripTime = tripTime[0] + ' hours ' + tripTime[1] + ' minutes';
+	      break;
+	    }
+
+	    return tripTime;
+	}
+
+	/**
 	* Convert celcius to farenheit
 	*
 	* @param integer degreesCelcius
@@ -163,6 +193,10 @@ angular.module('contentFormatting', [])
 
 		metresToFeet: function( heightMetres ) {
 			return metresToFeet( heightMetres );
+		},
+
+		formatTripTime: function( timeSeconds ) {
+			return formatTripTime( timeSeconds );
 		},
 
 		formatSeconds: function( timeSeconds ) {

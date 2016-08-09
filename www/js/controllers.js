@@ -794,8 +794,8 @@ angular.module('landcruiser.controllers', [])
     if (typeof tripData.data_points == "undefined") {
       return;
     }
-
-    tripData.time = contentFormatting.formatSeconds( tripData.time / 1000 );
+    
+    tripData.time = contentFormatting.formatTripTime( tripData.time / 1000 );
 
     var avgSpeed = 0;
     var avgAltitude = 0;
@@ -826,7 +826,6 @@ angular.module('landcruiser.controllers', [])
     $scope.avgSpeed = Math.round(avgSpeed / carLog.length);   
     $scope.tripDistance = Math.round(tripDistance);
 
-    console.log($scope.tripDistance)
     if (tripData.top_speed) {
 
       $scope.topSpeed = tripData.top_speed;
