@@ -4,7 +4,9 @@ angular.module('gpsAssist', [])
  * Service providing playback and mpd queue functionality 
  */
 .factory('gpsAssist', function($http, $log, $rootScope, $interval) {
-	
+	// Frequency to refresh the speed limit data in seconds
+	var speedLimitRefresh = 300;
+
 	/**
 	* Get data from the Gpsd service
 	*
@@ -44,7 +46,7 @@ angular.module('gpsAssist', [])
 					} else {
 						var speedLimitData = JSON.parse(speedLimitData);
 
-						if ((currentTime - speedLimitData.age) / 1000 > 300) {
+						if ((currentTime - speedLimitData.age) / 1000 > speedLimitRefresh) {
 							speedLimit(resultSet.lat, resultSet.lon);
 
 							var limitData = {
