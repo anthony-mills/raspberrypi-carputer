@@ -7,7 +7,7 @@ class apiServices {
 	protected $_hereAppId = 'MYAPPID';
 	protected $_hereAppCode = 'MYAPPCODE';	
 	protected $_baseWeatherAPI = 'https://weather.cit.api.here.com/weather/1.0/report.json';
-	protected $_baseSpeedAPI = 'http://route.st.nlp.nokia.com/routing/6.2/getlinkinfo.xml';
+	protected $_baseSpeedAPI = 'http://route.st.nlp.nokia.com/routing/7.2/getlinkinfo.xml';
 
 	// Live or debug GPS data
 	protected $_debugGps = false;
@@ -20,7 +20,9 @@ class apiServices {
 
 	// GPSD server settings
 	protected $_gpsdHost = 'localhost';
-	protected $_gpsdPort = 2947;	
+	protected $_gpsdPort = 2947;
+	protected $_gpsRead = 2000;	
+	protected $_pollDelay = '400';
 
 	// Weather variables
 	protected $_metricWeather = "true";
@@ -62,17 +64,16 @@ class apiServices {
 	/**
 	* Get the speed limit for a particular location
 	*
-	* @param string $currentLocation
+	* @param array $curLocation
 	*
 	* @return string $apiResponse // JSON Object	
 	*/
-	public function getSpeed( $currentLocation ) {
+	public function getSpeedLimit( $curLocation ) {
 		
-		if (!$currentLocation) {
-			die('No location provided');
-		}
+		$curLocation = $this->_checkLocation( $curLocation );
 
-		$apiUrl = $this->_baseSpeedAPI . '?app_id=' . $this->_hereAppId . '&app_code=' . $this->_hereAppCode . '&waypoint='.$currentLocation.'&linkattributes=all';
+		$apiUrl = $this->_baseSpeedAPI . '?app_id=' . $this->_hereAppId . '&app_code=' . $this->_hereAppCode . '&waypoint=' . $curLocation['longitude'] . ',' . $curLocation['latitude'] . '&linkattributes=all';
+
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {
@@ -91,21 +92,17 @@ class apiServices {
 	/**
 	* Get the current weather outlook
 	*
-	* @param string $curLongitude	
-	* @param string $curLatitude
+	* @param array $curLocation
 	*
 	* @return string $apiResponse // JSON Object
 	*/
-	public function getWeather( $curLongitude=false, $curLatitude=false ) {
-		if ((!$curLongitude) || (!$curLatitude)) {
-			$curLongitude = $this->_defaultLocation['longitude'];
-			$curLatitude = $this->_defaultLocation['latitude'];			
-		}
+	public function getWeather( $curLocation ) {
+		$curLocation = $this->_checkLocation( $curLocation );
 
 		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . 
 					'&product=observation&app_code=' . $this->_hereAppCode . 
-					'&longitude=' . $curLongitude . 
-					'&latitude=' . $curLatitude .
+					'&longitude=' . $curLocation['longitude'] . 
+					'&latitude=' . $curLocation['latitude'] .
 					'&metric=' . $this->_metricWeather;
 
 		$apiResponse = $this->apiCall($apiUrl);
@@ -119,22 +116,19 @@ class apiServices {
 	/**
 	* Get the current weather forecast
 	*
-	* @param string $curLongitude	
-	* @param string $curLatitude
+	* @param array $curLocation
 	*
 	* @return string $apiResponse // JSON Object	
 	*/
-	public function getForecast( $curLongitude=false, $curLatitude=false ) {
+	public function getForecast( $curLocation ) {
 
-		if ((!$curLongitude) || (!$curLatitude)) {
-			$curLongitude = $this->_defaultLocation['longitude'];
-			$curLatitude = $this->_defaultLocation['latitude'];			
-		}		
+		$curLocation = $this->_checkLocation( $curLocation );
+
 		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . 
 					'&product=forecast_7days_simple' . 
 					'&app_code=' . $this->_hereAppCode . 
-					'&longitude=' . $curLongitude . 
-					'&latitude=' . $curLatitude .
+					'&longitude=' . $curLocation['longitude'] . 
+					'&latitude=' . $curLocation['latitude'] .
 					'&metric=' . $this->_metricWeather;
 					
 		$apiResponse = $this->apiCall($apiUrl);
@@ -147,22 +141,18 @@ class apiServices {
 	/**
 	* Lookup human readable information about car position
 	*
-	* @param string $curLongitude	
-	* @param string $curLatitude
+	* @param array $curLocation
 	*
 	* @return string $apiResponse // JSON Object	
 	*/
-	public function getLocationInfo( $curLongitude=false, $curLatitude=false ) {
+	public function getLocationInfo( $curLocation ) {
 
-		if ((!$curLongitude) || (!$curLatitude)) {
-			$curLongitude = $this->_defaultLocation['longitude'];
-			$curLatitude = $this->_defaultLocation['latitude'];			
-		}		
+		$curLocation = $this->_checkLocation( $curLocation );
 		
 		$apiUrl = $this->_locationIqEndpoint . '?key=' . $this->_locationIqKey .
 					'&format=' . $this->_locationIqFormat . 
-					'&lat=' . $curLatitude . 
-					'&lon=' . $curLongitude;
+					'&lat=' . $curLocation['longitude'] . 
+					'&lon=' . $curLocation['latitude'];
 
 		$apiResponse = $this->apiCall($apiUrl);
 
@@ -223,16 +213,15 @@ class apiServices {
             $gpsdSock = @fsockopen( $this->_gpsdHost, $this->_gpsdPort, $errNo, $errStr, 2 );
 
             @fwrite($gpsdSock, "?WATCH={\"enable\":true}\n");
-            usleep(500);
+            usleep( $this->_pollDelay );
 
             @fwrite($gpsdSock, "?POLL;\n");
-            usleep(500);
+            usleep( $this->_pollDelay );
 
             for($connectAttempts = 0; $connectAttempts < 10; $connectAttempts++){
-                    $gpsResponse = @fread($gpsdSock, 2000);
+                    $gpsResponse = @fread($gpsdSock, $this->_gpsRead);
                     $jsonOb = json_decode($gpsResponse);
 
-                    //print_r($jsonOb);
                     if (preg_match('/{"class":"POLL".+}/i', $gpsResponse, $respMatch)){
 
                             $gpsResponse = $respMatch[0];
@@ -247,5 +236,23 @@ class apiServices {
             }
 
             return $gpsResponse;            
+    }
+
+    /**
+    * Check the provided location
+    * 
+    * param array $curLocation
+    *
+    * return array $curLocation
+    */
+    protected function _checkLocation( $curLocation ) {
+		if ((!$curLocation['longitude']) || (!$curLocation['latitude'])) {
+			$curLocation = array(
+									'longitude' => $this->_defaultLocation['longitude'],
+									'latitude' => $this->_defaultLocation['latitude']
+								);
+		}		
+
+		return $curLocation;
     }
 }

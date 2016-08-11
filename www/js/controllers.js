@@ -44,7 +44,7 @@ angular.module('landcruiser.controllers', [])
 
           gpsAssist.updateTrip( gpsData, updateFrequency );
       }
-      console.log(gpsData);
+
       $scope.gpsData = gpsData;
     });
   }, updateFrequency);
@@ -79,10 +79,17 @@ angular.module('landcruiser.controllers', [])
 * Manage the connection to the MPD instance 
 * and display main application navigation.
 */
-.controller('HomeCtrl', function( $scope, $interval, $timeout, growl, mpdAssist, contentFormatting) {
+.controller('HomeCtrl', function( $scope, $interval, $timeout, $location, mpdAssist, contentFormatting, growl) {
   $scope.playlistCount = 0;
   $scope.mpdStatus = "Not connected";
   $scope.currentlyPlaying = false;
+
+  /**
+  * Return to night mode if that was the last state the UI was in
+  */
+  if ($scope.appSettings.night_mode === 1) {  
+    $location.path('/app/night-mode');
+  }
 
   $scope.playState = mpdClient.getPlaystate();
 
@@ -167,7 +174,7 @@ angular.module('landcruiser.controllers', [])
   }, 1000);
 
   /**
-  * Paused the music
+  * Pause / resume music playback
   */
   $scope.pauseMusic = function() {
     if ($scope.playState === 'play') {
@@ -266,7 +273,7 @@ angular.module('landcruiser.controllers', [])
   *
   * @param boolean currentStatus  
   */
-  $scope.toggleConsumption = function(currentStatus) {
+  $scope.toggleConsumption = function( currentStatus ) {
 
     if (currentStatus) {
 
@@ -324,9 +331,14 @@ angular.module('landcruiser.controllers', [])
   $scope.directoryIndexes = false;
   $scope.homeButton = 0;
 
-  $scope.scrollTo = function( id ) {
+  /**
+  * Scroll down the page to the selected element
+  *
+  * @param string elementId
+  */
+  $scope.scrollTo = function( elementId ) {
 
-    $location.hash(id);
+    $location.hash(elementId);
 
     $anchorScroll();
 
@@ -371,8 +383,6 @@ angular.module('landcruiser.controllers', [])
 
     // Only show the letter indexes in the root directory of the filesystem
     if ((!basePath) || (basePath === '/')) {
-
-      console.log(dirData.directoryIndexes);
 
       $scope.directoryIndexes = dirData.directoryIndexes;  
 
@@ -422,8 +432,8 @@ angular.module('landcruiser.controllers', [])
     console.log('Added song to playlist: ' + songPath);
 
     growl.success("Song added to play queue");
-    mpdClient.addSongToQueueByFile(songPath);
 
+    mpdClient.addSongToQueueByFile(songPath);
   } 
 
   /**
@@ -597,7 +607,7 @@ angular.module('landcruiser.controllers', [])
   $scope.toggleNight = function( nightStatus ) {
       var appSettings = $scope.appSettings;
 
-      appSettings.nightMode = nightStatus;
+      appSettings.night_mode = nightStatus;
 
       window.localStorage['app_settings'] = JSON.stringify(appSettings); 
   }
@@ -785,8 +795,6 @@ angular.module('landcruiser.controllers', [])
       return;
     }
 
-    tripData.time = contentFormatting.formatSeconds( tripData.time / 1000 );
-
     var avgSpeed = 0;
     var avgAltitude = 0;
     var tripDistance = 0;
@@ -794,9 +802,8 @@ angular.module('landcruiser.controllers', [])
     var carLog = [];
     
     for (var i = 0; i < tripData.data_points.length; i++) { 
-
-      if (tripData.data_points[i].distance > 0) {
-        tripDistance += parseInt(tripData.data_points[i].distance);  
+      if ( (typeof tripData.data_points[i].distance === 'number' )) {
+        tripDistance += parseFloat(tripData.data_points[i].distance);  
 
         carLog.push(
                       {
@@ -807,15 +814,19 @@ angular.module('landcruiser.controllers', [])
 
         avgAltitude += parseInt(tripData.data_points[i].altitude);
 
-        if (typeof tripData.data_points[i].speed == 'number') {
+        if (typeof tripData.data_points[i].speed === 'number') {
           avgSpeed += parseInt( tripData.data_points[i].speed );       
         } 
       }    
     }
 
     $scope.avgAltitude = Math.round(avgAltitude / carLog.length);
-    $scope.avgSpeed = Math.round(avgSpeed / carLog.length);   
     $scope.tripDistance = Math.round(tripDistance);
+
+    var timeMinutes = parseFloat(tripData.time / 1000 / 60);
+    $scope.avgSpeed = Math.round(tripDistance / timeMinutes * 60); 
+ 
+    tripData.time = contentFormatting.formatTripTime( tripData.time / 1000 );
 
     if (tripData.top_speed) {
 
@@ -884,8 +895,8 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
-* Static page with external links out of the application 
-* to static resource files.
+* Static page with links to external resources out of the application 
+* i.e maps, car workshop manuals etc
 */
 .controller('ReferenceCtrl', function( $scope ) {
 
@@ -902,7 +913,7 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
-* Page for controllling application settings such as speed, distance temperature etc measurements
+* Page for controllling application settings such as the preferred unit for speed, distance temperature etc
 */
 .controller('SettingsCtrl', function( $scope ) {
   

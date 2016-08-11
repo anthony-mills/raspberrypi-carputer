@@ -5,7 +5,7 @@
 $requestedAction = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if (!$requestedAction) {
-	die('No action found.');
+	die('{"class":"ERROR","message":"No action requested."}');
 }
 
 $appConfig = parse_ini_file( __DIR__ . '/../../config/config.ini', TRUE);
@@ -18,18 +18,18 @@ $serviceObj->setHereConf( $appConfig['here-api'] );
 $serviceObj->setGpsConf( $appConfig['gpsd'] );
 $serviceObj->setLocationIqConf( $appConfig['location-iq'] );
 
+$curLocation = array(
+						'latitude' => filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS),
+						'longitude' => filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS)
+					);
+
 switch ($requestedAction) {
 	case 'speed-limit':
-		$currentLocation = filter_input(INPUT_GET, 'location', FILTER_SANITIZE_SPECIAL_CHARS);
-
-		echo $serviceObj->getSpeed($currentLocation);
+		echo $serviceObj->getSpeedLimit($curLocation);
 	break;
 
 	case 'location-info':
-		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
-		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
-
-		echo $serviceObj->getLocationInfo($curLongitude, $curLatitude);
+		echo $serviceObj->getLocationInfo($curLocation);
 	break;
 
 	case 'get-location':
@@ -37,16 +37,14 @@ switch ($requestedAction) {
 	break;
 
 	case 'weather-outlook':
-		$curLatitude = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
-		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
-
-		echo $serviceObj->getWeather($curLongitude, $curLatitude);
+		echo $serviceObj->getWeather($curLocation);
 	break;
 
 	case 'weather-forecast':
-		$curLatitide = filter_input(INPUT_GET, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
-		$curLongitude = filter_input(INPUT_GET, 'longitude', FILTER_SANITIZE_SPECIAL_CHARS);
+		echo $serviceObj->getForecast($curLocation);
+	break;
 
-		echo $serviceObj->getForecast($curLongitude, $curLatitude);
+	default:
+		echo '{"class":"ERROR","message":"Invalid action provided."}';
 	break;
 }

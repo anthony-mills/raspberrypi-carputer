@@ -272,7 +272,7 @@ angular.module('gpsAssist', [])
 	*/
 	function speedLimit(latitude, longitude) {
 
-		var getGps = getGpsData('/php/services.php?action=speed-limit&location=' + latitude + ',' + longitude);
+		var getGps = getGpsData('/php/services.php?action=speed-limit&latitude=' + latitude + '&longitude=' + longitude);
 
 		getGps.then(function(resultSet) {
 			if (resultSet.data) {
@@ -420,9 +420,13 @@ angular.module('gpsAssist', [])
 	*/
 	function speedConversion( gpsSpeed )
 	{
-		var carSpeed = gpsSpeed / 1000 * 3600;
+		if (isNaN(gpsSpeed)) {
+			return 0;
+		} else {
+			var carSpeed = gpsSpeed / 1000 * 3600;
 
-		return Math.floor(carSpeed);
+			return Math.floor(carSpeed);
+		}
 	}
 
 	return {
