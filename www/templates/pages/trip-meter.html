@@ -63,11 +63,15 @@
               </div>
 
 	            <div ng-if="highestAltitude">
-	            	<strong>Highest Altitude:</strong> {{ convertAltitude(highestAltitude) }} m
+	            	<strong>Highest Altitude:</strong> 
+                <span ng-if="appSettings.altitude==0" >{{highestAltitude}} m</span>
+                <span ng-else>{{ convertAltitude(highestAltitude) }} ft</span>
 	            </div>
 
 	            <div ng-if="avgAltitude">
-	            	<strong>Average Altitude:</strong> {{ convertAltitude(avgAltitude) }} m
+	            	<strong>Average Altitude:</strong> 
+                <span ng-if="appSettings.altitude==0" >{{avgAltitude}} m</span>
+                <span ng-else>{{ convertAltitude(avgAltitude) }} ft</span>
 	            </div>	            
             </div>
               
