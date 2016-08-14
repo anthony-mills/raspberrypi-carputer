@@ -812,18 +812,20 @@ angular.module('landcruiser.controllers', [])
                       }
                     );
 
-        avgAltitude += parseInt(tripData.data_points[i].altitude);
+        if ( (typeof tripData.data_points[i].altitude === 'number' )) {
+          avgAltitude += parseFloat(tripData.data_points[i].altitude);
+        }
 
         if (typeof tripData.data_points[i].speed === 'number') {
           avgSpeed += parseInt( tripData.data_points[i].speed );       
         } 
       }    
     }
+    var timeMinutes = parseFloat(tripData.time / 1000 / 60);
 
     $scope.avgAltitude = Math.round(avgAltitude / carLog.length);
     $scope.tripDistance = Math.round(tripDistance);
 
-    var timeMinutes = parseFloat(tripData.time / 1000 / 60);
     $scope.avgSpeed = Math.round(tripDistance / timeMinutes * 60); 
  
     tripData.time = contentFormatting.formatTripTime( tripData.time / 1000 );
@@ -836,7 +838,7 @@ angular.module('landcruiser.controllers', [])
 
     if (tripData.highest_altitude) {
 
-      $scope.highest_altitude = tripData.highest_altitude;
+      $scope.highestAltitude = tripData.highest_altitude;
 
     }
 

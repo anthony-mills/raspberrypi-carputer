@@ -14,6 +14,8 @@ angular.module('gpsAssist', [])
 	*/
 	function getLocationData() {
 		var getGps = getGpsData('/php/services.php?action=get-location');
+		var appSettings = JSON.parse(window.localStorage['app_settings']);
+
 		var gpsData = getGps.then(function(resultSet) {
 				if (typeof resultSet.data.tpv ==='undefined' || typeof resultSet.data.tpv[0].lat ==='undefined' || typeof resultSet.data.tpv[0].lon ==='undefined') {
 					var gpsStatus = {
@@ -31,7 +33,6 @@ angular.module('gpsAssist', [])
 					var resultSet = resultSet.data.tpv[0];
 
 					var speedLimitData = window.localStorage['speed_limit'];
-					var appSettings = JSON.parse(window.localStorage['app_settings']);
 
 					var currentTime = Date.now();
 
@@ -129,7 +130,11 @@ angular.module('gpsAssist', [])
 
 			dataPoints = tripData.data_points;
 
-			if ((typeof dataPoints !== "undefined" ) && (typeof dataPoints[dataPoints.length - 1] !=='undefined') && (gpsData.longitude != dataPoints[dataPoints.length - 1].long) && (gpsData.latitude != dataPoints[dataPoints.length - 1].lat)) {
+			if ((typeof dataPoints !== "undefined" ) && 
+				(typeof dataPoints[dataPoints.length - 1] !=='undefined') && 
+				(gpsData.longitude != dataPoints[dataPoints.length - 1].long) && 
+				(gpsData.latitude != dataPoints[dataPoints.length - 1].lat)) {
+				
 				var distanceTravelled = (
 											haversineDistance(
 																{ 
@@ -166,10 +171,10 @@ angular.module('gpsAssist', [])
                     var topSpeed = parseInt(tripData.top_speed);
             }
 
-            if ((!isNaN(gpsAltitude)) && (parseInt(gpsAltitude) > parseInt(tripData.highest_altitude))) {
-                    var highestAltitude = parseInt(gpsAltitude);
+            if ((!isNaN(gpsAltitude)) && (parseFloat(gpsAltitude) > parseFloat(tripData.highest_altitude))) {
+                    var highestAltitude = parseFloat(gpsAltitude);
             } else {
-                    var highestAltitude = parseInt(tripData.highest_altitude);
+                    var highestAltitude = parseFloat(tripData.highest_altitude);
             }            
 		} else {
 			var tripTime = 0;
