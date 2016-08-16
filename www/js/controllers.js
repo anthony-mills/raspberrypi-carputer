@@ -817,6 +817,10 @@ angular.module('landcruiser.controllers', [])
         }
 
         if (typeof tripData.data_points[i].speed === 'number') {
+          if ( typeof tripData.top_speed !== 'number' || tripData.top_speed < tripData.data_points[i].speed ) {
+            tripData.top_speed = tripData.data_points[i].speed;
+          }
+
           avgSpeed += parseInt( tripData.data_points[i].speed );       
         } 
       }    
