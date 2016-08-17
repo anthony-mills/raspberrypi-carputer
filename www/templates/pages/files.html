@@ -60,11 +60,9 @@
                       </div>
 
                       <div class="col-66"> 
-                        <h2 ng-if="directoryItem.title && directoryItem.artist">{{::directoryItem.title}}</h2>
+                        <h2 ng-if="directoryItem.title && directoryItem.artist" class="padding-bottom">{{::directoryItem.title}}</h2>
                         
-                        <h2 ng-else >{{::formatPath(directoryItem.path)}}</h2>
-
-                        <br />
+                        <h2 ng-else class="padding-bottom">{{::formatPath(directoryItem.path)}}</h2>
 
                         <p>Duration: {{::directoryItem.duration}}</p>
                       </div>

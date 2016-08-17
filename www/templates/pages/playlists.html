@@ -27,9 +27,7 @@
             <ion-list bindonce="menuItems">
 
               <ion-item ng-repeat="playlistItem in storedPlaylists track by $index" id="$index">
-                <h2>{{playlistItem}}</h2>
-
-                <br />
+                <h2 class="padding-bottom">{{playlistItem}}</h2>
                 
                 <div class="button-bar">
                   <button ng-click="loadPlaylist(playlistItem)" class="button button-positive icon-right ion-music-note">

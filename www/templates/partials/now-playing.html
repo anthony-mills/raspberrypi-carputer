@@ -14,9 +14,7 @@
       <div ng-if="currentlyPlaying.artist" class="track-details">
         <h2>{{currentlyPlaying.name}}</h2>
 
-        <strong>{{currentlyPlaying.artist}}</strong>
-
-        <br />
+        <strong class="padding-bottom">{{currentlyPlaying.artist}}</strong>
 
         <span class="song-album" ng-if="currentlyPlaying.album">
           {{currentlyPlaying.album}}
@@ -34,8 +32,8 @@
       </div>
 
       <div ng-if="currentlyPlaying.next" class="track-details">
-        <strong>Next Up:</strong> 
-        <br />
+        <strong class="padding-bottom">Next Up:</strong> 
+        
         <span ng-if="currentlyPlaying.next.artist">
           {{currentlyPlaying.next.name}} - {{currentlyPlaying.next.artist}}
           <br />
