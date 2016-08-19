@@ -11,26 +11,29 @@
                 <div class="night-speed-limit" ng-if="gpsData.speed_limit !='Unknown'">
                   Estimated Speed Limit: {{gpsData.speed_limit}}                
                   <br />
+
                   <div ng-if="gpsData.speed_limit_age > 0" align="center">
                       {{gpsData.speed_limit_age}}  
                   </div>           
                 </div>
 
-                <span ng-if="gpsData.speed_warn == 1" class="current-speed warn-speed">
+                <span class="current-speed {{ warnSpeed(gpsData.speed_warn) }}">
+                  <span ng-if="appSettings.speed==0">
                     {{gpsData.speed}}
+                  </span>
+
+                  <span ng-else>
+                    {{ kmToMiles(gpsData.speed) }}
+                  </span>                  
                 </span>
 
-                <span ng-else class="current-speed">
-                    {{gpsData.speed}}
-                </span>
-
-                <span ng-if="gpsData.speed_warn == 1" class="speed-unit warn-speed">
+                <span ng-if="appSettings.speed==0" class="speed-unit {{ warnSpeed(gpsData.speed_warn) }}">
                     km/h
                 </span>
 
-                <span ng-else class="speed-unit">
-                    km/h
-                </span>
+                <span ng-else-if="appSettings.speed==1" class="speed-unit {{ warnSpeed(gpsData.speed_warn) }}">
+                    mph
+                </span>              
             </div>
 
           </div>

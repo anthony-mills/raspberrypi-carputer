@@ -68,6 +68,18 @@ angular.module('landcruiser.controllers', [])
   }  
 
   /**
+  * Apply class to element if the car is currently exceeding the speed limit
+  *
+  * @param integer speedLimit
+  * @return string
+  */
+  $scope.warnSpeed = function( speedLimit ) {
+    if (speedLimit == 1) {
+      return 'warn-speed';
+    }
+  }
+
+  /**
   * Perform a hard refresh on the application from the browser
   */
   $scope.reloadApp = function() {
