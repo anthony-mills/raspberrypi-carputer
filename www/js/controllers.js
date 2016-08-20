@@ -677,6 +677,7 @@ angular.module('landcruiser.controllers', [])
   $weatherConditions = null;
   $scope.loadingData = true;
   $scope.locationInfo = false;
+  $scope.errorMsg = null;
 
   if (parseInt($scope.appSettings.locationiq) === 1) {
     $scope.locationInfo = gpsAssist.locationInfo( $scope.gpsData.latitude, $scope.gpsData.longitude );
@@ -723,6 +724,8 @@ angular.module('landcruiser.controllers', [])
       }
 
     }
+  } else {
+    $scope.errorMsg = 'Unable to determine current location';
   }
 })
 
