@@ -10,9 +10,8 @@
             <div class="speed-data">
                 <div class="night-speed-limit" ng-if="gpsData.speed_limit !='Unknown'">
                   Estimated Speed Limit: {{gpsData.speed_limit}}                
-                  <br />
 
-                  <div ng-if="gpsData.speed_limit_age > 0" align="center">
+                  <div class="padding-top" ng-if="gpsData.speed_limit_age > 0" align="center">
                       {{gpsData.speed_limit_age}}  
                   </div>           
                 </div>
@@ -40,19 +39,21 @@
         </div> 
 
         <div class="gps-status">
-          <strong>GPS Status:</strong> {{gpsData.status}} <br/>
+          <strong>GPS Status:</strong> {{gpsData.status}}
 
-          <span ng-if="gpsData.heading != 'N / A'">
-            <strong>Heading:</strong> {{gpsData.heading}} <br/>
-          </span>             
+          <div ng-if="gpsData.heading != 'N / A'" class="padding-top padding-bottom">
+            <strong>Heading:</strong> {{gpsData.heading}}
+          </div>             
 
-          <span ng-if="gpsData.longitude != 'Unknown'">
-            <strong>Location:</strong> {{gpsData.longitude}}, {{gpsData.latitude}} <br/>
-          </span>
+          <div ng-if="gpsData.longitude != 'Unknown'" class="padding-bottom">
+            <strong>Location:</strong> {{gpsData.longitude}}, {{gpsData.latitude}}
+          </div>
 
-          <span ng-if="gpsData.altitude != 'N / A'">
-            <strong>Altitude:</strong> {{gpsData.altitude}} <br/>
-          </span>          
+          <div ng-if="gpsData.altitude != 'N / A'" class="padding-bottom">
+            <strong>Altitude:</strong> 
+            <span ng-if="appSettings.altitude==0" >{{gpsData.altitude}} m</span>
+            <span ng-else>{{ convertAltitude(gpsData.altitude) }} ft</span>            
+          </div>          
         </div>        
 
         <div align="center" class="button-bar exit-night">

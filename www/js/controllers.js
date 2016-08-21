@@ -814,7 +814,7 @@ angular.module('landcruiser.controllers', [])
     var carLog = [];
     
     for (var i = 0; i < tripData.data_points.length; i++) { 
-      if ( (typeof tripData.data_points[i].distance === 'number' )) {
+      if ( (typeof tripData.data_points[i].distance === 'number' ) ) {
         tripDistance += parseFloat(tripData.data_points[i].distance);  
 
         carLog.push(
@@ -824,7 +824,7 @@ angular.module('landcruiser.controllers', [])
                       }
                     );
 
-        if ( (typeof tripData.data_points[i].altitude === 'number' )) {
+        if ( (typeof tripData.data_points[i].altitude === 'number' ) ) {
           avgAltitude += parseFloat(tripData.data_points[i].altitude);
         }
 
@@ -837,6 +837,7 @@ angular.module('landcruiser.controllers', [])
         } 
       }    
     }
+
     var timeMinutes = parseFloat(tripData.time / 1000 / 60);
 
     $scope.avgAltitude = Math.round(avgAltitude / carLog.length);
