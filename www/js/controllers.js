@@ -805,7 +805,7 @@ angular.module('landcruiser.controllers', [])
 
     var tripData = JSON.parse(tripData);
 
-    // If the trip is yet to contain any datapoints don't try and continue any further
+    // If the trip is yet to contain any datapoints no point trying to continue any further
     if (typeof tripData.data_points == "undefined") {
       return;
     }
@@ -815,9 +815,12 @@ angular.module('landcruiser.controllers', [])
     var tripDistance = 0;
     var topSpeed = 0; 
     var carLog = [];
+
+    tripData.top_speed = 0;
+    tripData.highest_altitude = 0;
     
     for (var i = 0; i < tripData.data_points.length; i++) { 
-      if ( (typeof tripData.data_points[i].distance === 'number' )) {
+      if ( (typeof tripData.data_points[i].distance === 'number' ) ) {
         tripDistance += parseFloat(tripData.data_points[i].distance);  
 
         carLog.push(
@@ -836,8 +839,18 @@ angular.module('landcruiser.controllers', [])
             tripData.top_speed = tripData.data_points[i].speed;
           }
 
-          avgSpeed += parseInt( tripData.data_points[i].speed );       
+          avgSpeed += parseFloat( tripData.data_points[i].speed );       
         } 
+        tripData.data_points[i].altitude = parseFloat(tripData.data_points[i].altitude);
+
+        if (typeof tripData.data_points[i].altitude === 'number') {
+
+          if ( typeof tripData.altitude !== 'number' || tripData.highest_altitude < tripData.data_points[i].altitude ) {
+            tripData.highest_altitude = tripData.data_points[i].altitude;
+          }
+
+          avgSpeed += parseFloat( tripData.data_points[i].speed );       
+        }         
       }    
     }
     var timeMinutes = parseFloat(tripData.time / 1000 / 60);
