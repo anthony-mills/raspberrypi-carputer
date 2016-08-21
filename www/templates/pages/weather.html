@@ -18,7 +18,7 @@
       <!-- Start the music control column -->
       <div class="col-66 pad-column">   
 
-        <div ng-if="locationInfo.location_info.display_name" class="card">
+        <div ng-if="locationInfo.location_info.display_name && !errorMsg" class="card">
           <div class="item item-divider bar bar-header page-heading heading-text" >
                 Weather Outlook
           </div>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="card" ng-else>
-            <div ng-if="loadingData">
+            <div ng-if="loadingData && !errorMsg">
               <div class="item item-divider bar bar-header page-heading heading-text" >
                   Loading
               </div>
@@ -125,6 +125,16 @@
                 <div class="standby-loading">
                   <strong>Attempting to retrieve weather data...</strong>
                 </div> 
+              </div>
+            </div>
+
+            <div ng-else-if="errorMsg">
+              <div class="item item-divider bar bar-header page-heading heading-text" >
+                  Error
+              </div>
+
+              <div class="item item-text-wrap">
+                {{errorMsg}}
               </div>
             </div>
 

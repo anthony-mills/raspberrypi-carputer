@@ -69,8 +69,11 @@ angular.module('gpsAssist', [])
 					}
 							
 					if (limitData.speed_limit === 'Unknown') {
+
 						var estSpeedLimit = limitData.speed_limit;
+
 					} else {
+
 						if ( typeof appSettings.speed !=="undefined" && appSettings.speed === 1) {
 							var estSpeedLimit = limitData.speed_limit + ' mph';					
 						} else {
@@ -153,7 +156,7 @@ angular.module('gpsAssist', [])
 
             var tripTime = parseInt(tripData.time) + parseInt(checkFrequency);
 
-            if ((!isNaN(gpsData.speed)) && (parseInt(gpsData.speed) > parseInt(tripData.top_speed))) {
+            if ((!isNaN(gpsData.speed)) && (parseFloat(gpsData.speed) > parseFloat(tripData.top_speed))) {
 
             	/**
             	* If the speed is under 80km/h assume its correct as a top speed any higher check it isn't anymore than 30km/h
@@ -161,14 +164,14 @@ angular.module('gpsAssist', [])
             	* This needs some real life on road testing but extra scrutiny has been added to try and stamp out invalid one off GPS speeds recieved such as 750km/h, 
             	* my car simply can't go that fast :-(
             	*/
-            	if (parseInt(gpsData.speed) < 80) {
-                    var topSpeed = parseInt(gpsData.speed);
+            	if (parseFloat(gpsData.speed) < 80) {
+                    var topSpeed = parseFloat(gpsData.speed);
             	} else if ((typeof dataPoints[dataPoints.length - 1].speed !=="undefined") && 
-            			  (parseInt(gpsData.speed) - parseInt(dataPoints[dataPoints.length - 1].speed) < 30)) {
-            		var topSpeed = parseInt(gpsData.speed);
+            			  (parseFloat(gpsData.speed) - parseFloat(dataPoints[dataPoints.length - 1].speed) < 30)) {
+            		var topSpeed = parseFloat(gpsData.speed);
             	}
             } else {
-                    var topSpeed = parseInt(tripData.top_speed);
+                    var topSpeed = parseFloat(tripData.top_speed);
             }
 
             if ((!isNaN(gpsAltitude)) && (parseFloat(gpsAltitude) > parseFloat(tripData.highest_altitude))) {
