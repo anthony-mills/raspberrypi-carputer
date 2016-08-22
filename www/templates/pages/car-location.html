@@ -29,14 +29,13 @@
                 <ui-gmap-marker coords="areaMap.center" idkey="areaMap.id">
               </ui-gmap-google-map>   
 
-              <br />
-              <div ng-if="locationInfo.location_info.display_name" class="center">
+              <div ng-if="locationInfo.location_info.display_name" class="center padding-top">
                 {{locationInfo.location_info.display_name}}
               </div>   
      
             </div>
 
-            <div class="button-bar ">         
+            <div class="button-bar">         
               <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
             </div>             
           </div>

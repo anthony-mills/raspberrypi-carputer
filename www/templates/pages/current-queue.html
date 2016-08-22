@@ -52,7 +52,7 @@
 
                         <div class="col-66"> 
 
-                          <div ng-if="playlistItem.artist">
+                          <div ng-if="playlistItem.artist" class="padding-bottom">
                             <h2>{{::playlistItem.name}}</h2>
                             <h3>{{::playlistItem.artist}}</h3>
                         
@@ -61,9 +61,8 @@
                             </h3>
                           </div>
 
-                          <div ng-else>{{::playlistItem.name}}</div>
+                          <div ng-else class="padding-bottom">{{::playlistItem.name}}</div>
 
-                          <br />
 
                           <p>
                             Duration: {{::playlistItem.duration}}
