@@ -72,12 +72,19 @@
                       </div>              
 
                       <div class="button-bar" ng-if="playlistItem.playing === 0">
-                        <button ng-click="removePlaylistItem(playlistItem.position, $index)" class="button button-positive icon-right ion-eject">Remove</button>
-                        <button ng-click="playSong(playlistItem.position, $index)" class="button button-positive icon-right ion-play">Play Item</button>
+                        <button ng-click="removePlaylistItem(playlistItem.position, $index)" class="button button-positive icon-right ion-eject">
+                          Remove
+                        </button>
+                        
+                        <button ng-click="playSong(playlistItem.position, $index)" class="button button-positive icon-right ion-play">
+                          Play Item
+                        </button>
                       </div>
 
                       <div class="button-bar" ng-if="playlistItem.playing === 1">
-                        <button ng-click="stopSong(playlistItem.position, $index)" class="button button-assertive icon-right ion-stop">Stop Item</button>
+                        <button ng-click="stopSong(playlistItem.position, $index)" class="button button-assertive icon-right ion-stop">
+                          Stop Item
+                        </button>
                       </div>
                 </ion-item>
 
@@ -90,7 +97,9 @@
               </div>
 
               <div class="button-bar">         
-                <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">Home</button>
+                <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">
+                  Home
+                </button>
               </div>  
             </div>
           </div>
