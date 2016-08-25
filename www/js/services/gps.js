@@ -155,34 +155,9 @@ angular.module('gpsAssist', [])
 			}
 
             var tripTime = parseInt(tripData.time) + parseInt(checkFrequency);
-
-            if ((!isNaN(gpsData.speed)) && (parseFloat(gpsData.speed) > parseFloat(tripData.top_speed))) {
-
-            	/**
-            	* If the speed is under 80km/h assume its correct as a top speed any higher check it isn't anymore than 30km/h
-            	* faster than the last stored datapoint.
-            	* This needs some real life on road testing but extra scrutiny has been added to try and stamp out invalid one off GPS speeds recieved such as 750km/h, 
-            	* my car simply can't go that fast :-(
-            	*/
-            	if (parseFloat(gpsData.speed) < 80) {
-                    var topSpeed = parseFloat(gpsData.speed);
-            	} else if ((typeof dataPoints[dataPoints.length - 1].speed !=="undefined") && 
-            			  (parseFloat(gpsData.speed) - parseFloat(dataPoints[dataPoints.length - 1].speed) < 30)) {
-            		var topSpeed = parseFloat(gpsData.speed);
-            	}
-            } else {
-                    var topSpeed = parseFloat(tripData.top_speed);
-            }
-
-            if ((!isNaN(gpsAltitude)) && (parseFloat(gpsAltitude) > parseFloat(tripData.highest_altitude))) {
-                    var highestAltitude = parseFloat(gpsAltitude);
-            } else {
-                    var highestAltitude = parseFloat(tripData.highest_altitude);
-            }            
+      
 		} else {
 			var tripTime = 0;
-			var topSpeed = 0;
-			var highestAltitude = 0;
 		}
 
 		/*
@@ -212,9 +187,7 @@ angular.module('gpsAssist', [])
 
 		var tripDetails = {
 			'distance' : totalDistance,
-			'time' : tripTime,
-            'top_speed' : topSpeed,	
-            'highest_altitude' : highestAltitude,            		
+			'time' : tripTime,         		
 			'data_points' : dataPoints
 		}		
 
