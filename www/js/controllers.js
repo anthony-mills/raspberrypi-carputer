@@ -866,13 +866,13 @@ angular.module('landcruiser.controllers', [])
  
     tripData.time = contentFormatting.formatTripTime( tripData.time / 1000 );
 
-    if (tripData.top_speed) {
+    if (tripData.top_speed > 0) {
 
       $scope.topSpeed = tripData.top_speed;
 
     }
 
-    if (tripData.highest_altitude) {
+    if (tripData.highest_altitude > 0) {
 
       $scope.highestAltitude = tripData.highest_altitude;
 
