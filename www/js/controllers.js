@@ -80,6 +80,15 @@ angular.module('landcruiser.controllers', [])
   }
 
   /**
+  * Convert a temperature from celcius to farenheit 
+  *
+  * @param integer tempC
+  */
+  $scope.convertTemperature = function( tempC ) {
+    return contentFormatting.celciusToFarenheit( tempC );
+  } 
+  
+  /**
   * Perform a hard refresh on the application from the browser
   */
   $scope.reloadApp = function() {
@@ -681,16 +690,7 @@ angular.module('landcruiser.controllers', [])
 
   if (parseInt($scope.appSettings.locationiq) === 1) {
     $scope.locationInfo = gpsAssist.locationInfo( $scope.gpsData.latitude, $scope.gpsData.longitude );
-  }
-
-  /**
-  * Convert a temperature from celcius to farenheit 
-  *
-  * @param integer tempC
-  */
-  $scope.convertTemperature = function( tempC ) {
-    return contentFormatting.celciusToFarenheit( tempC );
-  }    
+  }   
 
   /**
   * Get the appropriate icon for the weather conditions
