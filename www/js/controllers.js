@@ -779,6 +779,9 @@ angular.module('landcruiser.controllers', [])
 * Display the car trip meter
 */
 .controller('TripMeterCtrl', function( $scope, $interval, contentFormatting, mpdAssist, gpsAssist, uiGmapGoogleMapApi ) {
+  // Colour of the cars trip on the map
+  var pathColour = '#000';
+  
   $scope.tripData = '';
 
   // Reset the stored trip data
@@ -863,13 +866,13 @@ angular.module('landcruiser.controllers', [])
  
     tripData.time = contentFormatting.formatTripTime( tripData.time / 1000 );
 
-    if (tripData.top_speed) {
+    if (tripData.top_speed > 0) {
 
       $scope.topSpeed = tripData.top_speed;
 
     }
 
-    if (tripData.highest_altitude) {
+    if (tripData.highest_altitude > 0) {
 
       $scope.highestAltitude = tripData.highest_altitude;
 
@@ -906,7 +909,7 @@ angular.module('landcruiser.controllers', [])
               id: 'carTrip',
               path: carLog,
               stroke: {
-                  color: '#000',
+                  color: pathColour,
                   weight: 3
               },
               editable: false,
