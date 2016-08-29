@@ -682,7 +682,7 @@ angular.module('landcruiser.controllers', [])
 /*
 * Manage the weather forecast
 */
-.controller('WeatherCtrl', function( $scope, $timeout, weatherAssist, gpsAssist, contentFormatting ) {
+.controller('WeatherCtrl', function( $scope, $timeout, weatherAssist, gpsAssist ) {
   $weatherConditions = null;
   $scope.loadingData = true;
   $scope.locationInfo = false;
@@ -732,7 +732,7 @@ angular.module('landcruiser.controllers', [])
 /**
 * Display the current location of the car on a map
 */
-.controller('LocationCtrl', function( $scope, $interval, gpsAssist, contentFormatting ) {
+.controller('LocationCtrl', function( $scope, $interval, gpsAssist ) {
   $scope.areaMap = null;
 
   /**
