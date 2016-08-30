@@ -951,7 +951,7 @@ angular.module('landcruiser.controllers', [])
 })
 
 /*
-* Page for controllling application settings such as the preferred unit for speed, distance temperature etc
+* Page for controllling application settings such as the preferred unit for speed, distance, temperature etc.
 */
 .controller('SettingsCtrl', function( $scope ) {
   

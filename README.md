@@ -53,6 +53,8 @@ This project makes the use of a number of third party Open Source libraries. You
 
 In the near future the following features are planned:
 
+* Ironing out issues with return trips on the trip meter. At the moment the issues seem sporadic and needs further collection of real "on road" data to debug.
+
 * The ability to save a play queue to the MPD filesystem as a playlist
 
 * PHP script that acts as a podcast agregator finding and downloading new episodes as they are released and then making them available to the MPD daemon.
