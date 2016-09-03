@@ -339,6 +339,7 @@ angular.module('landcruiser.sound', [])
 				}
 
 				var albumArt = findAlbumArt(songArtist);
+				var trackMetadata = playlistSong.getMetadata();
 
 				var songObj = {
 		            'id' :  playlistSong.getId(),
@@ -349,6 +350,7 @@ angular.module('landcruiser.sound', [])
 		            'album' : playlistSong.getAlbum(),
 		            'image' : albumArt,
 					'playing' : songStatus,
+					'year' : trackMetadata.date,
 					'playTime' : 0
 		        }
 

@@ -58,7 +58,12 @@
                         
                             <h3 ng-if="playlistItem.album">
                               {{::playlistItem.album}}
+                              
+                              <span ng-if="playlistItem.year">
+                                ( {{playlistItem.year}} )
+                              </span>
                             </h3>
+
                           </div>
 
                           <div ng-else class="padding-bottom">{{::playlistItem.name}}</div>
