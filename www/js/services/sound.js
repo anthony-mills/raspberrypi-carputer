@@ -268,16 +268,19 @@ angular.module('landcruiser.sound', [])
 					var objPath = directoryItem.getPath();
 						
 					var albumArt = findAlbumArt(directoryItem.getArtist());
+					var trackMetadata = directoryItem.getMetadata();
 
 					var itemData = {
 						'type' : 'file',
 						'path' : objPath,
 						'index' : itemIndex.toLowerCase(),
 						'artist' : artistName,
+						'name' :  directoryItem.getDisplayName(),
 						'album' : directoryItem.getAlbum(),
 						'track' : directoryItem.getTrack(),
 						'duration' : contentFormatting.formatSeconds(metaData.time),
-						'artwork' : albumArt
+						'artwork' : albumArt,
+						'year' : trackMetadata.date
 					}
 
 				} else {

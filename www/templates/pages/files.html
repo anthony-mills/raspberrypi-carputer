@@ -60,7 +60,19 @@
                       </div>
 
                       <div class="col-66"> 
-                        <h2 ng-if="directoryItem.title && directoryItem.artist" class="padding-bottom">{{::directoryItem.title}}</h2>
+                        <div ng-if="directoryItem.name && directoryItem.artist" class="padding-bottom">
+                          <h2>
+                            {{::directoryItem.name}}
+                          </h2>
+
+                          <h3>
+                            {{::directoryItem.artist}}
+
+                            <span ng-if="directoryItem.year">
+                              ( {{::directoryItem.year}} )
+                            </span>
+                          </h3>
+                        </div>
                         
                         <h2 ng-else class="padding-bottom">{{::formatPath(directoryItem.path)}}</h2>
 
