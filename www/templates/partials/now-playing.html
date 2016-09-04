@@ -35,9 +35,15 @@
         <strong class="padding-bottom">Next Up:</strong> 
         
         <span ng-if="currentlyPlaying.next.artist">
-          {{currentlyPlaying.next.name}} - {{currentlyPlaying.next.artist}}
+          {{currentlyPlaying.next.name}}
           <br />
-          ( Duration: {{currentlyPlaying.next.duration}} )
+          {{currentlyPlaying.next.artist}} 
+
+          <span ng-if="currentlyPlaying.next.year">
+            ( {{currentlyPlaying.next.year}} )
+          </span>
+          <br />
+          Duration: {{currentlyPlaying.next.duration}}
         </span>
 
         <span ng-else>{{currentlyPlaying.next.name}}</span>
@@ -52,6 +58,6 @@
     <button ng-if="playState == 'pause'"  ng-click="pauseMusic()" class="button button-positive icon-right ion-play">Resume</button>
     <button ng-else ng-click="pauseMusic()" class="button button-positive icon-right ion-pause">Pause</button>
 
-    <button ng-if="currentlyPlaying.next.artist" ng-click="nextSong()" class="button button-positive icon-right ion-skip-forward">Next</button>              
+    <button ng-if="currentlyPlaying.next.artist || currentlyPlaying.next.name" ng-click="nextSong()" class="button button-positive icon-right ion-skip-forward">Next</button>              
   </div>
 </div>    
