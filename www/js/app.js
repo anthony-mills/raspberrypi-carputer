@@ -4,11 +4,11 @@ mpdClient = MPD(8800);
 * Car Computer AngularJS Application
 **/
 angular.module(
-                'landcruiser', 
+                'carcomputer', 
                 [
                   'ionic', 
-                  'landcruiser.controllers', 
-                  'landcruiser.sound',
+                  'controllers', 
+                  'sound',
                   'gpsAssist',
                   'weatherAssist',
                   'contentFormatting',

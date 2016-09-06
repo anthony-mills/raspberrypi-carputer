@@ -1,4 +1,4 @@
-angular.module('landcruiser.sound', [])
+angular.module('sound', [])
 
 /**
  * Service providing playback and mpd queue functionality 
