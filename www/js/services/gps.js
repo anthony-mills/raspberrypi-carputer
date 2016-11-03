@@ -109,7 +109,12 @@ angular.module('gpsAssist', [])
 					} else {
 						var gpsHeading = Math.round(resultSet.track) + ' degrees - ' + convertBearing(resultSet.track);
 					}
-
+					
+					if (!limitData) {
+					  var limitData = {
+						age : ''
+					  };
+					}
 					var gpsStatus = {
 						'status' : 'Has Fix',
 						'latitude' : resultSet.lat,
