@@ -68,7 +68,7 @@ angular.module('gpsAssist', [])
 
 								var limitData = {
 									'speed_limit' : speedLimitData.speed_limit,
-									'age' : 'Checked '  Math.round((currentTime - speedLimitData.age) / 1000)  ' seconds ago'
+									'age' : 'Checked '  + limitAge +  ' seconds ago'
 								}	
 
 							}
