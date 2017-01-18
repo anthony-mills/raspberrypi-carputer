@@ -330,79 +330,79 @@ angular.module('gpsAssist', [])
 	*
 	* @param integer headingDegrees
 	*
-	* @return string $headingDegrees
+	* @return string headingDir
 	*/
 	function convertBearing(headingDegrees)
 	{
 	  if (headingDegrees > 349) {
-	    var headingDegrees = "North";
+	    var headingDir = "North";
 	  }
 
 	  if (headingDegrees <= 11) {
-	    var headingDegrees = "North";
+	    var headingDir = "North";
 	  }
 
 	  if ((headingDegrees > 11) && ((headingDegrees <= 34 ))) {
-	    var headingDegrees = "NNE";
+	    var headingDir = "NNE";
 	  }
 
 	  if ((headingDegrees > 34) && ((headingDegrees <= 56 ))) {
-	    var headingDegrees = "NE";
+	    var headingDir = "NE";
 	  }
 
 	  if ((headingDegrees > 56) && ((headingDegrees <= 79 ))) {
-	    var headingDegrees = "ENE";
+	    var headingDir = "ENE";
 	  }
 
 	  if ((headingDegrees > 79) && ((headingDegrees <= 101 ))) {
-	    var headingDegrees = "East";
+	    var headingDir = "East";
 	  }
 
 	  if ((headingDegrees > 101) && ((headingDegrees <= 124 ))) {
-	    var headingDegrees = "ESE";
+	    var headingDir = "ESE";
 	  }                
 
 	  if ((headingDegrees > 125) && ((headingDegrees <= 146 ))) {
-	    var headingDegrees = "SE";
+	    var headingDir = "SE";
 	  }    
 
 	  if ((headingDegrees > 146) && ((headingDegrees <= 169 ))) {
-	    var headingDegrees = "SSE";
+	    var headingDir = "SSE";
 	  }  
 
 	  if ((headingDegrees > 169) && ((headingDegrees <= 191 ))) {
-	    var headingDegrees = "South";
+	    var headingDir = "South";
 	  }  
 
 	  if ((headingDegrees > 191) && ((headingDegrees <= 214 ))) {
-	    var headingDegrees = "SSW";
+	    var headingDir = "SSW";
 	  }    
 
 	  if ((headingDegrees > 214) && ((headingDegrees <= 236 ))) {
-	    var headingDegrees = "SW";
+	    var headingDir = "SW";
 	  }  
 
 	  if ((headingDegrees > 236) && ((headingDegrees <= 259 ))) {
-	    var headingDegrees = "WSW";
+	    var headingDir = "WSW";
 	  }
 
 	  if ((headingDegrees > 259) && ((headingDegrees <= 281 ))) {
-	    var headingDegrees = "West";
+	    var headingDir = "West";
 	  }                  
 
 	  if ((headingDegrees > 281) && ((headingDegrees <= 304 ))) {
-	    var headingDegrees = "WNW";
+	    var headingDir = "WNW";
 	  }    
 
 	  if ((headingDegrees > 304) && ((headingDegrees <= 326 ))) {
-	    var headingDegrees = "NW";
+	    var headingDir = "NW";
 	  }                  
 
 	  if ((headingDegrees > 326) && ((headingDegrees <= 349 ))) {
-	    var headingDegrees = "NNW";
+	    var headingDir = "NNW";
 	  }  
 
-	  return headingDegrees;  
+	  return headingDir;  
 	}	
 
 	/**
@@ -419,7 +419,7 @@ angular.module('gpsAssist', [])
 		} else {
 			var carSpeed = gpsSpeed / 1000 * 3600;
 
-			return Math.floor(carSpeed);
+			return Math.ceil(carSpeed);
 		}
 	}
 

@@ -1,4 +1,4 @@
-angular.module('landcruiser.controllers', [])
+angular.module('controllers', [])
 
 .controller('AppCtrl', function( $scope, $window, $interval, gpsAssist, contentFormatting ) {
 

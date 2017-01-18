@@ -1,4 +1,4 @@
-angular.module('landcruiser.sound', [])
+angular.module('sound', [])
 
 /**
  * Service providing playback and mpd queue functionality 
@@ -59,6 +59,7 @@ angular.module('landcruiser.sound', [])
 	        if (nextSong) {
 
 	        	var albumArt = findAlbumArt( nextSong.getArtist() );
+				var trackMetadata = nextSong.getMetadata();
 
 				var nextSongObj = {
 		            'id' :  nextSong.getId(),
@@ -67,6 +68,7 @@ angular.module('landcruiser.sound', [])
 		            'artist' : nextSong.getArtist(),
 		            'album' : nextSong.getAlbum(),
 		            'queueid' : nextSong.getQueuePosition(),
+		            'year' : trackMetadata.date,
 		            'image' : albumArt
 		        }	
 
