@@ -821,7 +821,8 @@ angular.module('landcruiser.controllers', [])
 
     tripData.top_speed = 0;
     tripData.highest_altitude = 0;
-    
+    console.log(tripData);
+      
     for (var i = 0; i < tripData.data_points.length; i++) { 
       if ( (typeof tripData.data_points[i].distance === 'number' ) ) {
         tripDistance += parseFloat(tripData.data_points[i].distance);  

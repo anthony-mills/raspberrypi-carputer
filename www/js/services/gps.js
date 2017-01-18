@@ -55,10 +55,23 @@ angular.module('gpsAssist', [])
 								'age' : ''
 							}
 						} else {
-							var limitData = {
-								'speed_limit' : speedLimitData.speed_limit,
-								'age' : 'Checked ' + Math.round((currentTime - speedLimitData.age) / 1000) + ' seconds ago'
-							}	
+							var limitAge = Math.round((currentTime - speedLimitData.age) / 1000);
+
+							if ( limitAge > 3600 ) {
+
+								var limitData = {
+									'speed_limit' : 'Unkown',
+									'age' : 'Limited connectivity available'
+								}	
+
+							} else {
+
+								var limitData = {
+									'speed_limit' : speedLimitData.speed_limit,
+									'age' : 'Checked '  Math.round((currentTime - speedLimitData.age) / 1000)  ' seconds ago'
+								}	
+
+							}
 						}					
 					}
 
