@@ -676,6 +676,13 @@ angular.module('landcruiser.controllers', [])
     mpdClient.loadPlaylistIntoQueue(playlistPath);
 
     growl.success("Playlist loaded to queue"); 
+
+    // Get the play state if music is not already playing start the playlist
+    var playState = mpdClient.getPlaystate();
+
+    if ( playState === 'stop' ) {
+      mpdClient.play();
+    }    
   } 
 })
 
