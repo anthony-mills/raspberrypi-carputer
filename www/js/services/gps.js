@@ -17,6 +17,7 @@ angular.module('gpsAssist', [])
 		var appSettings = JSON.parse(window.localStorage['app_settings']);
 
 		var gpsData = getGps.then(function(resultSet) {
+
 				if (typeof resultSet.data.tpv ==='undefined' || typeof resultSet.data.tpv[0].lat ==='undefined' || typeof resultSet.data.tpv[0].lon ==='undefined') {
 					var gpsStatus = {
 						'status' : 'No Fix',
@@ -26,7 +27,8 @@ angular.module('gpsAssist', [])
 						'heading' : 'N / A',																		
 						'speed' : '0',
 						'speed_limit' : 'Unknown',
-						'speed_limit_age' : 0
+						'speed_limit_age' : 0,
+						'time' : 'Unknown'
 					}							
 					
 				} else {
@@ -115,7 +117,8 @@ angular.module('gpsAssist', [])
 						'speed' : speedConversion(resultSet.speed),
 						'speed_limit' : estSpeedLimit,
 						'speed_limit_age' : limitData.age,
-						'speed_warn' : speedWarn				
+						'speed_warn' : speedWarn,
+						'time' : resultSet.time			
 					}
 				}
 

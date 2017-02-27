@@ -6,13 +6,14 @@ angular.module('contentFormatting', [])
 .factory('contentFormatting', function($http, $log, $rootScope) {
 	
 	/**
-	* Get the current time
+	* Get the current system time
 	*
+	* @param integer timeStamp
 	* @return string getTime
 	*/
-	function getTime()
+	function getSystemTime( timeStamp )
 	{
-	    var d = new Date(),
+	    var d = new Date( timeStamp ),
         minutes = d.getMinutes().toString().length == 1 ? '0'+ d.getMinutes() : d.getMinutes(),
         hours = d.getHours().toString().length == 1 ? '0'+ d.getHours() : d.getHours(),
         ampm = d.getHours() >= 12 ? 'pm' : 'am',
@@ -171,8 +172,8 @@ angular.module('contentFormatting', [])
 	}
 
 	return {
-		getTime: function() {
-			return getTime();
+		getSystemTime: function( timeStamp ) {
+			return getSystemTime( timeStamp );
 		},
 
 		dateFormat: function( dayNumber ) {

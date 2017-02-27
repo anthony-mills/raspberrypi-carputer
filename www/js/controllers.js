@@ -11,7 +11,8 @@ angular.module('controllers', [])
       "temperature" : 0,
       "altitude" : 0,     
       "locationiq" : 0,
-      "night_mode" : 0
+      "night_mode" : 0,
+      "time_src" : 0
     }
     
     $scope.appSettings = appSettings;
@@ -27,18 +28,28 @@ angular.module('controllers', [])
   * Default frequency is every second. The interval can probably be increased for a more responsive speed readout on systems using a Raspberry Pi Model 3
   */
   var updateFrequency = 1000;
-  
-  $scope.currentDate = contentFormatting.getTime();
 
   $scope.gpsData = {}
 
   $scope.getGPS = $interval(function() {
 
-    // Update the current time & GPS data
-    $scope.currentDate = contentFormatting.getTime();
+    // Use the system time 
+    console.log($scope.appSettings.time_src);
+
+    if ($scope.appSettings.time_src == 0) {
+      $scope.currentDate = contentFormatting.getSystemTime( Math.floor( Date.now() ) );
+    } else {
+      if (typeof $scope.gpsData.time === 'number') {
+        $scope.currentDate = contentFormatting.getSystemTime( Math.round ($scope.gpsData.time * 1000) );
+      } else {
+        $scope.currentDate = '';
+      }
+    }
+
 
     gpsAssist.getLocationData().then(function(gpsData) {
-      
+      console.log(gpsData);
+
       if ((gpsData.latitude != 'Unknown') && (gpsData.longitude !='Unknown')) {
           window.localStorage['gps_data'] = JSON.stringify( gpsData ); 
 
