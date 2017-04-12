@@ -59,6 +59,12 @@ In the near future the following features are planned:
 
 * PHP script that acts as a podcast agregator finding and downloading new episodes as they are released and then making them available to the MPD daemon.
 
+# Further Reading
+
+* The [Raspberry Pi Car Computer after over 15000km](https://www.development-cycle.com/2017/04/raspberrypi-car-computer-15000km-later/) of real life road testing.
+* Upgrading the [Car Computer to the Raspberry Pi 3](https://www.development-cycle.com/2016/03/car-computer-raspberry-pi-3-upgrade/)
+
+
 # Screenshots
 
 ![Home screen while travelling at 54kph and playing music](/screenshots/home_screen_playing.png?raw=true "Home Screen")
