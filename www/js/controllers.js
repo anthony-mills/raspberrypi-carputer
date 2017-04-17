@@ -34,8 +34,6 @@ angular.module('controllers', [])
   $scope.getGPS = $interval(function() {
 
     // Use the system time 
-    console.log($scope.appSettings.time_src);
-
     if ($scope.appSettings.time_src == 0) {
       $scope.currentDate = contentFormatting.getSystemTime( Math.floor( Date.now() ) );
     } else {
@@ -48,7 +46,6 @@ angular.module('controllers', [])
 
 
     gpsAssist.getLocationData().then(function(gpsData) {
-      console.log(gpsData);
 
       if ((gpsData.latitude != 'Unknown') && (gpsData.longitude !='Unknown')) {
           window.localStorage['gps_data'] = JSON.stringify( gpsData ); 
@@ -82,6 +79,7 @@ angular.module('controllers', [])
   * Apply class to element if the car is currently exceeding the speed limit
   *
   * @param integer speedLimit
+  *
   * @return string
   */
   $scope.warnSpeed = function( speedLimit ) {
