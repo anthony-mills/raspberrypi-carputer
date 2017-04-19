@@ -18,7 +18,7 @@ angular.module('gpsAssist', [])
 
 		var gpsData = getGps.then(function(resultSet) {
 
-				if (typeof resultSet.data.tpv ==='undefined' || typeof resultSet.data.tpv[0].lat ==='undefined' || typeof resultSet.data.tpv[0].lon ==='undefined') {
+				if (typeof resultSet.data.tpv ==='undefined' || resultSet.data.tpv.length === 0) {
 					var gpsStatus = {
 						'status' : 'No Fix',
 						'latitude' : 'Unknown',
