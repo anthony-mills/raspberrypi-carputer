@@ -31,6 +31,9 @@ angular.module('controllers', [])
 
   $scope.gpsData = {}
 
+  /**
+  * Pperiodically check the time and location data
+  **/
   $scope.getGPS = $interval(function() {
 
     // Use the system time 
@@ -249,22 +252,25 @@ angular.module('controllers', [])
   }
 
   $scope.nextSong = function() {
+    mpdClient.stop();
+
     var songId = $scope.currentlyPlaying.next.id;
 
     console.log('Switching to song: ' + songId);
 
-    mpdClient.stop();
     mpdClient.removeSongFromQueueById( $scope.currentlyPlaying.id );
-    mpdClient.playById( songId );
 
-    $scope.playState = 'play';
-
-    $scope.updateQueueLength(); 
     growl.success("Next song requested"); 
 
     $timeout(function() {
+      mpdClient.playById( songId );
+
+      $scope.playState = 'play';      
+
       $scope.currentlyPlaying = mpdAssist.getPlaying(); 
-    }, 800);
+
+      $scope.updateQueueLength(); 
+    }, 900);
   }
 
   /**
