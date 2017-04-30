@@ -101,16 +101,10 @@ angular.module('sound', [])
 	        if (artworkStore) {
 
 	            var artworkStore = JSON.parse(artworkStore);
-     			
+
 	            if (typeof artworkStore[artistSlug] === 'undefined') {
-					getAlbumArt(artistName).then(function(res){
-					  var results = res.data.results.pop();
 
-					  if ( typeof results.artworkUrl100 != undefined ) {
-					  	addAlbumArt(artistSlug, results.artworkUrl100);					  	
-					  }
-
-					});	            
+					albumArtRequest( artistName, artworkStore );	         
 						
 	            } else {
 	            	var artistCover = artworkStore[artistSlug];
@@ -139,16 +133,7 @@ angular.module('sound', [])
 
 	            }
 	        } else {
-				getAlbumArt(artistName).then(function(res){
-				  var albumArt = res.data.results.pop();
-
-				  if ( (typeof albumArt.artworkUrl100 !== "undefined") && (albumArt.artworkUrl100.length > 0) ) {
-					addAlbumArt(artistSlug, albumArt.artworkUrl100);		  	
-				  } else {
-					addAlbumArt('/img/no_image.png', albumArt.artworkUrl100);
-				  }
-
-				});	 	        	
+				albumArtRequest( artistName, artworkStore );	        	
 	        } 
 		}
 			
@@ -160,51 +145,77 @@ angular.module('sound', [])
 	}
 
 	/**
-	* Get the album art for a artist
+	* Check is request has already been made for this artists album art
+	* If not make a request to itunes
 	*
 	* @param string artistName
-	*/	
-	function getAlbumArt( artistName )
+	* @param object artworkStore
+	*/
+	function albumArtRequest( artistName, artworkStore )
 	{
+		var artistSlug = artistName.toLowerCase(artistName.replace(/\W/g, ''));    
 
-		var url = 'https://itunes.apple.com/search?term=' + artistName + '&limit=1&media=music&entity=musicArtist,album' + '&callback=JSON_CALLBACK';
-		console.log('Trying to find image for:' + url);
+		var getAlbumArt = function( artistName ) {
+			var url = 'https://itunes.apple.com/search?term=' + artistName + '&limit=1&media=music&entity=musicArtist,album' + '&callback=JSON_CALLBACK';
+			console.log('Trying to find image for:' + url);
 
-	   	return $http({
-	   	  	method: 'JSONP',
-	   	  	url: url
-	   	})
-	}
-
-	/**
-	* Add the url for an artists album image to the 
-	* local storage cache
-	*
-	* @param string artistSlug
-	* @param string imageUrl
-	*/	
-	function addAlbumArt( artistSlug, imageUrl )
-	{
-		if (imageUrl) {
-	        var albumArt = window.localStorage['album_art'];
-
-	        if (albumArt) {
-	            var albumArt = JSON.parse(albumArt);
-	        } else {
-	        	var albumArt = {};
-	        }
-
-	        var bigImage = imageUrl.replace("100x100", "200x200");
-	        var featureImage = imageUrl.replace("100x100", "150x150");        
-
-	        albumArt[artistSlug] = {
-	        	'original' : imageUrl,
-	        	'feature' : featureImage,
-	        	'big' : bigImage
-	        };
-
-			window.localStorage['album_art'] = JSON.stringify(albumArt);
+		   	return $http({
+		   	  	method: 'JSONP',
+		   	  	url: url
+		   	});
 		}
+
+		if (typeof artworkStore === 'undefined') {
+			var artworkStore = {};
+		}
+
+		if( typeof artworkStore[artistSlug] !== 'undefined' && typeof artworkStore[artistSlug].requested !== 'undefined' ) {
+
+			var timeDiff = (Math.floor(Date.now() / 1000)) - artworkStore[artistSlug].requested;
+
+			if (timeDiff < 600) {
+				return;
+			}
+		}
+
+		artworkStore[artistSlug] = {
+    		'requested' : Math.floor(Date.now() / 1000),
+    	};
+
+		window.localStorage['album_art'] = JSON.stringify( artworkStore );
+
+		getAlbumArt(artistName).then(function(res){
+		  var albumArt = res.data.results.pop();
+
+		  var addAlbumArt = function( artistSlug, imageUrl ) {
+			if (imageUrl) {
+		        var albumArt = window.localStorage['album_art'];
+
+		        if (albumArt) {
+		            var albumArt = JSON.parse(albumArt);
+		        } else {
+		        	var albumArt = {};
+		        }
+
+		        var bigImage = imageUrl.replace("100x100", "200x200");
+		        var featureImage = imageUrl.replace("100x100", "150x150");        
+
+		        albumArt[artistSlug] = {
+		        	'original' : imageUrl,
+		        	'feature' : featureImage,
+		        	'big' : bigImage
+		        };
+
+				window.localStorage['album_art'] = JSON.stringify(albumArt);
+			}
+		  }
+
+		  if ( (typeof albumArt.artworkUrl100 !== "undefined") && (albumArt.artworkUrl100.length > 0) ) {
+			addAlbumArt(artistSlug, albumArt.artworkUrl100);		  	
+		  } else {
+			addAlbumArt('/img/no_image.png', albumArt.artworkUrl100);
+		  }
+		});	 	
 	}
 
 	/**
@@ -399,19 +410,9 @@ angular.module('sound', [])
 	    	return getPlaying();
 	    },
 
-	    addAlbumArt: function( artistName, imageUrl ) {
-
-	       return addAlbumArt(artist, image);
-	    },
-
 	    checkAlbumArt: function( artistName ) {
 
 	       return checkAlbumArt(artist);
-	    },
-
-	    getAlbumArt: function( artistName ) {
-
-	       return getAlbumArt(artist);
 	    }
 	}
 });
