@@ -501,19 +501,22 @@ angular.module('controllers', [])
 * Allow management of the current music playlist queue
 */
 .controller('CurrentQueueCtrl', function( $scope, $interval, $timeout, growl, mpdAssist ) {
-
-  $scope.playlistSongs = {};
-  $scope.playlistCount = 0;
-  $scope.playlistLoading = true;  
+  $scope.playlistObj = {
+    'loading' : true,
+    'count' : 0,
+    'songs' : {}
+  };
 
   $scope.playQueue = function() {
 
-    $scope.playlistSongs = mpdAssist.getQueue();
-    $scope.playlistCount = $scope.playlistSongs.length;
+    $scope.playlistObj.songs = mpdAssist.getQueue();
 
-    if ( $scope.playlistLoading ) {
+    console.log( $scope.playlistObj.songs );
+    $scope.playlistObj.count = $scope.playlistObj.songs.length;
 
-      $scope.playlistLoading = false; 
+    if ( $scope.playlistObj.loading ) {
+
+      $scope.playlistObj.loading = false; 
 
     }
 
@@ -526,10 +529,11 @@ angular.module('controllers', [])
   * @param object playlistIndex
   */
   $scope.removePlaylistItem = function( itemId, playlistIndex ) {
-    $scope.playlistSongs.splice(playlistIndex, 1);
-    $scope.playlistCount--;
+    $scope.playlistObj.songs.splice(playlistIndex, 1);
 
-    $scope.playlistLoading = true;
+    $scope.playlistObj.count--;
+
+    $scope.playlistObj.loading = true;
     mpdClient.removeSongFromQueueByPosition(playlistIndex);
 
     growl.success("Song removed from the current play queue");
@@ -540,16 +544,12 @@ angular.module('controllers', [])
   */
   $scope.wipePlaylist = function() {
 
-    $scope.playlistCount = 0;
-    $scope.playlistSongs = [];
+    $scope.playlistObj.count = 0;
+    $scope.playlistObj.songs = {};
 
     mpdClient.clearQueue(); 
 
     growl.success("The play queue has been cleared"); 
-
-    $scope.playlistSongs = {};
-    $scope.playlistCount = 0;
-
   }
 
   /**
@@ -559,9 +559,9 @@ angular.module('controllers', [])
 
     mpdClient.shuffleQueue();
 
-    $scope.playlistSongs = {};
-    $scope.playlistLoading = true;  
-    $scope.playlistSongs = mpdAssist.getQueue();
+    $scope.playlistObj.songs = {};
+    $scope.playlistObj.loading = true;  
+    $scope.playlistObj.songs = mpdAssist.getQueue();
 
     growl.success("Shuffling the play queue contents"); 
 
@@ -577,7 +577,7 @@ angular.module('controllers', [])
 
     mpdClient.play(songId);
 
-    $scope.playlistSongs[queueIndex].playing = 1;
+    $scope.playlistObj.songs[queueIndex].playing = 1;
 
     growl.success("Music playback started");  
 
@@ -592,7 +592,8 @@ angular.module('controllers', [])
   $scope.stopSong = function(songId, queueIndex) {
 
     mpdClient.stop();
-    $scope.playlistSongs[queueIndex].playing = 0;
+
+    $scope.playlistObj.songs[queueIndex].playing = 0;
 
   } 
 

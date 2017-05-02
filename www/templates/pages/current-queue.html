@@ -21,8 +21,8 @@
       <!-- Start the music control column -->
       <div class="col-66">
         <div class="card">
-          <div ng-if="playlistCount > 0" class="item item-divider page-heading bar-header page-heading heading-text" >
-            Current Play Queue: {{playlistCount}} Songs
+          <div ng-if="playlistObj.count > 0" class="item item-divider page-heading bar-header page-heading heading-text" >
+            Current Play Queue: {{playlistObj.count}} Songs
           </div>
 
           <div ng-else class="item item-divider page-heading bar-header page-heading heading-text" >
@@ -41,23 +41,23 @@
           </div>
 
           <div ng-else>
-            <div bindonce="menuItems" ng-if="playlistCount > 0">
+            <div bindonce="menuItems" ng-if="playlistObj.count > 0">
               <ion-list>
 
-                <ion-item ng-repeat="playlistItem in playlistSongs track by $index" id="{{playlistItem.id}}">
+                <ion-item ng-repeat="playlistItem in playlistObj.songs track by $index" id="{{playlistItem.position}}">
                       <div class="row">
                         <div class="col-33">
-                          <img class="album-art" img-cache ic-src="{{::playlistItem.image}}">
+                          <img class="album-art" img-cache ic-src="{{playlistItem.image}}">
                         </div>
 
                         <div class="col-66"> 
 
                           <div ng-if="playlistItem.artist" class="padding-bottom">
-                            <h2>{{::playlistItem.name}}</h2>
-                            <h3>{{::playlistItem.artist}}</h3>
+                            <h2>{{playlistItem.name}}</h2>
+                            <h3>{{playlistItem.artist}}</h3>
                         
                             <h3 ng-if="playlistItem.album">
-                              {{::playlistItem.album}}
+                              {{playlistItem.album}}
                               
                               <span ng-if="playlistItem.year">
                                 ( {{playlistItem.year}} )
@@ -66,11 +66,11 @@
 
                           </div>
 
-                          <div ng-else class="padding-bottom">{{::playlistItem.name}}</div>
+                          <div ng-else class="padding-bottom">{{playlistItem.name}}</div>
 
 
                           <p>
-                            Duration: {{::playlistItem.duration}}
+                            Duration: {{playlistItem.duration}}
                           </p>
 
                         </div>
