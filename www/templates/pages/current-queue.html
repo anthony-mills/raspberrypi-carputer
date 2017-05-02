@@ -29,17 +29,27 @@
             Current Play Queue: Currently Empty
           </div>
 
-          <div class="button-bar">
+          <!-- If the queue contains items show the shuffle and wipe playlist buttons -->
+          <div class="button-bar" ng-if="playlistObj.count > 0">
             <button class="button button-positive icon-left ion-trash-a" ng-click="wipePlaylist()">Clear Queue</button>
             <button class="button button-positive icon-left ion-shuffle" ng-click="shuffleQueue()">Shuffle</button>
           </div>
 
+          <!-- If not just show a home button -->
+          <div class="button-bar" ng-else>
+            <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">
+              Home
+            </button>
+          </div>          
+
+          <!-- If in the loading state just display a loading message -->
           <div ng-if="playlistLoading">
               <div class="standby-loading">
                 <strong>Loading current play queue...</strong>
               </div>
           </div>
 
+          <!-- If we have song items parse through adding them to the list -->
           <div ng-else>
             <div bindonce="menuItems" ng-if="playlistObj.count > 0">
               <ion-list>
@@ -47,30 +57,29 @@
                 <ion-item ng-repeat="playlistItem in playlistObj.songs track by $index" id="{{playlistItem.position}}">
                       <div class="row">
                         <div class="col-33">
-                          <img class="album-art" img-cache ic-src="{{playlistItem.image}}">
+                          <img class="album-art" img-cache ic-src="{{::playlistItem.image}}">
                         </div>
 
                         <div class="col-66"> 
 
                           <div ng-if="playlistItem.artist" class="padding-bottom">
-                            <h2>{{playlistItem.name}}</h2>
-                            <h3>{{playlistItem.artist}}</h3>
+                            <h2>{{::playlistItem.name}}</h2>
+                            <h3>{{::playlistItem.artist}}</h3>
                         
                             <h3 ng-if="playlistItem.album">
-                              {{playlistItem.album}}
+                              {{::playlistItem.album}}
                               
                               <span ng-if="playlistItem.year">
-                                ( {{playlistItem.year}} )
+                                ( {{::playlistItem.year}} )
                               </span>
                             </h3>
 
                           </div>
 
-                          <div ng-else class="padding-bottom">{{playlistItem.name}}</div>
-
-
+                          <div ng-else class="padding-bottom">{{::playlistItem.name}}</div>
+                          
                           <p>
-                            Duration: {{playlistItem.duration}}
+                            Duration: {{::playlistItem.duration}}
                           </p>
 
                         </div>
