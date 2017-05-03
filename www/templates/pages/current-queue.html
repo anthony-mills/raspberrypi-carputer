@@ -33,17 +33,10 @@
           <div class="button-bar" ng-if="playlistObj.count > 0">
             <button class="button button-positive icon-left ion-trash-a" ng-click="wipePlaylist()">Clear Queue</button>
             <button class="button button-positive icon-left ion-shuffle" ng-click="shuffleQueue()">Shuffle</button>
-          </div>
-
-          <!-- If not just show a home button -->
-          <div class="button-bar" ng-else>
-            <button class="button button-positive icon-left ion-ios-home" ng-click="goHome()">
-              Home
-            </button>
-          </div>          
+          </div>      
 
           <!-- If in the loading state just display a loading message -->
-          <div ng-if="playlistLoading">
+          <div ng-if="playlistObj.loading">
               <div class="standby-loading">
                 <strong>Loading current play queue...</strong>
               </div>
@@ -105,7 +98,7 @@
               </ion-list>
             </div>
 
-            <div class="item item-text-wrap" ng-if="playlistCount === 0">
+            <div class="item item-text-wrap" ng-if="playlistObj.count < 1">
               <div class="no-playlists">
                 <p>The play queue is currently empty.</p>
               </div>
