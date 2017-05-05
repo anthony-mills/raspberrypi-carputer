@@ -79,7 +79,7 @@ In the near future the following features are planned:
 
 # Licence
 
-Copyright (C) 2016 [Anthony Mills](http://www.anthony-mills.com)
+Copyright (C) 2017 [Anthony Mills](http://www.anthony-mills.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
