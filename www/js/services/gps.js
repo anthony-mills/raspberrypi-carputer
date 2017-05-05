@@ -212,7 +212,7 @@ angular.module('gpsAssist', [])
 
 
 	/**
-	* Haversine formulae for calculating between two points
+	* Haversine formulae for calculating the distance between two points
 	*
 	* @param object coords1
 	* @param object coords2
@@ -442,12 +442,6 @@ angular.module('gpsAssist', [])
 		locationInfo: function( carLat, carLong ) {
 
 			return locationInfo( carLat, carLong );
-
-		},
-
-		updateTrip: function( gpsData, checkFrequency ) {
-
-			return updateTrip( gpsData, checkFrequency );
 
 		},
 
