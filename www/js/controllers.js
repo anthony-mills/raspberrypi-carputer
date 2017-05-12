@@ -32,7 +32,7 @@ angular.module('controllers', [])
   $scope.gpsData = {}
 
   /**
-  * Pperiodically check the time and location data
+  * Periodically check the time and location data
   **/
   $scope.getGPS = $interval(function() {
 
