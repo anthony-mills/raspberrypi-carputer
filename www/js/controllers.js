@@ -511,7 +511,6 @@ angular.module('controllers', [])
 
     $scope.playlistObj.songs = mpdAssist.getQueue();
 
-    console.log( $scope.playlistObj.songs );
     $scope.playlistObj.count = $scope.playlistObj.songs.length;
 
     if ( $scope.playlistObj.loading ) {
@@ -762,30 +761,24 @@ angular.module('controllers', [])
   * Update the location of the car marker on the map
   */
   $scope.updateLocation = function() {
-    var gpsData = window.localStorage['gps_data'];
     $scope.locationInfo = false;
+    console.log($scope.gpsData);
+    if ($scope.gpsData.latitude && $scope.gpsData.longitude) {
 
-    if (gpsData) {
-      var gpsData = JSON.parse( gpsData );
-
-      if (gpsData.latitude && gpsData.longitude) {
-
-        if (parseInt($scope.appSettings.locationiq) === 1) {
-          $scope.locationInfo = gpsAssist.locationInfo( gpsData.latitude, gpsData.longitude );
-        }
-
-
-        $scope.areaMap = {
-            center: {
-                latitude: gpsData.latitude,
-                longitude: gpsData.longitude
-            },
-            zoom: 16,
-            id: 0
-        }; 
-         
+      if (parseInt($scope.appSettings.locationiq) === 1) {
+        $scope.locationInfo = gpsAssist.locationInfo( $scope.gpsData.latitude, $scope.gpsData.longitude );
       }
-    }
+
+
+      $scope.areaMap = {
+          center: {
+              latitude: $scope.gpsData.latitude,
+              longitude: $scope.gpsData.longitude
+          },
+          zoom: 16,
+          id: 0
+      }; 
+    }   
   }
 
   // Update the current location of the car
