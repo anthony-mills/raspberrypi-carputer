@@ -33,7 +33,7 @@ A set of real world data set are stored in the www/php/data folder by inserting 
 
 # Changing the application background
 
-If you would like to change the image used as the application background. Simply overwrite the www/img/background.jpg file with a jpeg image of your choice.
+If you would like to change the image used as the application background. Simply overwrite the background.jpg file located in the www/img/ folder with a jpeg image of your choice.
 
 # Credits
 
@@ -54,6 +54,8 @@ This project makes the use of a number of third party Open Source libraries. You
 In the near future the following features are planned:
 
 * Ironing out issues with return trips on the trip meter. At the moment the issues seem sporadic and needs further collection of real "on road" data to debug.
+
+* The ability to control the screen brightness on the official Raspberry Pi Touchscreen using the display controller board v1.1 and above.
 
 * The ability to save a play queue to the MPD filesystem as a playlist
 
