@@ -105,9 +105,11 @@
                     </div>                   
 
                     <div class="button-bar">
-                      <button class="button button-positive icon-left ion-plus-circled" ng-click="addDirectory(directoryItem.path)">Add To Queue</button> 
+                    
+                      <a class="button button-positive icon-left ion-log-in" href="#/app/music-files/{{::directoryItem.link}}">See Contents</a>
 
-                      <a class="button button-positive icon-left ion-log-in" href="#/app/music-files/{{::directoryItem.link}}">See Contents</a>                                     
+                      <button class="button button-positive icon-left ion-plus-circled" ng-click="addDirectory(directoryItem.path)">Add To Queue</button> 
+                                     
                     </div>
                   </div>   
               </div>             
