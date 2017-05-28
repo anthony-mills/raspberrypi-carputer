@@ -20,12 +20,12 @@
         <div ng-if="tripData" class="card">
           <div class="item item-divider bar bar-header page-heading heading-text" >
                 Trip Log - Distance: 
-                <span ng-if="appSettings.distance==0" >{{tripDistance}} km</span>
-                <span ng-else>{{ kmToMiles(tripDistance) }} miles</span>                
+                <span ng-if="appSettings.distance==0" >{{tripDetails.trip_distance}} km</span>
+                <span ng-else>{{ kmToMiles(tripDetails.trip_distance) }} miles</span>                
           </div>
 
           <div class="item item-text-wrap">
-            <div class="col" ng-if="tripDistance > 0">
+            <div class="col" ng-if="tripDetails.trip_distance > 0">
       				<div id="map_canvas" ng-controller="TripMeterCtrl">
       				    <ui-gmap-google-map center="tripMap.center" zoom="tripMap.zoom" draggable="true" options="options" bounds="map.bounds">
       				        <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible'
@@ -39,40 +39,40 @@
                   Travelled 
 
                   <span ng-if="appSettings.distance==0" >
-                    {{tripDistance}} km
+                    {{tripDetails.trip_distance}} km
                   </span>
 
                   <span ng-else>
-                    {{ kmToMiles(tripDistance) }} miles
+                    {{ kmToMiles(tripDetails.trip_distance) }} miles
                   </span>
 
-                   in {{ tripData.time }}.
+                   in {{ tripDetails.trip_time }}.
                 </p>   
 	            </div>
 
               <div class="padding-bottom">
-  	            <div ng-if="avgSpeed">
+  	            <div ng-if="tripDetails.avg_speed">
   	            	<strong>Average Speed:</strong>
-                  <span ng-if="appSettings.speed==0" >{{avgSpeed}} km/h</span>
-                  <span ng-else>{{ kmToMiles(avgSpeed) }} mph</span>
+                  <span ng-if="appSettings.speed==0" >{{tripDetails.avg_speed}} km/h</span>
+                  <span ng-else>{{ kmToMiles(tripDetails.avg_speed) }} mph</span>
   	            </div>
 
-                <div ng-if="topSpeed">
+                <div ng-if="tripDetails.top_speed">
                   <strong>Top Speed:</strong>
-                  <span ng-if="appSettings.speed==0" >{{topSpeed}} km/h</span>
-                  <span ng-else>{{ kmToMiles(topSpeed) }} mph</span>
+                  <span ng-if="appSettings.speed==0" >{{tripDetails.top_speed}} km/h</span>
+                  <span ng-else>{{ kmToMiles(tripDetails.top_speed) }} mph</span>
                 </div>
 
-  	            <div ng-if="highestAltitude">
+  	            <div ng-if="tripDetails.high_altitude">
   	            	<strong>Highest Altitude:</strong> 
-                  <span ng-if="appSettings.altitude==0" >{{highestAltitude}} m</span>
-                  <span ng-else>{{ convertAltitude(highestAltitude) }} ft</span>
+                  <span ng-if="appSettings.altitude==0" >{{tripDetails.high_altitude}} m</span>
+                  <span ng-else>{{ convertAltitude(tripDetails.high_altitude) }} ft</span>
   	            </div>
 
-  	            <div ng-if="avgAltitude">
+  	            <div ng-if="tripDetails.avg_altitude">
   	            	<strong>Average Altitude:</strong> 
-                  <span ng-if="appSettings.altitude==0" >{{avgAltitude}} m</span>
-                  <span ng-else>{{ convertAltitude(avgAltitude) }} ft</span>
+                  <span ng-if="appSettings.altitude==0" >{{tripDetails.avg_altitude}} m</span>
+                  <span ng-else>{{ convertAltitude(tripDetails.avg_altitude) }} ft</span>
   	            </div>	  
               </div>          
             </div>

@@ -47,7 +47,6 @@ angular.module('controllers', [])
       }
     }
 
-
     gpsAssist.getLocationData().then(function(gpsData) {
 
       if ((gpsData.latitude != 'Unknown') && (gpsData.longitude !='Unknown')) {
@@ -180,7 +179,7 @@ angular.module('controllers', [])
           }
 
           // Song is currently playing increment the playback timer
-          if ( ( $scope.playState === 'play' ) && ( nowPlaying.playTime.raw > 0) && (nowPlaying.playTime.raw < nowPlaying.duration.raw)) {
+          if ( ( $scope.playState === 'play' ) && ( nowPlaying.playTime.raw > 0 ) && ( nowPlaying.playTime.raw < nowPlaying.duration.raw )) {
             
             nowPlaying.playTime.raw++;
 
@@ -762,13 +761,12 @@ angular.module('controllers', [])
   */
   $scope.updateLocation = function() {
     $scope.locationInfo = false;
-    console.log($scope.gpsData);
+
     if ($scope.gpsData.latitude && $scope.gpsData.longitude) {
 
       if (parseInt($scope.appSettings.locationiq) === 1) {
         $scope.locationInfo = gpsAssist.locationInfo( $scope.gpsData.latitude, $scope.gpsData.longitude );
       }
-
 
       $scope.areaMap = {
           center: {
@@ -796,7 +794,10 @@ angular.module('controllers', [])
 */
 .controller('TripMeterCtrl', function( $scope, $interval, contentFormatting, mpdAssist, gpsAssist, uiGmapGoogleMapApi ) {
   // Colour of the cars trip on the map
-  var pathColour = '#000';
+  var mapSettings = {
+    "path_colour" : '#000',
+    "path_weight" : 3
+  }
   
   $scope.tripData = '';
 
@@ -829,84 +830,74 @@ angular.module('controllers', [])
       return;
     }
 
-    var avgSpeed = 0;
-    var avgAltitude = 0;
-    var tripDistance = 0;
-    var topSpeed = 0; 
-    var carLog = [];
+    var tripDetails = {
+      "avg_speed" : 0,
+      "avg_altitude" : 0,
+      "altitude_points" : 0,
+      "high_altitude" : 0,
+      "trip_distance" : 0,
+      "top_speed" : 0,
+      "trip_log" : []
+    }
 
-    tripData.top_speed = 0;
-    tripData.highest_altitude = 0;
-    console.log(tripData);
       
     for (var i = 0; i < tripData.data_points.length; i++) { 
       if ( (typeof tripData.data_points[i].distance === 'number' ) ) {
-        tripDistance += parseFloat(tripData.data_points[i].distance);  
+        tripDetails.altitude_points++;
+        tripDetails.trip_distance += parseFloat(tripData.data_points[i].distance);  
 
-        carLog.push(
+        tripDetails.trip_log.push(
                       {
                           latitude: tripData.data_points[i].lat,
                           longitude: tripData.data_points[i].long
                       }
                     );
 
-        if ( (typeof tripData.data_points[i].altitude === 'number' ) ) {
-          avgAltitude += parseFloat(tripData.data_points[i].altitude);
+        if (parseFloat(tripData.data_points[i].altitude) > 0) {
+          tripDetails.avg_altitude += parseFloat(tripData.data_points[i].altitude);
+
+          if ( tripDetails.high_altitude < parseFloat(tripData.data_points[i].altitude) ) {
+            tripDetails.high_altitude = parseFloat(tripData.data_points[i].altitude);
+          }          
         }
 
         if (typeof tripData.data_points[i].speed === 'number') {
-          if ( typeof tripData.top_speed !== 'number' || tripData.top_speed < tripData.data_points[i].speed ) {
-            tripData.top_speed = tripData.data_points[i].speed;
+
+          if ( tripDetails.top_speed < tripData.data_points[i].speed ) {
+            tripDetails.altitude_points++;
+            tripDetails.top_speed = tripData.data_points[i].speed;
           }
 
-          avgSpeed += parseFloat( tripData.data_points[i].speed );       
+          tripDetails.avg_speed += parseFloat( tripData.data_points[i].speed );       
         } 
+
         tripData.data_points[i].altitude = parseFloat(tripData.data_points[i].altitude);
 
-        if (typeof tripData.data_points[i].altitude === 'number') {
-
-          if ( typeof tripData.altitude !== 'number' || tripData.highest_altitude < tripData.data_points[i].altitude ) {
-            tripData.highest_altitude = tripData.data_points[i].altitude;
-          }
-
-          avgSpeed += parseFloat( tripData.data_points[i].speed );       
-        }         
+        tripDetails.avg_speed += parseFloat( tripData.data_points[i].speed );       
       }    
     }
 
-    var timeMinutes = parseFloat(tripData.time / 1000 / 60);
-
-    $scope.avgAltitude = Math.round(avgAltitude / carLog.length);
-    $scope.tripDistance = Math.round(tripDistance);
-
-    $scope.avgSpeed = Math.round(tripDistance / timeMinutes * 60); 
- 
-    tripData.time = contentFormatting.formatTripTime( tripData.time / 1000 );
-
-    if (tripData.top_speed > 0) {
-
-      $scope.topSpeed = tripData.top_speed;
-
-    }
-
-    if (tripData.highest_altitude > 0) {
-
-      $scope.highestAltitude = tripData.highest_altitude;
-
+    $scope.tripDetails = {
+      "avg_altitude" : Math.round(tripDetails.avg_altitude / tripDetails.altitude_points),
+      "trip_distance" : Math.round(tripDetails.trip_distance),
+      "avg_speed" : Math.round(tripDetails.trip_distance / parseFloat(tripData.time / 1000 / 60) * 60),
+      "top_speed" : tripDetails.top_speed,
+      "high_altitude" : tripDetails.high_altitude,
+      "trip_time" : contentFormatting.formatTripTime( tripData.time / 1000 )
     }
 
     // Only show a map if we have gone at least 1km
-    if ( tripDistance < 1 ) {
+    if ( tripDetails.trip_distance < 1 ) {
       return;
     }
 
     var lastPos = {
-                    lat : tripData.data_points[carLog.length-1].lat,
-                    long : tripData.data_points[carLog.length-1].long
+                    lat : tripData.data_points[tripDetails.trip_log.length-1].lat,
+                    long : tripData.data_points[tripDetails.trip_log.length-1].long
                   }
 
     // Calculate the optimum zoom level given the distance traversed
-    var mapZoom = gpsAssist.getMapZoom( lastPos.lat , tripDistance );
+    var mapZoom = gpsAssist.getMapZoom( lastPos.lat , tripDetails.trip_distance );
 
     $scope.tripMap = {
                         center: {
@@ -924,10 +915,10 @@ angular.module('controllers', [])
       $scope.polylines = [
           {
               id: 'carTrip',
-              path: carLog,
+              path: tripDetails.trip_log,
               stroke: {
-                  color: pathColour,
-                  weight: 3
+                  color: mapSettings.path_colour,
+                  weight: mapSettings.path_weight
               },
               editable: false,
               draggable: false,

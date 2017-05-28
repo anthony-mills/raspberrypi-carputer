@@ -182,6 +182,7 @@ class apiServices {
 		return $gpsResponse;
 	}
 
+
 	/**
 	* Make a CURL request to an API endpoint
 	*
@@ -190,7 +191,9 @@ class apiServices {
 	* @return string
 	*/
 	protected function apiCall($apiUrl) {
-
+		if (!function_exists('curl_version')) {
+			die ('PHP requires curl support to access external data services.');
+		}
 		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
