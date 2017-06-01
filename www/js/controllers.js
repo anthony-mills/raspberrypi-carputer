@@ -396,10 +396,8 @@ angular.module('controllers', [])
     basePath = '/';
 
   } else {
-
-    basePath = $stateParams.param1;
     
-    basePath = decodeURIComponent(basePath);
+    basePath = decodeURIComponent( $stateParams.param1 );
 
     // Replace the custom directory seperator as we cannot pass slashes via the URL
     var basePath = basePath.replace( dirSeperator, "/" );
@@ -413,8 +411,7 @@ angular.module('controllers', [])
 
   $scope.$watch('dirData', function ( dirData ) {
 
-    var directoryContents = dirData.directoryContents;
-    $scope.directoryContents = directoryContents;
+    $scope.directoryContents = dirData.directoryContents;
 
     // Only show the letter indexes in the root directory of the filesystem
     if ((!basePath) || (basePath === '/')) {
@@ -448,8 +445,7 @@ angular.module('controllers', [])
   */
   $scope.addDirectory = function( dirPath ) {
 
-    var dirPath = decodeURIComponent(dirPath);
-    var dirPath = dirPath.replace( dirSeperator, "/" );    
+    var dirPath = dirPath.replace( decodeURIComponent(dirPath), "/" );
 
     growl.success("Directory added to play queue");
 
@@ -463,8 +459,6 @@ angular.module('controllers', [])
   * @param integer songPath
   */
   $scope.addSong = function( songPath ) {
-
-    console.log('Added song to playlist: ' + songPath);
 
     growl.success("Song added to play queue");
 
