@@ -3,19 +3,23 @@
 This repository is the UI component of a Raspberry Pi car computer set up. [Visit this blog post for more information on the project and building your own Raspberry Pi based "carputer".](https://www.development-cycle.com/2016/02/building-a-raspberry-pi-car-computer/)
 
 # Prerequisites
-The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So to have the frontend work properly these two daemons must be installed and configured. Although for development and testing, a fake GPS data set can be used in place of a live GPS stream to make things easier ( see below under "No GPS" for more details). 
+The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So to have the frontend work properly these two daemons must be installed and configured. Although for development and testing, a fake GPS data set can be used in place of a live GPS stream to make things easier ( see below under "No GPS" for more details ). 
 
-The system uses PHP for getting GPS and other data from external services so at minimum the PHP5-common, PHP5-cli and PHP5-curl packages must be installed on the system. The application also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This HTML5 API is poorly supported so either Chromium or Chrome needs to be used with the application for the local image cache to function correctly.
+The system uses PHP as a gateway for getting GPS and other data from external services. So at minimum the PHP5-common, PHP5-cli and PHP5-curl packages must be installed on the system. 
 
-The UI was designed for use on a car computer built on the Raspberry Pi platform ( has been tested with the 2 & 3 Model B ) combined with the official 7 inch Raspberry Pi touch screen display (800x480). Although it will run happily at other resolutions with the majority of development and testing taking place in [Chromium](https://www.chromium.org/Home) on a standard desktop computer.
+The car computer also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This HTML5 API is poorly supported so either Chromium or Chrome needs to be used with the application for otherwise thye local image cache will not function correctly.
+
+The UI was designed for use on a car computer built on the Raspberry Pi platform ( has been tested with the 2 & 3 Model B ). Combined with the official 7 inch Raspberry Pi touch screen display (800x480). 
+
+Although it will run happily at other resolutions with the majority of development and testing taking place using [Chromium](https://www.chromium.org/Home) on a standard desktop computer.
 
 # Installation
 
 * Install all of the required dependencies.
 * Edit the application config file at config/config.ini and enter your [Here.com API](https://developer.here.com/plans/api/consumer-mapping) details - Required for speed limit and weather information. In order to translate the cars location from a latititude, longitude pair to a human readble address you will also need to get an API key from [locationIQ](http://locationiq.org/).
 * Also check the GPSD daemon setting in application config file - Should work with the defaults on most setups
-* From the command line run the start.sh script to start a and instance of the internal PHP webserver on port 8000.
-* Open Chrome or Chromium and visit localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Official touch screen in mind i.e 800x468 so if your on a desktop / laptop you may want to use developer tools to switch to a 800x468 viewport. To get get a more realistic idea of what the UI will look like on the end device.
+* From the command line run the start.sh script to start an instance of the internal PHP webserver on port 8000.
+* Open a browser ( Chrome or Chromium recommended ) and visit localhost:8000 to see the application. Keep in mind that it has been designed with the Raspberry Pi Official touch screen in mind i.e 800x468 so if your on a desktop / laptop you may want to use developer tools to switch to a 800x468 viewport. To get get a more realistic idea of what the UI will look like when viewed on the end device.
 
 # Running with out a GPS device
 
@@ -25,7 +29,7 @@ This will force the service to read a static GPS json object from the www/php/da
 
 # Trip Data Log
 
-By default the system will store a data point with information about the cars location data ( speed, location , altitutude ) every 30 seconds during a trip to a JSON object that persists using the HTML5 local storage API. This allows for the calculation of average speeds etc along with being able to map the trip using Google maps.
+By default the system will store a data point with information about the cars location data ( speed, location , altitutude ) every 60 seconds during a trip to a JSON object that persists using the HTML5 local storage API. This allows for the calculation of average speeds etc along with being able to map the trip using Google maps.
 
 The data never leaves the local system but at the end of a trip you may want to delete the data associated with a trip due to privacy reasons. To achieve this simply select the "Reset Tripmeter" option on the Tripmeter page to delete the data under the trip_data key. In another use case a button has now also been added to the Trip Meter page that will download the trip_data JSON object as a file to the system for later analysis / testing / debugging.
 
