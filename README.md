@@ -11,7 +11,7 @@ The car computer also uses the [HTML5 Filesystem API](http://www.html5rocks.com/
 
 The UI was designed for use on a car computer built on the Raspberry Pi platform ( has been tested with the 2 & 3 Model B ). Combined with the official 7 inch Raspberry Pi touch screen display (800x480). 
 
-Although it will run happily at other resolutions with the majority of development and testing taking place using [Chromium](https://www.chromium.org/Home) on a standard desktop computer.
+It is responsive and will run happily at other resolutions though. With the majority of development and testing taking place using [Chromium](https://www.chromium.org/Home) on a standard desktop computer.
 
 # Installation
 
@@ -23,13 +23,15 @@ Although it will run happily at other resolutions with the majority of developme
 
 # Running with out a GPS device
 
-GPS functionality can be fudged without an active GPS fix or even a GPS device for development or testing purposes. To enable the GPS testing mode change the value of the gpsd-debug option in the application config file to true. 
+GPS functionality can easily be fudgedfor development or testing purposes. Without an active GPS fix or even a GPS device. 
+
+To enable the GPS testing mode change the value of the gpsd-debug option in the application config file to true. 
 
 This will force the service to read a static GPS json object from the www/php/data/gps_data.json file. By changing the location values in this file a specific location, altitude or speed can be spoofed to test functionality.
 
 # Trip Data Log
 
-By default the system will store a data point with information about the cars location data ( speed, location , altitutude ) every 60 seconds during a trip to a JSON object that persists using the HTML5 local storage API. This allows for the calculation of average speeds etc along with being able to map the trip using Google maps.
+By default the system will store a data point containing information about the cars location data ( speed, location , altitutude ) every 60 seconds during a trip to a JSON object that persists using the HTML5 local storage API. This allows for the calculation of average speeds etc along with being able to map the trip using Google maps.
 
 The data never leaves the local system but at the end of a trip you may want to delete the data associated with a trip due to privacy reasons. To achieve this simply select the "Reset Tripmeter" option on the Tripmeter page to delete the data under the trip_data key. In another use case a button has now also been added to the Trip Meter page that will download the trip_data JSON object as a file to the system for later analysis / testing / debugging.
 
