@@ -185,7 +185,7 @@ angular.module(
   $compileProvider.debugInfoEnabled(false);
   
   // Set a global timeout on notification messages
-  growlProvider.globalTimeToLive(1200);
+  growlProvider.globalTimeToLive(2000);
   growlProvider.globalDisableCountDown(true);
   growlProvider.globalPosition('bottom-center');
   growlProvider.onlyUniqueMessages(false);
