@@ -63,12 +63,6 @@
          
         </div>
 
-        <div class="gps-data">
-            <strong class="padding-bottom">Heading:</strong>
-
-            {{ gpsData.heading }}
-        </div>
-
         <div class="gps-data">        
             <strong class="padding-bottom">Altitude:</strong>
 
@@ -81,6 +75,12 @@
             <span ng-else-if="gpsData.altitude!='N / A'">
                 ft
             </span>
+        </div>
+        
+        <div class="gps-data">
+            <strong class="padding-bottom">Heading:</strong>
+
+            {{ gpsData.heading }}
         </div>
 
         <div class="gps-data">
