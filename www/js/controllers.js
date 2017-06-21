@@ -12,6 +12,7 @@ angular.module('controllers', [])
       "altitude" : 0,     
       "locationiq" : 0,
       "night_mode" : 0,
+      "speed_limit" : 0,      
       "time_src" : 0
     }
     

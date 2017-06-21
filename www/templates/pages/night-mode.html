@@ -8,7 +8,7 @@
         <div class="row speed-info">
           <div class="col night-mode">
             <div class="speed-data">
-                <div class="night-speed-limit" ng-if="gpsData.speed_limit !='Unknown'">
+                <div class="night-speed-limit" ng-if="gpsData.speed_limit !='Unknown' && appSettings.speed_limit==1">
                   Estimated Speed Limit: {{gpsData.speed_limit}}                
 
                   <div class="padding-top" ng-if="gpsData.speed_limit_age > 0" align="center">

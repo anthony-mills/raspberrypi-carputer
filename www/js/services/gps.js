@@ -38,18 +38,9 @@ angular.module('gpsAssist', [])
 
 					var currentTime = Date.now();
 
-					if (!speedLimitData) {
+					if (appSettings.speed_limit === 1) {
+						if (!speedLimitData) {
 
-						speedLimit(resultSet.lat, resultSet.lon);
-
-						var limitData = {
-							'speed_limit' : 'Unknown',
-							'age' : ''
-						}
-					} else {
-						var speedLimitData = JSON.parse(speedLimitData);
-
-						if ((currentTime - speedLimitData.age) / 1000 > speedLimitRefresh) {
 							speedLimit(resultSet.lat, resultSet.lon);
 
 							var limitData = {
@@ -57,43 +48,54 @@ angular.module('gpsAssist', [])
 								'age' : ''
 							}
 						} else {
-							var limitAge = Math.round((currentTime - speedLimitData.age) / 1000);
+							var speedLimitData = JSON.parse(speedLimitData);
 
-							if ( limitAge > 3600 ) {
+							if ((currentTime - speedLimitData.age) / 1000 > speedLimitRefresh) {
+								speedLimit(resultSet.lat, resultSet.lon);
 
 								var limitData = {
-									'speed_limit' : 'Unkown',
-									'age' : 'Limited connectivity available'
-								}	
-
+									'speed_limit' : 'Unknown',
+									'age' : ''
+								}
 							} else {
+								var limitAge = Math.round((currentTime - speedLimitData.age) / 1000);
 
-								var limitData = {
-									'speed_limit' : speedLimitData.speed_limit,
-									'age' : 'Checked '  + limitAge +  ' seconds ago'
-								}	
+								if ( limitAge > 3600 ) {
 
-							}
-						}					
-					}
+									var limitData = {
+										'speed_limit' : 'Unknown',
+										'age' : 'Limited connectivity available'
+									}	
 
-					if ((Number(parseFloat(limitData.speed_limit))==limitData.speed_limit) && (speedConversion(resultSet.speed) > limitData.speed_limit)) {
-						var speedWarn = 1;
-					} else {
-						var speedWarn = 0;
-					}
-							
-					if (limitData.speed_limit === 'Unknown') {
+								} else {
 
-						var estSpeedLimit = limitData.speed_limit;
+									var limitData = {
+										'speed_limit' : speedLimitData.speed_limit,
+										'age' : 'Checked '  + limitAge +  ' seconds ago'
+									}	
 
-					} else {
+								}
+							}					
+						}	
 
-						if ( typeof appSettings.speed !=="undefined" && appSettings.speed === 1) {
-							var estSpeedLimit = limitData.speed_limit + ' mph';					
+						if ((Number(parseFloat(limitData.speed_limit))==limitData.speed_limit) && (speedConversion(resultSet.speed) > limitData.speed_limit)) {
+							var speedWarn = 1;
 						} else {
-							var estSpeedLimit = limitData.speed_limit + ' km/h';
+							var speedWarn = 0;
 						}
+								
+						if (limitData.speed_limit === 'Unknown') {
+
+							var estSpeedLimit = limitData.speed_limit;
+
+						} else {
+
+							if ( typeof appSettings.speed !=="undefined" && appSettings.speed === 1) {
+								var estSpeedLimit = limitData.speed_limit + ' mph';					
+							} else {
+								var estSpeedLimit = limitData.speed_limit + ' km/h';
+							}
+						}											
 					}
 
 					if ( typeof resultSet.alt === 'undefined' ) {
@@ -117,8 +119,15 @@ angular.module('gpsAssist', [])
 						'speed' : speedConversion(resultSet.speed),
 						'speed_limit' : estSpeedLimit,
 						'speed_limit_age' : limitData.age,
-						'speed_warn' : speedWarn,
 						'time' : resultSet.time			
+					}
+
+					if (appSettings.speed_limit === 1) {
+						gpsStatus.speed_limit = estSpeedLimit;
+						gpsStatus.speed_limit_age = limitData.age;
+						gpsStatus.speed_warn = speedWarn;						
+					} else {
+						gpsStatus.speed_warn = 0;
 					}
 				}
 
