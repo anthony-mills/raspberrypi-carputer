@@ -1,6 +1,8 @@
-# Raspberry Pi Car Computer 
+# Nomadic Pi Car Computer 
 
-This repository is the UI component of a Raspberry Pi car computer set up. [Visit this blog post for more information on the project and building your own Raspberry Pi based "carputer".](https://www.development-cycle.com/2016/02/building-a-raspberry-pi-car-computer/)
+This repository is the UI component of the Nomadic PI Raspberry Pi based car computer. [Visit the Nomadic Pi website for more information on the project and details on building your own "carputer"](https://www.nomadicpi.com/).
+
+A pre built image file for use with the [Raspberry Pi 3 can also be downloaded here](https://www.nomadicpi.com/download.php).
 
 # Prerequisites
 The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So to have the frontend work properly these two daemons must be installed and configured. Although for development and testing, a fake GPS data set can be used in place of a live GPS stream to make things easier ( see below under "No GPS" for more details ). 
@@ -69,8 +71,10 @@ In the near future the following features are planned:
 
 # Further Reading
 
+* [Nomadic Pi website](https://www.nomadicpi.com)
 * The [Raspberry Pi Car Computer after over 15000km](https://www.development-cycle.com/2017/04/raspberrypi-car-computer-15000km-later/) of real life road testing.
 * Upgrading the [Car Computer to the Raspberry Pi 3](https://www.development-cycle.com/2016/03/car-computer-raspberry-pi-3-upgrade/)
+* [Original blog post detailing the construction and configuration of Nomadic Pi](https://www.development-cycle.com/2016/02/07/building-a-raspberry-pi-car-computer/)
 
 
 # Screenshots
