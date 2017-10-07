@@ -39,17 +39,17 @@
             <i class="icon ion-gear-a"></i> Settings
           </ion-item> 
 
-          <ion-item nav-clear menu-close ng-click="reloadApp()">
-            <i class="icon ion-refresh"></i> Reload Application
-          </ion-item>
-
-          <ion-item ng-if="isFullScreen === 0" nav-clear menu-close ng-click="minimiseApp()">
+          <ion-item ng-if="isFullScreen === 0" id="fullsize-screen" nav-clear menu-close ng-click="minimiseApp()">
             <i class="icon ion-monitor"></i> Fullscreen Interface
           </ion-item>
 
           <ion-item ng-if="isFullScreen === 1" nav-clear menu-close ng-click="minimiseApp()">
             <i class="icon ion-ios-browsers-outline"></i> Leave Fullscreen
-          </ion-item>                                       
+          </ion-item> 
+
+          <ion-item nav-clear menu-close ng-click="reloadApp()">
+            <i class="icon ion-refresh"></i> Reload Application
+          </ion-item>                                                
         </ion-list>
       </div>
     </ion-content>

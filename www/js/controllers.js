@@ -1,6 +1,6 @@
 angular.module('controllers', [])
 
-.controller('AppCtrl', function( $scope, $window, $interval, gpsAssist, contentFormatting, Fullscreen ) {
+.controller('AppCtrl', function( $scope, $window, $interval, $timeout, gpsAssist, contentFormatting, Fullscreen ) {
 
   var appSettings = window.localStorage['app_settings'];
 
@@ -57,6 +57,9 @@ angular.module('controllers', [])
       }
 
       $scope.gpsData = gpsData;
+
+      // Check if user has exited fullscreen via Chrome
+      $scope.screenSize();
     });
   }, updateFrequency);
 
@@ -110,23 +113,23 @@ angular.module('controllers', [])
   /**
   * Fullscreen the application window
   */
-  if (Fullscreen.isEnabled()) {
-    $scope.isFullScreen = 1;
-  } else {
-    $scope.isFullScreen = 0;    
-  }
-
   $scope.minimiseApp = function() {
       if (Fullscreen.isEnabled()) {
-         Fullscreen.cancel(); 
-
-         $scope.isFullScreen = 0;       
+         Fullscreen.cancel();      
       } else {
          Fullscreen.all();
-
-         $scope.isFullScreen = 1;
       }
-  }  
+
+      $scope.screenSize();
+  } 
+
+  $scope.screenSize = function() {
+    if (Fullscreen.isEnabled()) {
+      $scope.isFullScreen = 1;
+    } else {
+      $scope.isFullScreen = 0;    
+    }
+  } 
 })
 
 /**
