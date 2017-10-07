@@ -16,7 +16,8 @@ angular.module(
                   'ImgCache',
                   'angular-growl',
                   'nemLogging',
-                  'uiGmapgoogle-maps'
+                  'uiGmapgoogle-maps',
+                  'FBAngular'
                 ]
               )
 

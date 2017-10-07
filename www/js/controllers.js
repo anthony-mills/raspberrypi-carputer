@@ -1,6 +1,6 @@
 angular.module('controllers', [])
 
-.controller('AppCtrl', function( $scope, $window, $interval, gpsAssist, contentFormatting ) {
+.controller('AppCtrl', function( $scope, $window, $interval, gpsAssist, contentFormatting, Fullscreen ) {
 
   var appSettings = window.localStorage['app_settings'];
 
@@ -106,6 +106,27 @@ angular.module('controllers', [])
   $scope.reloadApp = function() {
     $window.location.reload(true);
   }
+
+  /**
+  * Fullscreen the application window
+  */
+  if (Fullscreen.isEnabled()) {
+    $scope.isFullScreen = 1;
+  } else {
+    $scope.isFullScreen = 0;    
+  }
+
+  $scope.minimiseApp = function() {
+      if (Fullscreen.isEnabled()) {
+         Fullscreen.cancel(); 
+
+         $scope.isFullScreen = 0;       
+      } else {
+         Fullscreen.all();
+
+         $scope.isFullScreen = 1;
+      }
+  }  
 })
 
 /**
