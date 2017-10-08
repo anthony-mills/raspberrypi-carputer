@@ -41,12 +41,18 @@ angular.module('controllers', [])
     if ($scope.appSettings.time_src == 0) {
       $scope.currentDate = contentFormatting.getSystemTime( Math.floor( Date.now() ) );
     } else {
-      if (typeof $scope.gpsData.time === 'number') {
-        $scope.currentDate = contentFormatting.getSystemTime( Math.round ($scope.gpsData.time * 1000) );
+        console.log( $scope.gpsData.time );
+
+      if ($scope.gpsData.time) {
+        var gpsTime = new Date( $scope.gpsData.time );
+
+        $scope.currentDate = contentFormatting.getSystemTime( gpsTime );
+
       } else {
         $scope.currentDate = '';
       }
     }
+
 
     gpsAssist.getLocationData().then(function(gpsData) {
 
