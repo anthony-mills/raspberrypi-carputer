@@ -82,5 +82,18 @@
 }
 
 .center{
-     text-align:center;
+  text-align:center;
+}
+
+/* Ionic Framework fixes for raspi pi screen */
+a.item-content {
+  margin: 1px;
+}
+
+.card {
+  padding-top: 0px !important;
+}
+
+.item {
+  margin: 0px !important;
 }
