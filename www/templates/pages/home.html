@@ -33,26 +33,44 @@
               Play Queue
             </ion-item>
 
-            <ion-item href="#/app/current-queue">Current Queue ( {{playlistCount}} items )</ion-item>
+            <ion-item href="#/app/current-queue">
+              Current Queue ( {{playlistCount}} items )
+            </ion-item>
 
-            <ion-item href="#/app/night-mode">Night Mode</ion-item> 
+            <ion-item href="#/app/night-mode">
+              Night Mode
+            </ion-item> 
 
-            <ion-item href="#/app/playlists">Playlists</ion-item>    
+            <ion-item href="#/app/playlists">
+              Playlists
+            </ion-item>    
 
-            <ion-item href="#/app/music-files/root">Files</ion-item> 
+            <ion-item href="#/app/music-files/root">
+              Files
+            </ion-item> 
 
             <!-- Enable / disable random playback -->
-            <ion-item ng-if="randomPlayback" ng-click="toggleRandom()">Disable Random Playback</ion-item>    
+            <ion-item ng-if="randomPlayback" ng-click="toggleRandom()">
+              Disable Random Playback
+            </ion-item>    
 
-            <ion-item ng-else ng-click="toggleRandom(true)">Enable Random Playback</ion-item>  
+            <ion-item ng-else ng-click="toggleRandom(true)">
+              Enable Random Playback
+            </ion-item>  
 
             <!-- Enable / disable consumption playback -->
-            <ion-item ng-if="consumePlayback" ng-click="toggleConsumption()">Disable Consumption Playback</ion-item>    
+            <ion-item ng-if="consumePlayback" ng-click="toggleConsumption()">
+              Disable Consumption Playback
+            </ion-item>    
 
-            <ion-item ng-else ng-click="toggleConsumption(true)">Enable Consumption Playback</ion-item> 
+            <ion-item ng-else ng-click="toggleConsumption(true)">
+              Enable Consumption Playback
+            </ion-item> 
 
             <!-- Refresh the media store -->
-            <ion-item ng-click="refreshMedia()">Refresh Mediastore</ion-item> 
+            <ion-item ng-click="refreshMedia()">
+              Refresh Mediastore
+            </ion-item> 
           </ion-list>
 
         </div>
