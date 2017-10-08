@@ -156,6 +156,10 @@ angular.module('gpsAssist', [])
 		var tripData = window.localStorage['trip_data'];
 		var dataPoints = [];
 
+		if (typeof gpsData.speed === "number" && gpsData.speed < 5) {
+			gpsData.speed = 0;
+		}
+
 		var gpsAltitude = gpsData.altitude;
 
 		if (tripData) {
