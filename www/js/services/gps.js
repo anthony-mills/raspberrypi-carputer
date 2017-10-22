@@ -122,18 +122,26 @@ angular.module('gpsAssist', [])
 						var gpsStatus = 'Has Fix';							
 					}
 
+                    if (!resultSet.lat) {
+						var gpsStatus = 'No Fix';
+						resultSet.lat = '-';
+						resultSet.lon = '-';						                                               
+                    } else {
+						var gpsStatus = 'Has Fix';
+                    }
 
-					var gpsStatus = {
-						'status' : gpsStatus,
-						'latitude' : resultSet.lat,
-						'longitude' : resultSet.lon,
-						'altitude' : gpsAltitude,
-						'heading' : gpsHeading,																		
-						'speed' : speedConversion(resultSet.speed),
-						'speed_limit' : estSpeedLimit,
-						'speed_limit_age' : limitData.age,
-						'time' : resultSet.time			
-					}
+
+                    var gpsStatus = {
+                            'status' : gpsStatus,
+                            'latitude' : resultSet.lat,
+                            'longitude' : resultSet.lon,
+                            'altitude' : gpsAltitude,
+                            'heading' : gpsHeading,
+                            'speed' : speedConversion(resultSet.speed),
+                            'speed_limit' : estSpeedLimit,
+                            'speed_limit_age' : limitData.age,
+                            'time' : resultSet.time
+                    }
 
 					if (appSettings.speed_limit === 1) {
 						gpsStatus.speed_limit = estSpeedLimit;
