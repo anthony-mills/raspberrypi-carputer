@@ -21,10 +21,10 @@ angular.module('gpsAssist', [])
 				if (typeof resultSet.data.tpv ==='undefined' || resultSet.data.tpv.length === 0) {
 					var gpsStatus = {
 						'status' : 'No Fix',
-						'latitude' : 'Unknown',
-						'longitude' : 'Unknown',
-						'altitude' : 'N / A',
-						'heading' : 'N / A',																		
+						'latitude' : '-',
+						'longitude' : '-',
+						'altitude' : '-',
+						'heading' : '-',																		
 						'speed' : '0',
 						'speed_limit' : 'Unknown',
 						'speed_limit_age' : 0,
@@ -99,13 +99,13 @@ angular.module('gpsAssist', [])
 					}
 
 					if ( typeof resultSet.alt === 'undefined' ) {
-						var gpsAltitude = 'Unknown';
+						var gpsAltitude = '-';
 					} else {
 						var gpsAltitude = resultSet.alt;
 					}
 
 					if ( typeof resultSet.track === 'undefined' ) {
-						var gpsHeading = 'Unknown';
+						var gpsHeading = '-';
 					} else {
 						var gpsHeading = Math.round(resultSet.track) + ' degrees - ' + convertBearing(resultSet.track);
 					}
@@ -115,8 +115,16 @@ angular.module('gpsAssist', [])
 						age : ''
 					  };
 					}
+
+					if (typeof resultSet.lat === undefined) {
+						var gpsStatus = '';						
+					} else {
+						var gpsStatus = 'Has Fix';							
+					}
+
+
 					var gpsStatus = {
-						'status' : 'Has Fix',
+						'status' : gpsStatus,
 						'latitude' : resultSet.lat,
 						'longitude' : resultSet.lon,
 						'altitude' : gpsAltitude,

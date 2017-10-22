@@ -68,11 +68,11 @@
 
             {{ gpsData.altitude }}
 
-            <span ng-if="appSettings.altitude==0 && gpsData.altitude!='N / A'" >
+            <span ng-if="appSettings.altitude==0 && gpsData.altitude!='-'" >
                 m
             </span>
 
-            <span ng-else-if="gpsData.altitude!='N / A'">
+            <span ng-else-if="gpsData.altitude!='-'">
                 ft
             </span>
         </div>
