@@ -65,7 +65,7 @@ function MPD(_port, _host, _password){
      * @instance
      */
     self.enableLogging = function(){
-        _private.do_logging = true;
+        _private.do_logging = false;
     };
 
     /**
@@ -292,6 +292,16 @@ function MPD(_port, _host, _password){
         return playlists;
     };
 
+    self.lsPlaylists = function () {
+
+        issueCommands({
+            command:'listplaylists',
+            handler:playlistsHandler
+        });
+
+        return;       
+    }
+
 
     /**
      * returns an array of Output objects
@@ -313,7 +323,6 @@ function MPD(_port, _host, _password){
     self.outputIsEnabled = function(id){
         return _private.outputs[id].outputenabled == 1;
     };
-
 
     /**
      * turns on the output specified by the id
@@ -968,93 +977,6 @@ function MPD(_port, _host, _password){
     |* private methods *|
     \*******************/
 
-    /****************************\
-    |* UTF-8 compatability code *|
-    \****************************/
-
-    /* because websockify apparently doesn't do this :\ */
-
-    /**
-     * convert a string to a UTF-8 byte sequence
-     * @private
-     */
-    function encodeString(str){
-      var bytes = [];
-      for(var i = 0; i < str.length; i++){
-        var char = str.codePointAt(i);
-        if(char > 65535){
-          bytes.push(240 | (char >> 18) & 7);   // 11110xxx
-          bytes.push(128 | (char >> 12) & 63);  // 10xxxxxx
-          bytes.push(128 | (char >>  6) & 63);  // 10xxxxxx
-          bytes.push(128 | (char & 63));        // 10xxxxxx
-        }
-        if(char > 2047){
-          bytes.push(224 | (char >> 12) & 15);  // 1110xxxx
-          bytes.push(128 | (char >>  6) & 63);  // 10xxxxxx
-          bytes.push(128 | (char & 63));        // 10xxxxxx
-        }
-        if(char > 127){
-          bytes.push(192 | (char >> 6) & 31);   // 110xxxxx
-          bytes.push(128 | (char & 63));        // 10xxxxxx
-        }
-        else{
-          bytes.push(char & 127);               // 0xxxxxxx
-        }
-      }
-      return bytes;
-    }
-
-
-    /**
-     * convert the byte sequence to a UTF-8 string
-     * @private
-     */
-    function decodeString(bytes){
-        //build a character code array
-        var chars = [];
-        for(var i = 0; i<bytes.length; i++){
-          var char = bytes[i];
-          if(char > 127){
-            if((char & 224) == 192){
-              //char 0b11100000 = 0b11000000 first 3 bits are 110
-              //first byte of a 2 byte sequence
-              char =
-                ((char & 31) << 6) | // 110xxxxx & 00011111
-                (bytes[i+1] & 63);  // 10xxxxxx & 00111111
-              i+=1;
-            }
-            else if((char & 240) == 224){
-              //char 0b11110000 = 0b11100000 first 4 bits are 1110
-              //first byte of a 3 byte sequence
-              char =
-                ((char & 15) << 12) |       // 1110xxxx & 00001111
-                ((bytes[i+1] & 63) << 6) | // 10xxxxxx & 00111111
-                (bytes[i+2] & 63);         // 10xxxxxx
-              i += 2
-            }
-            else if((char & 248) == 240){
-              //char 0b11111000 = 0b11110000 first 5 bits are 11110
-              //first byte of a 4 byte sequence
-              char =
-                ((char & 7) << 18) |          // 11110xxx & 00000111
-                ((bytes[i+1] & 63) << 12) |  // 10xxxxxx & 00111111
-                ((bytes[i+2] & 63) << 6) |   // 10xxxxxx & 00111111
-                (bytes[i+3] & 63);           // 10xxxxxx & 00111111
-              i += 3;
-            }
-            else{
-              throw new Error("#"+char+" invalid character encoding");
-            }
-          }
-          else{
-            char = char & 127;
-            //shouldn't actually make a difference
-          }
-          chars.push(char);
-        }
-        return String.fromCodePoint.apply(null,chars);
-    }
-
     /*************************\
     |* connection management *|
     \*************************/
@@ -1065,7 +987,7 @@ function MPD(_port, _host, _password){
      */
     function sendString(str){
         log('sending: "'+str+'"');
-        _private.socket.send(encodeString(str));
+        _private.socket.send_string(str);
     }
 
 
@@ -1261,6 +1183,8 @@ function MPD(_port, _host, _password){
      * what to do by default if a command fails
      */
     function defaultErrorHandler(error){
+        return;
+        
         var error_codes = MPD.getErrorCodes();
         //if it's an error we know something about, maybe we can deal with it, otherwise just call registered handlers
         switch(error.code){
@@ -1392,8 +1316,7 @@ function MPD(_port, _host, _password){
      *fetch outstanding lines from MPD
      */
     function getRawLines(){
-
-        _private.raw_buffer += decodeString(_private.socket.rQshiftBytes());//get the raw string
+        _private.raw_buffer += _private.socket.rQshiftStr();//get the raw string
 
         var lines = _private.raw_buffer.split('\n');//split that into lines
 
@@ -1596,7 +1519,6 @@ function MPD(_port, _host, _password){
      */
     function playlistsHandler(lines){
         _private.state.playlists = processListResponce(lines);
-
         callHandler('PlaylistsChanged',self.getPlaylists());
     }
 
@@ -1678,29 +1600,26 @@ function MPD(_port, _host, _password){
             case 'database': //the song database has been modified after update.
                 //reload
                 //everything
-                return ['everything'];
+                return 'everything';
             break;
 
             case 'stored_playlist': //a stored playlist has been modified, renamed, created or deleted, no idea which one
-                return ['playlist'];
+                return 'playlist';
             break;
 
             case 'playlist': //the current playlist has been modified
-                return ['queue'];
+                return 'queue';
             break;
 
             /*these are all status changed*/
             case 'player': //the player has been started, stopped or seeked
+            case 'mixer': //the volume has been changed
             case 'options': //options like repeat, random, crossfade, replay gain
-                return ['status'];
+                return 'status';
             break;
 
             case 'output': //an audio output has been enabled or disabled
-                return ['outputs'];
-            break;
-
-            case 'mixer': //the volume has been changed
-                return ['status','outputs'];
+                return 'outputs';
             break;
 
             /*these are things I'm not interested in (yet)*/
@@ -1712,7 +1631,6 @@ function MPD(_port, _host, _password){
             case 'message': //a message was received on a channel this client is subscribed to; this event is only emitted when the queue is empty
             default:
                 //default do nothing
-                return [];
         }
     }
 
@@ -1727,10 +1645,7 @@ function MPD(_port, _host, _password){
             var actions = {};
             lines.forEach(function(line){
                 var change = line.replace(/([^:]+): (.*)/,'$2');
-                var changes = figureOutWhatToReload(change);
-                for(var i = 0; i<changes.length; i++){
-                    actions[changes[i]] = true;
-                }
+                actions[figureOutWhatToReload(change)] = true;
             });
 
             if(actions.everything){
@@ -1943,7 +1858,7 @@ function MPD(_port, _host, _password){
           protocol = "wss://";
           url = url.substr(8);
       }
-      if(url.substring(0, 3) == "wss"){
+      else if(url.substring(0, 3) == "wss"){
           protocol = "wss://";
           url = url.substr(6);
       }
@@ -2716,7 +2631,6 @@ MPD.Output = function(client, source){
  * Lists all songs and directories in path (blank string for root). also returns song file metadata info
  * @callback directoryContentsCallback
  * @param {directory[]} [directory_contents] - the contents of the directory, will be an array of objects representing director(y|ies) and/or song(s) interleived
- */
 /**
  * is given search results when the search is complete
  * @callback searchResultsCallback
