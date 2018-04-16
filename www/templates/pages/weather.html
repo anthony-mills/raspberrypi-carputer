@@ -37,17 +37,17 @@
         <div ng-if="weatherData.forecast">
           <div ng-repeat="weatherItem in weatherData.forecast track by $index" class="card">
             <div class="item item-divider bar bar-header page-heading heading-text" >
-                {{weatherItem.weekday}}
+                {{ reverseDate(weatherItem.applicable_date) }}
             </div>
 
             <div class="item item-text-wrap">
               <div class="row">
                 <div class="col-50 pad-column">
-                  <img src="{{ getIcon(weatherItem.iconLink) }}" />
+                  <img src="{{ getIcon(weatherItem.weather_state_abbr) }}" />
                 </div>
 
                 <div class="col-50 pad-column">
-                  <p class="padding-bottom">{{weatherItem.description}}</p>
+                  <p class="padding-bottom">{{weatherItem.weather_state_name}}</p>
 
                   <ul class="weather-outlook">
                     <li>
@@ -55,11 +55,11 @@
                         <strong>Min Temp:</strong> 
 
                         <span ng-if="appSettings.temperature==0" >
-                          {{ weatherItem.lowTemperature | number:0 | number }}  Celcius
+                          {{ weatherItem.min_temp | number:0 | number }}  Celcius
                         </span>
 
                         <span ng-else>
-                          {{ convertTemperature(weatherItem.lowTemperature) }}  Fahrenheit
+                          {{ convertTemperature(weatherItem.min_temp) }}  Fahrenheit
                         </span> 
                       </p>
                     </li>
@@ -69,19 +69,19 @@
                         <strong>Max Temp:</strong>
 
                         <span ng-if="appSettings.temperature==0" >
-                            {{ weatherItem.highTemperature | number:0 | number }}  Celcius
+                            {{ weatherItem.max_temp | number:0 | number }}  Celcius
                         </span>
 
                         <span ng-else>
-                          {{ convertTemperature(weatherItem.highTemperature) }} Fahrenheit
+                          {{ convertTemperature(weatherItem.max_temp) }} Fahrenheit
                         </span>                         
                       </p>
                     </li>
 
                     <li>
                       <p>
-                        <strong>Chance Of Rain:</strong>
-                        {{weatherItem.precipitationProbability}}%
+                        <strong>Air Pressure:</strong>
+                        {{weatherItem.air_pressure}}%
                       </p>
                     </li>
 
@@ -97,14 +97,14 @@
                         <strong>Wind:</strong>
 
                         <span ng-if="appSettings.speed==0" >
-                          {{weatherItem.windSpeed | number:0 | number }}km/h 
+                          {{weatherItem.wind_speed | number:0 | number }}km/h 
                         </span>
 
                         <span ng-else>
-                          {{kmToMiles(weatherItem.windSpeed)}}mph
+                          {{kmToMiles(weatherItem.wind_speed)}}mph
                         </span>                          
                         
-                        {{weatherItem.windDescShort}}
+                        {{weatherItem.wind_direction_compass}}
                       </p>
                     </li>
                   </ul>                  

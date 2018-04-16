@@ -57,6 +57,7 @@ This project makes the use of a number of third party Open Source libraries. You
 * [gpsd](http://www.catb.org/gpsd/)
 * [angular-fullscreen](https://github.com/fabiobiondi/angular-fullscreen)
 * [Angular Google Maps](https://github.com/angular-ui/angular-google-maps)
+* [MetaWeather](https://www.metaweather.com/)
 
 # Immediate Roadmap
 

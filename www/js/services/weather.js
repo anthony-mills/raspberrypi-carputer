@@ -30,6 +30,7 @@ angular.module('weatherAssist', [])
 			var weatherRequest = getWeatherCall('/php/services.php?action=weather-forecast&location=' + latitude + ',' + longitude);
 
 			weatherRequest.then(function(resultSet) {
+				console.log(resultSet);
 
 				// Check first for an error message
 				if ( resultSet.data.Message != undefined ) {
@@ -38,16 +39,17 @@ angular.module('weatherAssist', [])
 					return;
 				}
 
-				if ( typeof resultSet.data.dailyForecasts.forecastLocation != undefined ) {
+
+
+				if ( typeof resultSet.data.title!= undefined ) {
 
 					var weatherForecast = {
 										'location'	: {
-											'state' : resultSet.data.dailyForecasts.forecastLocation.state,
-											'city' : resultSet.data.dailyForecasts.forecastLocation.city,
-											'latitude' : resultSet.data.dailyForecasts.forecastLocation.latitude,
-											'longitude' : resultSet.data.dailyForecasts.forecastLocation.longitude																						
+											'city' : resultSet.data.title,
+											'latitude' : latitude,
+											'longitude' : longitude																						
 										},
-										'forecast'	: resultSet.data.dailyForecasts.forecastLocation.forecast,
+										'forecast'	: resultSet.data.consolidated_weather,
 										'created'	: Date.now()
 									}
 
@@ -62,63 +64,84 @@ angular.module('weatherAssist', [])
 		}
 	}
 
-	/**
-	* Rewrite the here.com weather icon into the location of a local image 
+	/** 
+	* Rewritemetaweather.com weather states into the location of a local image 
+	* See https://www.metaweather.com/api/ for more information on possible weather states 
 	*
-	* @param string iconUrl
+	* @param string weatherType
 	*
 	* @return string weatherIcon
 	*/
-	function getWeatherIcon( iconUrl )
+	function getWeatherIcon( weatherType )
 	{
-		var iconFile = iconUrl.substring(iconUrl.lastIndexOf('/')+1);
-
-		iconFile = parseInt(iconFile.slice(0, -4));
 		var weatherIcon = 'sunny.png';
 
-		if (iconFile === 1) {
+		switch (weatherType) {
+			case 'c':
+				var weatherIcon = 'sunny.png';				
+			break;
 
-			var weatherIcon = 'sunny.png';
+			case 'lc':
+				var weatherIcon = 'sunny.png';				
+			break;
 
-		} else if ( iconFile > 1 && iconFile < 5 || iconFile === 9 || iconFile === 12 || iconFile === 17 || iconFile === 25 ) {
-			
-			var weatherIcon = 'clouds.png';
+			case 'hc':
+				var weatherIcon = 'clouds.png';				
+			break;
 
-		} else if ( iconFile === 5 || iconFile === 10 || iconFile === 22 || iconFile === 26 ) {
-			
-			var weatherIcon = 'rain.png';			
+			case 'hr':
+				var weatherIcon = 'rain.png';				
+			break;
 
-		} else if ( iconFile === 6 || iconFile === 7 || iconFile === 11 || iconFile === 15 ) {
-			
-			var weatherIcon = 'stormy.png';
+			case 'lr':
+				var weatherIcon = 'rain.png';				
+			break;
 
-		} else if ( iconFile === 8 || iconFile === 13 ) {
-			
-			var weatherIcon = 'haze.png';
+			case 's':
+				var weatherIcon = 'showers.png';				
+			break;	
 
-		} else if ( iconFile === 14 || iconFile === 21 || iconFile === 23 || iconFile === 24 ) {
-			
-			var weatherIcon = 'moon_clouds.png';
+			case 't':
+				var weatherIcon = 'stormy.png';				
+			break;
 
-		} else if ( iconFile === 16 ) {
-			
-			var weatherIcon = 'clear_night.png';
+			case 'sn':
+				var weatherIcon = 'snow.png';				
+			break;		
 
-		} else if ( iconFile === 18 || iconFile === 19 || iconFile === 20 || iconFile === 28 ) {
-			
-			var weatherIcon = 'snow.png';
+			case 'h':
+				var weatherIcon = 'stormy.png';				
+			break;
 
-		} else if ( iconFile === 27 ) {
-
-			var weatherIcon = 'showers.png';
-
-		} else if ( iconFile > 28 && iconFile < 33) {
-			
-			var weatherIcon = 'windy.png';
-
-		} 
+			case 'sl':
+				var weatherIcon = 'snow.png';				
+			break;															
+		}
 
 		return '/img/weather_icons/' +  weatherIcon;
+	}
+
+	/**
+	* Reverse the date format
+	*
+	* @param dateString
+	*/
+	function reverseDate( dateString ) {
+		var weekDays = [
+							"Sunday",
+							"Monday",
+							"Tuesday",
+							"Wednesday",
+							"Thursday",
+							"Friday",
+							"Saturday"
+						];
+		
+		var dateString = new Date(dateString);
+
+		var dayNum = dateString.getDay();
+
+		return weekDays[ dayNum ];
 	}
 
 	/**
@@ -139,8 +162,12 @@ angular.module('weatherAssist', [])
 			return getForecast(latitude, longitude);
 		},
 
-		getWeatherIcon: function(iconUrl) {
-			return getWeatherIcon(iconUrl);
+		reverseDate: function( dateString ) {
+			return reverseDate( dateString );
+		},
+
+		getWeatherIcon: function( weatherType ) {
+			return getWeatherIcon( weatherType );
 		}
 
 	}

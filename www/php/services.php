@@ -36,10 +36,6 @@ switch ($requestedAction) {
 		echo $serviceObj->getLocation();
 	break;
 
-	case 'weather-outlook':
-		echo $serviceObj->getWeather($curLocation);
-	break;
-
 	case 'weather-forecast':
 		echo $serviceObj->getForecast($curLocation);
 	break;

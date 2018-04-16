@@ -745,8 +745,19 @@ angular.module('controllers', [])
   *
   * @return string 
   */
-  $scope.getIcon = function ( urlPath ) {
-    return weatherAssist.getWeatherIcon( urlPath );
+  $scope.getIcon = function ( weatherType ) {
+    return weatherAssist.getWeatherIcon( weatherType );
+  }
+
+  /**
+  * Format the weather date
+  *
+  * @param string urlPath
+  *
+  * @return string 
+  */
+  $scope.reverseDate = function ( weatherDate ) {
+    return weatherAssist.reverseDate( weatherDate );
   }
 
   var gpsData = window.localStorage['gps_data'];
