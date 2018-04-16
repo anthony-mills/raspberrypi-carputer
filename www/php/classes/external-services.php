@@ -102,29 +102,6 @@ class apiServices {
 	}
 
 	/**
-	* Get the current weather outlook
-	*
-	* @param array $curLocation
-	*
-	* @return string $apiResponse // JSON Object
-	*/
-	public function getWeather( $curLocation ) {
-		$curLocation = $this->_checkLocation( $curLocation );
-
-		$apiUrl = $this->_baseWeatherAPI . 'weather?appid=' . $this->_openWeatherKey .
-					'&lon=' . $curLocation['longitude'] . 
-					'&lat=' . $curLocation['latitude'] .
-					'&units=' . $this->_weatherUnits;
-
-		$apiResponse = $this->apiCall($apiUrl);
-
-		if ($apiResponse) {
-			return $apiResponse;
-		}
-
-	}
-
-	/**
 	* Get the current weather forecast
 	*
 	* @param array $curLocation
@@ -136,10 +113,11 @@ class apiServices {
 		$curLocation = $this->_checkLocation( $curLocation );
 		$weatherLoc = $this->_weatherLocation( $curLocation );
 
-		$apiUrl = $this->_baseWeatherAPI . 'location/' . $weatherLoc;
+		$apiUrl = $this->_baseWeatherAPI . 'location/' . $weatherLoc . '/';
 		
 		$apiResponse = $this->apiCall($apiUrl);
-
+		print_r($apiResponse);
+		print_r($apiUrl);
 		if ($apiResponse) {
 			return $apiResponse;
 		}
