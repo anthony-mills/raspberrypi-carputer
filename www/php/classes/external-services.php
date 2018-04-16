@@ -5,8 +5,8 @@
 */
 class apiServices {
 	protected $_hereAppId = 'MYAPPID';
-	protected $_hereAppCode = 'MYAPPCODE';	
-	protected $_baseWeatherAPI = 'https://weather.cit.api.here.com/weather/1.0/report.json';
+	protected $_hereAppCode = 'MYAPPCODE';
+
 	protected $_baseSpeedAPI = 'http://route.st.nlp.nokia.com/routing/7.2/getlinkinfo.xml';
 
 	// Live or debug GPS data
@@ -25,7 +25,9 @@ class apiServices {
 	protected $_pollDelay = '400';
 
 	// Weather variables
-	protected $_metricWeather = "true";
+	protected $_baseWeatherAPI = 'https://www.metaweather.com/api/';
+
+	protected $_weatherUnits = "metric";
 	protected $_defaultLocation = array(
 									'longitude' => 151.206939,
 									'latitude' => -33.873427
@@ -37,7 +39,17 @@ class apiServices {
 	* @param array $locationIqConf
 	*/
 	public function setLocationIqConf( $locationIqConf ) {
-		$this->_locationIqKey = $locationIqConf['locationiq-key'];				
+		$this->_locationIqKey = $locationIqConf['locationiq-key'];	
+	}
+
+	/**
+	* Set the API key for the Open Weather API
+	*
+	* ( see https://openweathermap.org/ foor more details ) 
+	* @param array $locationIqConf
+	*/
+	public function setOpenWeatherConf( $openWeatherConf ) {
+		$this->_openWeatherKey = $openWeatherConf['weather-key'];	
 	}
 
 	/**
@@ -99,11 +111,10 @@ class apiServices {
 	public function getWeather( $curLocation ) {
 		$curLocation = $this->_checkLocation( $curLocation );
 
-		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . 
-					'&product=observation&app_code=' . $this->_hereAppCode . 
-					'&longitude=' . $curLocation['longitude'] . 
-					'&latitude=' . $curLocation['latitude'] .
-					'&metric=' . $this->_metricWeather;
+		$apiUrl = $this->_baseWeatherAPI . 'weather?appid=' . $this->_openWeatherKey .
+					'&lon=' . $curLocation['longitude'] . 
+					'&lat=' . $curLocation['latitude'] .
+					'&units=' . $this->_weatherUnits;
 
 		$apiResponse = $this->apiCall($apiUrl);
 
@@ -123,20 +134,17 @@ class apiServices {
 	public function getForecast( $curLocation ) {
 
 		$curLocation = $this->_checkLocation( $curLocation );
+		$weatherLoc = $this->_weatherLocation( $curLocation );
 
-		$apiUrl = $this->_baseWeatherAPI . '?app_id=' . $this->_hereAppId . 
-					'&product=forecast_7days_simple' . 
-					'&app_code=' . $this->_hereAppCode . 
-					'&longitude=' . $curLocation['longitude'] . 
-					'&latitude=' . $curLocation['latitude'] .
-					'&metric=' . $this->_metricWeather;
-					
+		$apiUrl = $this->_baseWeatherAPI . 'location/' . $weatherLoc;
+		
 		$apiResponse = $this->apiCall($apiUrl);
 
 		if ($apiResponse) {
 			return $apiResponse;
 		}
 	}
+
 
 	/**
 	* Lookup human readable information about car position
@@ -240,6 +248,34 @@ class apiServices {
 
             return $gpsResponse;            
     }
+
+	/**
+	* Get the current weather forecast location
+	*
+	* @param array $curLocation
+	*
+	* @return string $apiResponse // JSON Object	
+	*/
+	protected function _weatherLocation( $curLocation ) {
+
+		$curLocation = $this->_checkLocation( $curLocation );
+
+		$apiUrl = $this->_baseWeatherAPI . 'location/search/?lattlong='
+					. $curLocation['latitude'] . ',' . $curLocation['longitude'];
+		
+		$apiResponse = $this->apiCall($apiUrl);
+
+		if ($apiResponse) {
+
+			$apiResponse = json_decode($apiResponse);
+
+			if (count($apiResponse) > 0 ) {
+				$locObj = array_shift($apiResponse);
+
+				return $locObj->woeid;
+			}
+		}
+	}
 
     /**
     * Check the provided location
