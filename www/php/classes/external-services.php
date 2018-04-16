@@ -116,8 +116,7 @@ class apiServices {
 		$apiUrl = $this->_baseWeatherAPI . 'location/' . $weatherLoc . '/';
 		
 		$apiResponse = $this->apiCall($apiUrl);
-		print_r($apiResponse);
-		print_r($apiUrl);
+
 		if ($apiResponse) {
 			return $apiResponse;
 		}
