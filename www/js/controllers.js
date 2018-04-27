@@ -181,6 +181,16 @@ angular.module('controllers', [])
     mpdClient.play();
   }
 
+  $scope.clearQueue = function() {
+    $scope.playlistCount = 0;
+    $scope.playState = 'stop';
+    $scope.currentlyPlaying = false;
+
+    mpdClient.clearQueue(); 
+
+    growl.success("The play queue has been cleared"); 
+  }
+
   $scope.checkConnection = $interval(function() {
 
     var mpdState = mpdClient.getState();    

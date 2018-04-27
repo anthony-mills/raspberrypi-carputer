@@ -37,6 +37,10 @@
               Current Queue ( {{playlistCount}} items )
             </ion-item>
 
+            <ion-item ng-if="playlistCount > 0" ng-click="clearQueue()">
+              Clear Current Queue
+            </ion-item>
+
             <ion-item href="#/app/night-mode">
               Night Mode
             </ion-item> 
