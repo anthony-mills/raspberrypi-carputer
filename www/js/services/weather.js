@@ -65,7 +65,7 @@ angular.module('weatherAssist', [])
 	}
 
 	/** 
-	* Rewritemetaweather.com weather states into the location of a local image 
+	* Rewrite metaweather.com weather states into the location of a local image 
 	* See https://www.metaweather.com/api/ for more information on possible weather states 
 	*
 	* @param string weatherType
@@ -137,7 +137,7 @@ angular.module('weatherAssist', [])
 							"Saturday"
 						];
 		
-		var dateString = new Date(dateString);
+		var dateString = new Date( dateString );
 
 		var dayNum = dateString.getDay();
 
@@ -158,8 +158,8 @@ angular.module('weatherAssist', [])
 	}
 
 	return {
-		getForecast: function(latitude, longitude) {
-			return getForecast(latitude, longitude);
+		getForecast: function( latitude, longitude ) {
+			return getForecast( latitude, longitude );
 		},
 
 		reverseDate: function( dateString ) {

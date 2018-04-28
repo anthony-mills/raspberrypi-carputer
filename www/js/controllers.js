@@ -41,7 +41,6 @@ angular.module('controllers', [])
     if ($scope.appSettings.time_src == 0) {
       $scope.currentDate = contentFormatting.getSystemTime( Math.floor( Date.now() ) );
     } else {
-        console.log( $scope.gpsData.time );
 
       if ($scope.gpsData.time) {
         var gpsTime = new Date( $scope.gpsData.time );
@@ -70,7 +69,7 @@ angular.module('controllers', [])
   }, updateFrequency);
 
   /**
-  * Convert a distance / speed km to miles
+  * Convert a distance / speed from km to miles
   *
   * @param integer distanceKm
   */
