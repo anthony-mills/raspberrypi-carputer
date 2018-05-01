@@ -1,19 +1,21 @@
 # Nomadic Pi Car Computer 
 
-This repository is the UI component of the Nomadic PI Raspberry Pi based car computer. [Visit the Nomadic Pi website for more information on the project and details on building your own "carputer"](https://www.nomadicpi.com/).
+This repository is the UI component of the Nomadic PI Raspberry Pi based car computer. [Visit the Nomadic Pi website for more information on the project and details on building your own car computer or "carputer"](https://www.nomadicpi.com/).
 
 A pre built image file for use with the [Raspberry Pi 3 can also be downloaded here](https://www.nomadicpi.com/download.php).
 
 # Prerequisites
-The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So to have the frontend work properly these two daemons must be installed and configured. Although for development and testing, a fake GPS data set can be used in place of a live GPS stream to make things easier ( see below under "No GPS" for more details ). 
+The UI acts as a frontend for the [MPD](http://www.musicpd.org/) and [GPSD](http://www.catb.org/gpsd/). So to have the frontend work properly in a live environment these two daemons must be installed and configured. 
+
+But for the purposes of development and testing, a fake GPS data set can be used in place of a live GPS stream to make things easier ( see below under "No GPS" for more details ). 
 
 The system uses PHP as a gateway for getting GPS and other data from external services. So at minimum the PHP5-common, PHP5-cli and PHP5-curl packages must be installed on the system. 
 
-The car computer also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This HTML5 API is poorly supported so either Chromium or Chrome needs to be used with the application for otherwise thye local image cache will not function correctly.
+The car computer also uses the [HTML5 Filesystem API](http://www.html5rocks.com/en/tutorials/file/filesystem/) for the local storage of album art. This HTML5 API is poorly supported so either Chromium or Chrome needs to be used with the application for otherwise the local image cache will not function correctly.
 
 The UI was designed for use on a car computer built on the Raspberry Pi platform ( has been tested with the 2 & 3 Model B ). Combined with the official 7 inch Raspberry Pi touch screen display (800x480). 
 
-It is responsive and will run happily at other resolutions though. With the majority of development and testing taking place using [Chromium](https://www.chromium.org/Home) on a standard desktop computer.
+It is responsive and will run happily at other resolutions. With the majority of development and testing taking place using [Chromium](https://www.chromium.org/Home) on a standard desktop computer.
 
 # Installation
 
@@ -25,7 +27,7 @@ It is responsive and will run happily at other resolutions though. With the majo
 
 # Running with out a GPS device
 
-GPS functionality can easily be fudgedfor development or testing purposes. Without an active GPS fix or even a GPS device. 
+GPS functionality can easily be fudged for development or testing purposes. Without an active GPS fix or even a real GPS device. 
 
 To enable the GPS testing mode change the value of the gpsd-debug option in the application config file to true. 
 
