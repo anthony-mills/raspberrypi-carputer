@@ -422,7 +422,6 @@ angular.module('controllers', [])
   $scope.formatPath = function( filePath ) {
 
     return filePath.split("/").pop();
-
   }
 
   $scope.goBack = function() {
@@ -483,10 +482,7 @@ angular.module('controllers', [])
   *
   * @param dirPath
   */
-  $scope.addDirectory = function( dirPath ) {
-
-    var dirPath = dirPath.replace( decodeURIComponent(dirPath), "/" );
-
+  $scope.addDirectory = function( dirPath ) {    
     growl.success("Directory added to play queue");
 
     mpdClient.addSongToQueueByFile(dirPath);
